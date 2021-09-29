@@ -86,61 +86,61 @@ public class S10Controller2 : MonoBehaviour
 
         // Define deck
         card[] deck = {
-            new card {val = "2", suit = "clubs", index = 0, GameObjectName = "C2"},
-            new card {val = "3", suit = "clubs", index = 1, GameObjectName = "C3"},
-            new card {val = "4", suit = "clubs", index = 2, GameObjectName = "C4"},
-            new card {val = "5", suit = "clubs", index = 3, GameObjectName = "C5"},
-            new card {val = "6", suit = "clubs", index = 4, GameObjectName = "C6"},
-            new card {val = "7", suit = "clubs", index = 5, GameObjectName = "C7"},
-            new card {val = "8", suit = "clubs", index = 6, GameObjectName = "C8"},
-            new card {val = "9", suit = "clubs", index = 7, GameObjectName = "C9"},
-            new card {val = "10", suit = "clubs", index = 8, GameObjectName = "C10"},
-            new card {val = "J", suit = "clubs", index = 9, GameObjectName = "CJ"},
-            new card {val = "Q", suit = "clubs", index = 10, GameObjectName = "CQ"},
-            new card {val = "K", suit = "clubs", index = 11, GameObjectName = "CK"},
-            new card {val = "A", suit = "clubs", index = 12, GameObjectName = "CA"},
+            new card {val = "2", suit = "clubs", index = 0, GameObjectName = "2ofclubs"},
+            new card {val = "3", suit = "clubs", index = 1, GameObjectName = "3ofclubs"},
+            new card {val = "4", suit = "clubs", index = 2, GameObjectName = "4ofclubs"},
+            new card {val = "5", suit = "clubs", index = 3, GameObjectName = "5ofclubs"},
+            new card {val = "6", suit = "clubs", index = 4, GameObjectName = "6ofclubs"},
+            new card {val = "7", suit = "clubs", index = 5, GameObjectName = "7ofclubs"},
+            new card {val = "8", suit = "clubs", index = 6, GameObjectName = "8ofclubs"},
+            new card {val = "9", suit = "clubs", index = 7, GameObjectName = "9ofclubs"},
+            new card {val = "10", suit = "clubs", index = 8, GameObjectName = "10ofclubs"},
+            new card {val = "J", suit = "clubs", index = 9, GameObjectName = "Jackofclubs"},
+            new card {val = "Q", suit = "clubs", index = 10, GameObjectName = "Queenofclubs"},
+            new card {val = "K", suit = "clubs", index = 11, GameObjectName = "Kingofclubs"},
+            new card {val = "A", suit = "clubs", index = 12, GameObjectName = "Aceofclubs"},
 
-            new card {val = "2", suit = "diamonds", index = 13, GameObjectName = "D2"},
-            new card {val = "3", suit = "diamonds", index = 14, GameObjectName = "D3"},
-            new card {val = "4", suit = "diamonds", index = 15, GameObjectName = "D4"},
-            new card {val = "5", suit = "diamonds", index = 16, GameObjectName = "D5"},
-            new card {val = "6", suit = "diamonds", index = 17, GameObjectName = "6ofDiamonds"},
-            new card {val = "7", suit = "diamonds", index = 18, GameObjectName = "7ofDiamonds"},
-            new card {val = "8", suit = "diamonds", index = 19, GameObjectName = "8ofDiamonds"},
-            new card {val = "9", suit = "diamonds", index = 20, GameObjectName = "9ofDiamonds"},
-            new card {val = "10", suit = "diamonds", index = 21, GameObjectName = "10ofDiamonds"},
-            new card {val = "J", suit = "diamonds", index = 22, GameObjectName = "JackofDiamonds"},
-            new card {val = "Q", suit = "diamonds", index = 23, GameObjectName = "QueenofDiamonds"},
-            new card {val = "K", suit = "diamonds", index = 24, GameObjectName = "KingofDiamonds"},
-            new card {val = "A", suit = "diamonds", index = 25, GameObjectName = "AceofDiamonds"},
+            new card {val = "2", suit = "diamonds", index = 13, GameObjectName = "2ofdiamonds"},
+            new card {val = "3", suit = "diamonds", index = 14, GameObjectName = "3ofdiamonds"},
+            new card {val = "4", suit = "diamonds", index = 15, GameObjectName = "4ofdiamonds"},
+            new card {val = "5", suit = "diamonds", index = 16, GameObjectName = "5ofdiamonds"},
+            new card {val = "6", suit = "diamonds", index = 17, GameObjectName = "6ofdiamonds"},
+            new card {val = "7", suit = "diamonds", index = 18, GameObjectName = "7ofdiamonds"},
+            new card {val = "8", suit = "diamonds", index = 19, GameObjectName = "8ofdiamonds"},
+            new card {val = "9", suit = "diamonds", index = 20, GameObjectName = "9ofdiamonds"},
+            new card {val = "10", suit = "diamonds", index = 21, GameObjectName = "10ofdiamonds"},
+            new card {val = "J", suit = "diamonds", index = 22, GameObjectName = "Jackofdiamonds"},
+            new card {val = "Q", suit = "diamonds", index = 23, GameObjectName = "Queenofdiamonds"},
+            new card {val = "K", suit = "diamonds", index = 24, GameObjectName = "Kingofdiamonds"},
+            new card {val = "A", suit = "diamonds", index = 25, GameObjectName = "Aceofdiamonds"},
 
-            new card {val = "2", suit = "hearts", index = 26, GameObjectName = "2ofHearts"},
-            new card {val = "3", suit = "hearts", index = 27, GameObjectName = "3ofHearts"},
-            new card {val = "4", suit = "hearts", index = 28, GameObjectName = "4ofHearts"},
-            new card {val = "5", suit = "hearts", index = 29, GameObjectName = "5ofHearts"},
-            new card {val = "6", suit = "hearts", index = 30, GameObjectName = "6ofHearts"},
-            new card {val = "7", suit = "hearts", index = 31, GameObjectName = "7ofHearts"},
-            new card {val = "8", suit = "hearts", index = 32, GameObjectName = "8ofHearts"},
-            new card {val = "9", suit = "hearts", index = 33, GameObjectName = "9ofHearts"},
-            new card {val = "10", suit = "hearts", index = 34, GameObjectName = "10ofHearts"},
-            new card {val = "J", suit = "hearts", index = 35, GameObjectName = "JackofHearts"},
-            new card {val = "Q", suit = "hearts", index = 36, GameObjectName = "QueenofHearts"},
-            new card {val = "K", suit = "hearts", index = 37, GameObjectName = "KingofHearts"},
-            new card {val = "A", suit = "hearts", index = 38, GameObjectName = "AceofHearts"},
+            new card {val = "2", suit = "hearts", index = 26, GameObjectName = "2ofhearts"},
+            new card {val = "3", suit = "hearts", index = 27, GameObjectName = "3ofhearts"},
+            new card {val = "4", suit = "hearts", index = 28, GameObjectName = "4ofhearts"},
+            new card {val = "5", suit = "hearts", index = 29, GameObjectName = "5ofhearts"},
+            new card {val = "6", suit = "hearts", index = 30, GameObjectName = "6ofhearts"},
+            new card {val = "7", suit = "hearts", index = 31, GameObjectName = "7ofhearts"},
+            new card {val = "8", suit = "hearts", index = 32, GameObjectName = "8ofhearts"},
+            new card {val = "9", suit = "hearts", index = 33, GameObjectName = "9ofhearts"},
+            new card {val = "10", suit = "hearts", index = 34, GameObjectName = "10ofhearts"},
+            new card {val = "J", suit = "hearts", index = 35, GameObjectName = "Jackofhearts"},
+            new card {val = "Q", suit = "hearts", index = 36, GameObjectName = "Queenofhearts"},
+            new card {val = "K", suit = "hearts", index = 37, GameObjectName = "Kingofhearts"},
+            new card {val = "A", suit = "hearts", index = 38, GameObjectName = "Aceofhearts"},
 
-            new card {val = "2", suit = "spades", index = 39, GameObjectName = "2ofSpades"},
-            new card {val = "3", suit = "spades", index = 40, GameObjectName = "3ofSpades"},
-            new card {val = "4", suit = "spades", index = 41, GameObjectName = "4ofSpades"},
-            new card {val = "5", suit = "spades", index = 42, GameObjectName = "5ofSpades"},
-            new card {val = "6", suit = "spades", index = 43, GameObjectName = "6ofSpades"},
-            new card {val = "7", suit = "spades", index = 44, GameObjectName = "7ofSpades"},
-            new card {val = "8", suit = "spades", index = 45, GameObjectName = "8ofSpades"},
-            new card {val = "9", suit = "spades", index = 46, GameObjectName = "9ofSpades"},
-            new card {val = "10", suit = "spades", index = 47, GameObjectName = "10ofSpades"},
-            new card {val = "J", suit = "spades", index = 48, GameObjectName = "JackofSpades"},
-            new card {val = "Q", suit = "spades", index = 49, GameObjectName = "QueenofSpades"},
-            new card {val = "K", suit = "spades", index = 50, GameObjectName = "KingofSpades"},
-            new card {val = "A", suit = "spades", index = 51, GameObjectName = "AceofSpades"}
+            new card {val = "2", suit = "spades", index = 39, GameObjectName = "2ofspades"},
+            new card {val = "3", suit = "spades", index = 40, GameObjectName = "3ofspades"},
+            new card {val = "4", suit = "spades", index = 41, GameObjectName = "4ofspades"},
+            new card {val = "5", suit = "spades", index = 42, GameObjectName = "5ofspades"},
+            new card {val = "6", suit = "spades", index = 43, GameObjectName = "6ofspades"},
+            new card {val = "7", suit = "spades", index = 44, GameObjectName = "7ofspades"},
+            new card {val = "8", suit = "spades", index = 45, GameObjectName = "8ofspades"},
+            new card {val = "9", suit = "spades", index = 46, GameObjectName = "9ofspades"},
+            new card {val = "10", suit = "spades", index = 47, GameObjectName = "10ofspades"},
+            new card {val = "J", suit = "spades", index = 48, GameObjectName = "Jackofspades"},
+            new card {val = "Q", suit = "spades", index = 49, GameObjectName = "Queenofspades"},
+            new card {val = "K", suit = "spades", index = 50, GameObjectName = "Kingofspades"},
+            new card {val = "A", suit = "spades", index = 51, GameObjectName = "Aceofspades"}
         };
 
         // Shuffle deck - for 1000 turns, switch the values of two random cards
@@ -178,6 +178,26 @@ public class S10Controller2 : MonoBehaviour
         }
 
         // Display my cards
+        
+        var myhand = hands[0];
+        
+        float cardspread = 700;
+        float increment = 700/myhand.Count; 
+        float xposition = cardspread*(-0.5);
+        for (int i = 0; i < myhand.Count; i++)
+        {
+            GameObject.Find(myhand.get(i).GameObjectName).transform.position = new Vector2(xposition,-150);
+            xposition += increment;
+        }
+            
+
+        //foreach (int i in myhand)
+        // {
+        // var cardpic = GameObject.Find(myhand[i]);
+        // cardpic.transform.position = new Vector2(0,-150);
+        // }
+        
+
 
         // Set each matching game object to a specific position on the board
 
