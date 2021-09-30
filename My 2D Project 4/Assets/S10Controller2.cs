@@ -178,28 +178,42 @@ public class S10Controller2 : MonoBehaviour
             }
         }
 
-        // Display my cards
+        // Sort cards from 3-A, then 2, then Jokers
+        string[] sortArray = new string[14] {"3","4","5","6","7","8","9","10","J","Q","K","A","2","Joker"};
         var myHand = hands[0];
-        
+
+        myHand.Sort((x,y) => Array.IndexOf(sortArray,x.val).CompareTo(Array.IndexOf(sortArray,y.val)));
+
+        // Display my cards
         float cardSpread = 625.0f;
-        float increment = cardSpread/(myHand.Count - 1); //Number of cards - 1. Figured out on whiteboard, don't need to account for middle card
+        float increment = cardSpread/(myHand.Count - 1); //Number of cards - 1, don't need to account for middle card
         float xposition = cardSpread*(-0.5f);
+
         for (int i = 0; i < myHand.Count; i++)
         {
             GameObject.Find(myHand[i].GameObjectName).transform.position = new Vector2(xposition,-150);
             xposition += increment;
         }
             
-        // Sort cards from 3-A, then 2, then Jokers
-
-
-
-
-
-        
-
     }
-    
+
+    // Select cards
+    // Deselect cards
+    // Validate if cards are playable
+
+
+    // public static string selectedObject;
+    // public string internalObject;
+    // public RaycastHit theObject;
+
+    // void Update() 
+    // {
+    //     if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out theObject))
+    //     {
+    //         selectedObject = theObject.transform.gameObject.name;
+    //         internalObject = theObject.transform.gameObject.name;
+    //     }
+    // }
     
 
     public void ExitGame()
