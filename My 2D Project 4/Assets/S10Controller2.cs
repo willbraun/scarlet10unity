@@ -83,9 +83,9 @@ public class S10Controller2 : MonoBehaviour
     public void StartGame()
     {
         StartPage.SetActive(false);
-
+        
         // Define deck
-        card[] deck = {
+        List<card> deck = new List<card> {
             new card {val = "2", suit = "clubs", index = 0, GameObjectName = "2ofclubs"},
             new card {val = "3", suit = "clubs", index = 1, GameObjectName = "3ofclubs"},
             new card {val = "4", suit = "clubs", index = 2, GameObjectName = "4ofclubs"},
@@ -144,12 +144,13 @@ public class S10Controller2 : MonoBehaviour
         };
 
         // Shuffle deck - for 1000 turns, switch the values of two random cards
+        int deckSize = deck.Count;
         var rand = new System.Random();
         
         for (int i = 0; i < 1000; i++)
         {
-            int location1 = rand.Next(deck.Length);
-            int location2 = rand.Next(deck.Length);
+            int location1 = rand.Next(deckSize);
+            int location2 = rand.Next(deckSize);
             var temp = deck[location1];
 
             deck[location1] = deck[location2];
@@ -167,7 +168,7 @@ public class S10Controller2 : MonoBehaviour
 
         int n = 0;
    
-        for (int i = 0; i < deck.Length; i++) // Adds cards to each player's empty list one by one
+        for (int i = 0; i < deckSize; i++) // Adds cards to each player's empty list one by one
         {
             hands[n].Add(deck[i]);
             n++;
@@ -178,31 +179,19 @@ public class S10Controller2 : MonoBehaviour
         }
 
         // Display my cards
+        var myHand = hands[0];
         
-        var myhand = hands[0];
-        
-        float cardspread = 700;
-        float increment = 700/myhand.Count; 
-        float xposition = cardspread*(-0.5);
-        for (int i = 0; i < myhand.Count; i++)
+        float cardSpread = 625.0f;
+        float increment = cardSpread/(myHand.Count - 1); //Number of cards - 1. Figured out on whiteboard, don't need to account for middle card
+        float xposition = cardSpread*(-0.5f);
+        for (int i = 0; i < myHand.Count; i++)
         {
-            GameObject.Find(myhand.get(i).GameObjectName).transform.position = new Vector2(xposition,-150);
+            GameObject.Find(myHand[i].GameObjectName).transform.position = new Vector2(xposition,-150);
             xposition += increment;
         }
             
+        // Sort cards from 3-A, then 2, then Jokers
 
-        //foreach (int i in myhand)
-        // {
-        // var cardpic = GameObject.Find(myhand[i]);
-        // cardpic.transform.position = new Vector2(0,-150);
-        // }
-        
-
-
-        // Set each matching game object to a specific position on the board
-
-        // use GameObject.Find(concatenate first letter of suit, uppercase, with card.val to find game object). 
-        // If that works, delete GameObjectName from cards and class
 
 
 
