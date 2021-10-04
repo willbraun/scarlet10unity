@@ -197,23 +197,8 @@ public class S10Controller2 : MonoBehaviour
             
     }
 
-    // Select cards
-    // Deselect cards
-    // Validate if cards are playable
 
 
-    // public static string selectedObject;
-    // public string internalObject;
-    // public RaycastHit theObject;
-
-    // void Update() 
-    // {
-    //     if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out theObject))
-    //     {
-    //         selectedObject = theObject.transform.gameObject.name;
-    //         internalObject = theObject.transform.gameObject.name;
-    //     }
-    // }
     
 
     public void ExitGame()
