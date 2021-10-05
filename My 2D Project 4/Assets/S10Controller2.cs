@@ -67,6 +67,12 @@ public class S10Controller2 : MonoBehaviour
     [SerializeField] private GameObject RJ;
     [SerializeField] private GameObject BJ;
 
+    [SerializeField] private GameObject selectedCards;
+    [SerializeField] private GameObject player2;
+    [SerializeField] private GameObject player3;
+    [SerializeField] private GameObject player4;
+
+
     class card
     {
         public string val { get; set; }
@@ -191,13 +197,11 @@ public class S10Controller2 : MonoBehaviour
 
         for (int i = 0; i < myHand.Count; i++)
         {
-            GameObject.Find(myHand[i].GameObjectName).transform.position = new Vector2(xposition,-150);
+            GameObject.Find(myHand[i].GameObjectName).transform.position = new Vector2(xposition,-205);
             xposition += increment;
         }
             
     }
-
-
 
     
 
