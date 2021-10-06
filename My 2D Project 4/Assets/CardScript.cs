@@ -7,15 +7,7 @@ using UnityEngine.UI;
 public class CardScript : MonoBehaviour
 {
 
-    class card
-    {
-        public string val { get; set; }
-        public string suit { get; set; }
-        public int index { get; set; }
-        public string GameObjectName { get; set; }
-    }
-
-    List<card> selectedCards = new List<card>();
+    [SerializeField] private SelectedCardsManager selectedCardsManager;
 
     void OnMouseDown()
     {
@@ -26,5 +18,18 @@ public class CardScript : MonoBehaviour
         // If card is already in list, remove from list
         // Attach this script to all cards
     }
+
+
+    // class card
+    // {
+    //     public string val { get; set; }
+    //     public string suit { get; set; }
+    //     public int index { get; set; }
+    //     public string GameObjectName { get; set; }
+    // }
+
+    //List<card> selectedCards = new List<card>();
+
+
 
 }
