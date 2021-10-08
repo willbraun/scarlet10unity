@@ -184,23 +184,28 @@ public class S10Controller2 : MonoBehaviour
             }
         }
 
-        // Sort cards from 3-A, then 2, then Jokers
+        // Distribute all player cards (players 2-4 outside viewing area)
         string[] sortArray = new string[14] {"3","4","5","6","7","8","9","10","J","Q","K","A","2","Joker"};
-        var myHand = hands[0];
+        
+        int[] xPosArray = new int[4] {0,-750,0,750};
+        int[] yPosArray = new int[4] {-205,0,400,100};
 
-        myHand.Sort((x,y) => Array.IndexOf(sortArray,x.val).CompareTo(Array.IndexOf(sortArray,y.val)));
-
-        // Display my cards
-        float cardSpread = 625.0f;
-        float increment = cardSpread/(myHand.Count - 1); //Number of cards - 1, don't need to account for middle card
-        float xposition = cardSpread*(-0.5f);
-
-        for (int i = 0; i < myHand.Count; i++)
+        for (int h = 0; h < hands.Count; h++)
         {
-            GameObject.Find(myHand[i].GameObjectName).transform.position = new Vector2(xposition,-205);
-            xposition += increment;
+            hands[h].Sort((x,y) => Array.IndexOf(sortArray,x.val).CompareTo(Array.IndexOf(sortArray,y.val)));
+
+            float increment = 52.0f;
+            float cardSpread = increment * (hands[h].Count - 1); // The -1 is because there are one less spaces than cards
+            float xposition = cardSpread*(-0.5f) + xPosArray[h];
+            float yposition = yPosArray[h];
+
+            for (int i = 0; i < hands[h].Count; i++)
+            {
+                GameObject.Find(hands[h][i].GameObjectName).transform.position = new Vector2(xposition,yposition);
+                xposition += increment;
+            }
         }
-            
+     
     }
 
     

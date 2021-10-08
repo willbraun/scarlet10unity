@@ -1559,7 +1559,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 464.18082
+  orthographic size: 889.19836
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3163,6 +3163,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1140765574}
   m_CullTransparentMesh: 1
+--- !u!1 &1146763537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1146763539}
+  - component: {fileID: 1146763538}
+  m_Layer: 0
+  m_Name: MouseManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1146763538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146763537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 116c9cc377fee4aada877cae1ff4cb69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedObject: {fileID: 0}
+--- !u!4 &1146763539
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146763537}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -50.341938, y: -71.84085, z: -683.52594}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1164835690
 GameObject:
   m_ObjectHideFlags: 0
@@ -4225,6 +4269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b78a72517a8e34713b72a808d3a38879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedCardsManager: {fileID: 0}
 --- !u!4 &1456076309
 Transform:
   m_ObjectHideFlags: 0
@@ -4575,8 +4620,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -195.93396, y: -306.3412}
-  m_SizeDelta: {x: 49.2549, y: 61.2741}
+  m_AnchoredPosition: {x: -196.44, y: -305.97}
+  m_SizeDelta: {x: 50, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1596770349
 MonoBehaviour:
@@ -4628,6 +4673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b78a72517a8e34713b72a808d3a38879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedCardsManager: {fileID: 0}
 --- !u!61 &1596770352
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4641,7 +4687,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.1318245, y: 0}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -4652,7 +4698,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 48.99125, y: 61.2741}
+  m_Size: {x: 50, y: 70}
   m_EdgeRadius: 0
 --- !u!1 &1602119514
 GameObject:
