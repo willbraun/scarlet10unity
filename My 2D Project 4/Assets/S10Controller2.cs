@@ -184,11 +184,11 @@ public class S10Controller2 : MonoBehaviour
             }
         }
 
-        // Distribute all player cards (players 2-4 outside viewing area)
+        // Display all player cards (players 2-4 outside viewing area)
         string[] sortArray = new string[14] {"3","4","5","6","7","8","9","10","J","Q","K","A","2","Joker"};
         
-        int[] xPosArray = new int[4] {0,-750,0,750};
-        int[] yPosArray = new int[4] {-205,0,400,100};
+        int[] xPosArray = new int[4] {0,0,0,0};
+        int[] yPosArray = new int[4] {-205,475,400,325};
 
         for (int h = 0; h < hands.Count; h++)
         {
