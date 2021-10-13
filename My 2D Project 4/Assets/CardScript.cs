@@ -7,12 +7,9 @@ using UnityEngine.UI;
 public class CardScript : MonoBehaviour
 {
 
-    [SerializeField] private SelectedCardsManager selectedCardsManager;
-
-    //List<GameObject> selectedCards = new List<GameObject>();
-    //selectedCards.Add GameObjects that are at this Y height
-
+    // Dictionary of 'CardScript' objects and their position before moving
     private Vector2 previousPosition;
+    private Dictionary<CardScript,Vector2> selectedCards = new Dictionary<CardScript,Vector2>(); 
 
     void OnMouseDown()
     {
@@ -22,16 +19,18 @@ public class CardScript : MonoBehaviour
 
         if (this.transform.position.y != -95.0f)
         {
-            //Saves position, then moves to new position
+            // On Select
             previousPosition = this.transform.position;
             this.transform.position = new Vector2(xNew,yNew);
+            selectedCards.Add(this,previousPosition);
 
             Debug.Log("Selected "+ this.name);
         }
         else
         {
-            // Moves selected card to original position
-            this.transform.position = previousPosition;
+            // On Deselect, set position to original position and remove from selected list
+            this.transform.position = selectedCards[this];  
+            selectedCards.Remove(this);
 
             Debug.Log("Deselected "+ this.name);
         }
