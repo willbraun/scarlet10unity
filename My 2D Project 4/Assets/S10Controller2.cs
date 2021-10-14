@@ -195,7 +195,7 @@ public class S10Controller2 : MonoBehaviour
             hands[h].Sort((x,y) => Array.IndexOf(sortArray,x.val).CompareTo(Array.IndexOf(sortArray,y.val)));
 
             float increment = 52.0f;
-            float cardSpread = increment * (hands[h].Count - 1); // The -1 is because there are one less spaces than cards
+            float cardSpread = increment*(hands[h].Count - 1); // The -1 is because there are one less spaces than cards
             float xposition = cardSpread*(-0.5f) + xPosArray[h];
             float yposition = yPosArray[h];
 

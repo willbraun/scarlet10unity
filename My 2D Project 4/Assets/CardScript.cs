@@ -8,46 +8,45 @@ public class CardScript : MonoBehaviour
 {
 
     // Dictionary of 'CardScript' objects and their position before moving
-    private Vector2 previousPosition;
-    private Dictionary<CardScript,Vector2> selectedCards = new Dictionary<CardScript,Vector2>(); 
+    public static Vector2 previousPosition;
+    public static Dictionary<CardScript,Vector2> selectedCardPrevPos = new Dictionary<CardScript,Vector2>(); 
+
+    // List of selected cards for positioning
+    public static List<CardScript> selectedCardObjects = new List<CardScript>();
 
     void OnMouseDown()
     {
 
-        float xNew = 0f;
-        float yNew = -95.0f;
+        float yposition = -95.0f;
 
-        if (this.transform.position.y != -95.0f)
+        if (this.transform.position.y != yposition)
         {
             // On Select
+            // Save previous position, add card object to "selected" dictionary and list
             previousPosition = this.transform.position;
-            this.transform.position = new Vector2(xNew,yNew);
-            selectedCards.Add(this,previousPosition);
-
-            Debug.Log("Selected "+ this.name);
+            selectedCardPrevPos.Add(this,previousPosition);
+            selectedCardObjects.Add(this);
         }
         else
         {
-            // On Deselect, set position to original position and remove from selected list
-            this.transform.position = selectedCards[this];  
-            selectedCards.Remove(this);
-
-            Debug.Log("Deselected "+ this.name);
+            // On Deselect
+            // Set card back to original position, and remove from dictionary and list
+            this.transform.position = selectedCardPrevPos[this];  
+            selectedCardPrevPos.Remove(this);
+            selectedCardObjects.Remove(this);
+        }
+        
+        // Reposition selected cards
+        float increment = 52.0f;
+        float cardSpread = increment*(selectedCardObjects.Count - 1);
+        float xposition = cardSpread*(-0.5f); // The -1 is because there are one less spaces than cards
+        
+        for (int i = 0; i < selectedCardObjects.Count; i++)
+        {
+            GameObject.Find(selectedCardObjects[i].name).transform.position = new Vector2(xposition,yposition);
+            xposition += increment;
         }
 
     }
-
-
-    // class card
-    // {
-    //     public string val { get; set; }
-    //     public string suit { get; set; }
-    //     public int index { get; set; }
-    //     public string GameObjectName { get; set; }
-    // }
-
-    //List<card> selectedCards = new List<card>();
-
-
 
 }
