@@ -12,6 +12,9 @@ public class S10Controller2 : MonoBehaviour
     [SerializeField] private GameObject MainGame;
     [SerializeField] private GameObject ExitGameButton;
 
+    public static List<List<GameObject>> hands = new List<List<GameObject>>();
+    public static char[] sortArray = new char[15] {'3','4','5','6','7','8','9','1','J','Q','K','A','2','B','R'};
+
     public void Start()
     {
         StartPage.SetActive(true);
@@ -43,7 +46,6 @@ public class S10Controller2 : MonoBehaviour
 
         // Deal cards evenly
         int numPlayers = 4;
-        List<List<GameObject>> hands = new List<List<GameObject>>();
         
         for (int i = 0; i < numPlayers; i++) // Creates a list of empty lists, one for each player
         {
@@ -63,7 +65,6 @@ public class S10Controller2 : MonoBehaviour
         }
 
         // Display all player cards (players 2-4 outside viewing area)
-        char[] sortArray = new char[15] {'3','4','5','6','7','8','9','1','J','Q','K','A','2','B','R'};
         
         int[] yPosArray = new int[4] {-205,475,400,325};
         int yPosArrayIndex = 0;
