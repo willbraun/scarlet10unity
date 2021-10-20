@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class CardScript : MonoBehaviour
 {
 
+    public cardSO thisCardSO;
+
     // Dictionary of 'CardScript' objects and their position before moving
     public static Vector2 previousPosition;
     public static Dictionary<GameObject,Vector2> selectedCardPrevPos = new Dictionary<GameObject,Vector2>(); 
@@ -40,6 +42,9 @@ public class CardScript : MonoBehaviour
         }
         
         Reposition(selectedCardObjects,47.0f,selectedYposition);
+
+        Debug.Log(thisCardSO.value + " " + thisCardSO.suit);
+
 
     }
 

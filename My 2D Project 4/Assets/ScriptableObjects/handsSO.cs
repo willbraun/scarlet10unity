@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "List Variable")]
+[CreateAssetMenu(fileName = "New Card", menuName = "Card")]
 
-public class ListVariable : ScriptableObject
+public class Card : ScriptableObject
 {
-    public List<List<GameObject>> value;
+    public string value;
+    public string suit;
+    public Sprite Artwork;
 }
