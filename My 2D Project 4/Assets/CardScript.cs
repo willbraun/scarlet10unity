@@ -7,8 +7,6 @@ using UnityEngine.UI;
 public class CardScript : MonoBehaviour
 {
 
-    public cardSO thisCardSO;
-
     // Dictionary of 'CardScript' objects and their position before moving
     public static Vector2 previousPosition;
     public static Dictionary<GameObject,Vector2> selectedCardPrevPos = new Dictionary<GameObject,Vector2>(); 
@@ -23,8 +21,11 @@ public class CardScript : MonoBehaviour
     public static float selectedYposition = -95.0f;
     public static List<List<GameObject>> handsCS = S10Controller2.hands;
 
+    //public GetValueSuit getValueSuitScript;
+
     void OnMouseDown()
     {
+        // "this" refers to the CardScript object
 
         if (this.gameObject.transform.position.y != selectedYposition)
         {
@@ -43,8 +44,8 @@ public class CardScript : MonoBehaviour
         
         Reposition(selectedCardObjects,47.0f,selectedYposition);
 
-        Debug.Log(thisCardSO.value + " " + thisCardSO.suit);
-
+        
+        Debug.Log(this.gameObject.GetComponent<GetValueSuit>().returnValue());
 
     }
 
@@ -91,6 +92,7 @@ public class CardScript : MonoBehaviour
 
     public void Reposition(List<GameObject> listOfCards, float increment, float yposition)
     {
+        
         char[] sortArray = new char[15] {'3','4','5','6','7','8','9','1','J','Q','K','A','2','B','R'};
         listOfCards.Sort((x,y) => Array.IndexOf(sortArray,x.name[0]).CompareTo(Array.IndexOf(sortArray,y.name[0])));
         float cardSpread = 0.0f;
@@ -120,6 +122,17 @@ public class CardScript : MonoBehaviour
         }
 
     }
+
+    
+    // public List<int> getCardValues(List<GameObject> listOfCards)
+    // {
+
+        // Initialize a new list of integers
+        // use foreach loop to pull value from each gameobject in selectedCardObjects and add to new list 
+
+    // }
+
+    // write getCardSuits function
 
 
 

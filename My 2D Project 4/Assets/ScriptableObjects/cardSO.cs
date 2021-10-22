@@ -6,6 +6,6 @@ using UnityEngine;
 
 public class cardSO : ScriptableObject
 {
-    public string value;
+    public int value;
     public string suit;
 }
