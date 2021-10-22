@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df44486f71d96432a9329c42b4268733, type: 3}
   m_Name: 3ofdiamondsSO
   m_EditorClassIdentifier: 
-  value: 0
-  suit: 
+  value: 3
+  suit: diamonds

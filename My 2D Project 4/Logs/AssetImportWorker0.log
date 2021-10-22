@@ -1875,3 +1875,155 @@ AssetImportParameters requested are different than current active one (requested
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 1680.242957 seconds.
+  path: Assets/ScriptableObjects/10ofspadesSO.asset
+  artifactKey: Guid(14e10399c1b70439f93de18a64fc5e4b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/10ofspadesSO.asset using Guid(14e10399c1b70439f93de18a64fc5e4b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dd17047cce813b3948ef25966d3f98e7') in 0.027597 seconds 
+  Import took 0.035832 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000460 seconds.
+  path: Assets/ScriptableObjects/AceofspadesSO.asset
+  artifactKey: Guid(00232f642fed3439c8edc77c78fcd7f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/AceofspadesSO.asset using Guid(00232f642fed3439c8edc77c78fcd7f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6d4150a7c88a3315bc657fc5ef8a1a98') in 0.005416 seconds 
+  Import took 0.012088 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000332 seconds.
+  path: Assets/ScriptableObjects/QueenofheartsSO.asset
+  artifactKey: Guid(5d509313a2dc047febaa0b02a50fe0f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/QueenofheartsSO.asset using Guid(5d509313a2dc047febaa0b02a50fe0f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '66d851a19b75b971593d722ac81e139c') in 0.005745 seconds 
+  Import took 0.011570 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000320 seconds.
+  path: Assets/ScriptableObjects/JackofspadesSO.asset
+  artifactKey: Guid(611bb5b5ccae545bf81a0017b01696ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/JackofspadesSO.asset using Guid(611bb5b5ccae545bf81a0017b01696ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '59c78dc191fe353c258051356c1ba364') in 0.005272 seconds 
+  Import took 0.011068 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000322 seconds.
+  path: Assets/ScriptableObjects/AceofheartsSO.asset
+  artifactKey: Guid(15e1f6c083384401790092c110caf3bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/AceofheartsSO.asset using Guid(15e1f6c083384401790092c110caf3bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f26ed98b17198b1dcb345e1204338ae5') in 0.005517 seconds 
+  Import took 0.011991 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000333 seconds.
+  path: Assets/ScriptableObjects/JackofdiamondsSO.asset
+  artifactKey: Guid(3178cb936c571483f9b2303301592348) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/JackofdiamondsSO.asset using Guid(3178cb936c571483f9b2303301592348) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '55d4f351161b35e0487feb46a4410f22') in 0.003965 seconds 
+  Import took 0.010125 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000450 seconds.
+  path: Assets/ScriptableObjects/QueenofspadesSO.asset
+  artifactKey: Guid(163f362cfa94e48c6ae0d375d0a3f904) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/QueenofspadesSO.asset using Guid(163f362cfa94e48c6ae0d375d0a3f904) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a0d76a25a59c89d10aa90d4adbce6d85') in 0.004800 seconds 
+  Import took 0.010467 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000332 seconds.
+  path: Assets/ScriptableObjects/QueenofclubsSO.asset
+  artifactKey: Guid(4c3b0dfddbe4c4ca4a4d2234388acf69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/QueenofclubsSO.asset using Guid(4c3b0dfddbe4c4ca4a4d2234388acf69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ddf51fec441d6f29790fe7ee313452cb') in 0.004171 seconds 
+  Import took 0.009804 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000377 seconds.
+  path: Assets/ScriptableObjects/KingofspadesSO.asset
+  artifactKey: Guid(1365449da75c841bcab801e2a63bb6c2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/KingofspadesSO.asset using Guid(1365449da75c841bcab801e2a63bb6c2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fdb431acaca646d45556e3621fea6fd3') in 0.005890 seconds 
+  Import took 0.011544 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000309 seconds.
+  path: Assets/ScriptableObjects/JackofheartsSO.asset
+  artifactKey: Guid(f0c569c53fb5d4ffaab9fb324262b775) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/JackofheartsSO.asset using Guid(f0c569c53fb5d4ffaab9fb324262b775) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '29a69ee204f3b9fa146885c2c211cf67') in 0.005936 seconds 
+  Import took 0.012061 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000356 seconds.
+  path: Assets/ScriptableObjects/KingofheartsSO.asset
+  artifactKey: Guid(15cd85540dcee4d639b1eb6b0261b0db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/KingofheartsSO.asset using Guid(15cd85540dcee4d639b1eb6b0261b0db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0184840cd25c08082c5d95b209935155') in 0.003833 seconds 
+  Import took 0.009731 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000370 seconds.
+  path: Assets/ScriptableObjects/AceofclubsSO.asset
+  artifactKey: Guid(b02679bfb9996436e995d237c2e3c02d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/AceofclubsSO.asset using Guid(b02679bfb9996436e995d237c2e3c02d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1100ab120bb03aca1f3568170995be87') in 0.004541 seconds 
+  Import took 0.009326 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000524 seconds.
+  path: Assets/ScriptableObjects/QueenofdiamondsSO.asset
+  artifactKey: Guid(527dcb4192b5945e8a29ced3895907c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/QueenofdiamondsSO.asset using Guid(527dcb4192b5945e8a29ced3895907c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ddb007c87add7df9a609f4d4339aaf42') in 0.005510 seconds 
+  Import took 0.011115 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000349 seconds.
+  path: Assets/ScriptableObjects/KingofclubsSO.asset
+  artifactKey: Guid(94a98df717c3842959fdfeea5633b47a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/KingofclubsSO.asset using Guid(94a98df717c3842959fdfeea5633b47a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5dba7b3a8b5e991ab668b82c6cd76e6b') in 0.004138 seconds 
+  Import took 0.011071 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000378 seconds.
+  path: Assets/ScriptableObjects/Blackjoker.asset
+  artifactKey: Guid(be9223ceaf9844e1b80f8acf4508fbe0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/Blackjoker.asset using Guid(be9223ceaf9844e1b80f8acf4508fbe0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f2c05a844c9579ae110539ffd2e5758f') in 0.003937 seconds 
+  Import took 0.010657 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000335 seconds.
+  path: Assets/ScriptableObjects/JackofclubsSO.asset
+  artifactKey: Guid(839a2b055c5244436bb08bf7aa3c2345) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/JackofclubsSO.asset using Guid(839a2b055c5244436bb08bf7aa3c2345) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4529bd8a6bf005d61beb571924a91587') in 0.005592 seconds 
+  Import took 0.012123 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000358 seconds.
+  path: Assets/ScriptableObjects/KingofdiamondsSO.asset
+  artifactKey: Guid(c246cb48eb27b45658a64d44b36e63ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/KingofdiamondsSO.asset using Guid(c246cb48eb27b45658a64d44b36e63ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e3f107bc4a2de7320a8a78bc1df71325') in 0.004574 seconds 
+  Import took 0.011651 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000431 seconds.
+  path: Assets/ScriptableObjects/Redjoker.asset
+  artifactKey: Guid(536639f780b2f45059dfda9978b9e645) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/Redjoker.asset using Guid(536639f780b2f45059dfda9978b9e645) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4a54e083a48cfce3fd4c1486428ba49e') in 0.004077 seconds 
+  Import took 0.011258 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000450 seconds.
+  path: Assets/ScriptableObjects/AceofdiamondsSO.asset
+  artifactKey: Guid(1ee2e29dd7be243488aeb7cc85922ea8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/AceofdiamondsSO.asset using Guid(1ee2e29dd7be243488aeb7cc85922ea8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ce74c0f43fdf1bd02ffe22f2bc9f1836') in 0.006312 seconds 
+  Import took 0.014458 seconds .
+
