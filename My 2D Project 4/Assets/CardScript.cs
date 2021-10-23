@@ -44,9 +44,6 @@ public class CardScript : MonoBehaviour
         
         Reposition(selectedCardObjects,47.0f,selectedYposition);
 
-        
-        Debug.Log(this.gameObject.GetComponent<GetValueSuit>().returnValue());
-
     }
 
     public void ClearSelection()
@@ -64,21 +61,64 @@ public class CardScript : MonoBehaviour
 
     public void PlayCards()
     {
+        // See what type of hand is on the table
+        List<int> tableCardValues = getCardValues(tableCardObjects);
+        List<int> selectedCardValues = getCardValues(selectedCardObjects);
+
+        string errorMessage = "";
+
+        // Debug.Log("Triple? " + isTriple(selectedCardValues));
+        // if (tableCardValues.Count == 1)
+        // {
+        //     // single card validation
+        // }
+        // else if (tableCardValues.Count == 2)
+        // {
+        //     // double card validation
+        // }
+        // else if (tableCardValues.Count == 3)
+        // {
+        //     // 
+        // }
+        //single - count = 1
+        //double - count = 2, same
+        //triple - count = 3, same
+        //quad - count = 4, same
+        //straight - count >= 3, consecutive, doesn't include 2
+        //straight of doubles - odds are consecutive, evens are consecutive, doesn't include 2
+        //4-4-Ace - values equal 4, 4, 14
+        //red10s - count = 2, same, value[0] = 10, suits = hearts and diamonds
+        //black10s - count = 2, same, value[0] = 10, suits = clubs and spades
+        //2joker - count = 2, same, value[0] = 16
+
+
+
+
+
+        // Validate that hand is that type or bomb
+
+        // Check values to see if higher
+
+
         // Validation of if selectedCardObjects is valid, with error if not
+
+
+
+
 
         // Validation of if selectedCardObjects beats tableCardObjects, with error if not
 
         // If hand is valid
-        foreach (GameObject card1 in tableCardObjects)
+        foreach (GameObject card in tableCardObjects)
         {
-            Destroy(card1);
+            Destroy(card);
         }
 
         Reposition(selectedCardObjects,-1.0f,92.0f);
 
-        foreach (GameObject card2 in selectedCardObjects)
+        foreach (GameObject card in selectedCardObjects)
         {
-            handsCS[0].Remove(card2);
+            handsCS[0].Remove(card);
         }
 
         tableCardObjects.Clear();
@@ -124,17 +164,86 @@ public class CardScript : MonoBehaviour
     }
 
     
-    // public List<int> getCardValues(List<GameObject> listOfCards)
-    // {
+    public List<int> getCardValues(List<GameObject> listOfCards)
+    {
+        
+        List<int> cardValues = new List<int>();
 
-        // Initialize a new list of integers
-        // use foreach loop to pull value from each gameobject in selectedCardObjects and add to new list 
+        foreach (GameObject card in listOfCards)
+        {
+            cardValues.Add(card.GetComponent<GetValueSuit>().returnValue());
+        }
 
-    // }
+        return cardValues;
+
+    }
 
     // write getCardSuits function
 
+    public bool isConsecutive(List<int> listOfCardValues)
+    {
+        bool result = false;
+        
+        for (int i = 0; i < listOfCardValues.Count - 1; i++)
+        {
+            if (listOfCardValues[i] + 1 != listOfCardValues[i+1])
+            {
+                break;
+            }
 
+            result = true;
+        }
+
+        return result;
+
+    }
+
+    public bool isAllSame(List<int> listOfCardValues)
+    {
+        if (listOfCardValues.Count == 1)
+        {
+            return true;
+        }
+
+        bool result = false;
+
+        for (int i = 0; i < listOfCardValues.Count - 1; i++)
+        {
+            if (listOfCardValues[i] != listOfCardValues[i+1])
+            {
+                break;
+            }
+
+            result = true;
+        }
+
+        return result;
+
+    }
+
+    public bool isTriple(List<int> listOfCardValues)
+    {
+        bool result = false;
+
+        if (listOfCardValues.Count == 3 && isAllSame(listOfCardValues) == true)
+        {
+            result = true;
+        }
+
+        return result;
+    }
+
+    public bool isQuad(List<int> listOfCardValues)
+    {
+        bool result = false;
+
+        if (listOfCardValues.Count == 4 && isAllSame(listOfCardValues) == true)
+        {
+            result = true;
+        }
+
+        return result;
+    }
 
 
     // void Update()
