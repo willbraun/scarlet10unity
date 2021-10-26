@@ -59,50 +59,15 @@ public class CardScript : MonoBehaviour
 
     }
 
-    public void PlayCards()
+    public void PlayCards() // Add inputs for tableCardObjects and selectedCardObjects
     {
-        // See what type of hand is on the table
-        List<int> tableCardValues = getCardValues(tableCardObjects);
-        List<int> selectedCardValues = getCardValues(selectedCardObjects);
+        
+        //characterize table card objects
+        //characterize selected card objects
+        string selectedType = characterize(selectedCardObjects);
+        Debug.Log(selectedType);
 
-        string errorMessage = "";
-
-        // Debug.Log("Triple? " + isTriple(selectedCardValues));
-        // if (tableCardValues.Count == 1)
-        // {
-        //     // single card validation
-        // }
-        // else if (tableCardValues.Count == 2)
-        // {
-        //     // double card validation
-        // }
-        // else if (tableCardValues.Count == 3)
-        // {
-        //     // 
-        // }
-        //single - count = 1
-        //double - count = 2, same
-        //triple - count = 3, same
-        //quad - count = 4, same
-        //straight - count >= 3, consecutive, doesn't include 2
-        //straight of doubles - odds are consecutive, evens are consecutive, doesn't include 2
-        //4-4-Ace - values equal 4, 4, 14
-        //red10s - count = 2, same, value[0] = 10, suits = hearts and diamonds
-        //black10s - count = 2, same, value[0] = 10, suits = clubs and spades
-        //2joker - count = 2, same, value[0] = 16
-
-
-
-
-
-        // Validate that hand is that type or bomb
-
-        // Check values to see if higher
-
-
-        // Validation of if selectedCardObjects is valid, with error if not
-
-
+        // pass "Error" message from characterize along as error for Play Cards, then skip code to play hand
 
 
 
@@ -163,7 +128,87 @@ public class CardScript : MonoBehaviour
 
     }
 
-    
+    public string characterize(List<GameObject> listOfCards)
+    {
+
+        List<int> theseCardValues = getCardValues(listOfCards);
+        List<string> theseCardSuits = getCardSuits(listOfCards);
+
+        string result = "";
+
+        if (listOfCards.Count == 1) 
+            {result = "single";}
+        else if (listOfCards.Count == 3 && 
+            theseCardValues[0] == 4 && 
+            theseCardValues[1] == 4 && 
+            theseCardValues[2] == 14)
+            {result = "4-4-Ace";}
+        else if (listOfCards.Count == 2 && 
+            theseCardValues[0] == 10 &&
+            isAllSame(theseCardValues) && 
+            theseCardSuits.Contains("diamonds") &&
+            theseCardSuits.Contains("hearts"))
+            {result = "red10s";}
+        else if (listOfCards.Count == 2 && 
+            theseCardValues[0] == 10 &&
+            isAllSame(theseCardValues) && 
+            theseCardSuits.Contains("clubs") &&
+            theseCardSuits.Contains("spades"))
+            {result = "black10s";}
+        else if (listOfCards.Count == 2 && 
+            theseCardValues[0] == 16 &&
+            isAllSame(theseCardValues)) 
+            {result = "doublejoker";}
+        else if (listOfCards.Count == 2 && isAllSame(theseCardValues)) 
+            {result = "double";}
+        else if (listOfCards.Count == 3 && isAllSame(theseCardValues))
+            {result = "triple";}
+        else if (listOfCards.Count == 4 && isAllSame(theseCardValues))
+            {result = "quad";}
+        else if (listOfCards.Count == 3 && isStraight(theseCardValues))
+            {result = "S3";}
+        else if (listOfCards.Count == 4 && isStraight(theseCardValues))
+            {result = "S4";}
+        else if (listOfCards.Count == 5 && isStraight(theseCardValues))
+            {result = "S5";}
+        else if (listOfCards.Count == 6 && isStraight(theseCardValues))
+            {result = "S6";}
+        else if (listOfCards.Count == 7 && isStraight(theseCardValues))
+            {result = "S7";}
+        else if (listOfCards.Count == 8 && isStraight(theseCardValues))
+            {result = "S8";}
+        else if (listOfCards.Count == 9 && isStraight(theseCardValues))
+            {result = "S9";}
+        else if (listOfCards.Count == 10 && isStraight(theseCardValues))
+            {result = "S10";}
+        else if (listOfCards.Count == 11 && isStraight(theseCardValues))
+            {result = "S11";}
+        else if (listOfCards.Count == 12 && isStraight(theseCardValues))
+            {result = "S12";}
+        else if (listOfCards.Count == 6 && isStraightOfDoubles(theseCardValues))
+            {result = "SD6";}
+        else if (listOfCards.Count == 8 && isStraightOfDoubles(theseCardValues))
+            {result = "SD8";}
+        else if (listOfCards.Count == 10 && isStraightOfDoubles(theseCardValues))
+            {result = "SD10";}
+        else if (listOfCards.Count == 12 && isStraightOfDoubles(theseCardValues))
+            {result = "SD12";}
+        else if (listOfCards.Count == 14 && isStraightOfDoubles(theseCardValues))
+            {result = "SD14";}
+        else if (listOfCards.Count == 16 && isStraightOfDoubles(theseCardValues))
+            {result = "SD16";}
+        else if (listOfCards.Count == 18 && isStraightOfDoubles(theseCardValues))
+            {result = "SD18";}
+
+        else
+        {
+            result = "Error: Invalid Hand";
+        }
+
+        return result;
+
+    }
+
     public List<int> getCardValues(List<GameObject> listOfCards)
     {
         
@@ -178,7 +223,19 @@ public class CardScript : MonoBehaviour
 
     }
 
-    // write getCardSuits function
+    public List<string> getCardSuits(List<GameObject> listOfCards)
+    {
+        
+        List<string> cardSuits = new List<string>();
+
+        foreach (GameObject card in listOfCards)
+        {
+            cardSuits.Add(card.GetComponent<GetValueSuit>().returnSuit());
+        }
+
+        return cardSuits;
+
+    }   
 
     public bool isConsecutive(List<int> listOfCardValues)
     {
@@ -221,28 +278,34 @@ public class CardScript : MonoBehaviour
 
     }
 
-    public bool isTriple(List<int> listOfCardValues)
+    public bool isStraight(List<int> listOfCardValues)
     {
-        bool result = false;
-
-        if (listOfCardValues.Count == 3 && isAllSame(listOfCardValues) == true)
-        {
-            result = true;
-        }
-
-        return result;
+        return isConsecutive(listOfCardValues) && !listOfCardValues.Contains(15) ? true : false;
     }
 
-    public bool isQuad(List<int> listOfCardValues)
+    public bool isStraightOfDoubles(List<int> listOfCardValues)
     {
-        bool result = false;
-
-        if (listOfCardValues.Count == 4 && isAllSame(listOfCardValues) == true)
+        if (listOfCardValues.Count < 6 || listOfCardValues.Count % 2 == 1)
         {
-            result = true;
+            return false;
         }
 
-        return result;
+        List<int> oddSDcards = new List<int>();
+        List<int> evenSDcards = new List<int>();
+
+        for (int i = 0; i < listOfCardValues.Count; i += 2)
+        {
+            oddSDcards.Add(listOfCardValues[i]);
+        }
+        for (int i = 1; i < listOfCardValues.Count; i += 2)
+        {
+            evenSDcards.Add(listOfCardValues[i]);
+        }
+
+        return isStraight(oddSDcards) && 
+               isStraight(evenSDcards) && 
+               oddSDcards[0] == evenSDcards[0]
+               ? true : false;
     }
 
 
