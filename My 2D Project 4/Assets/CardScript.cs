@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class CardScript : MonoBehaviour
 {
 
+    [SerializeField] private GameObject ErrorText; 
+
     // Dictionary of 'CardScript' objects and their position before moving
     public static Vector2 previousPosition;
     public static Dictionary<GameObject,Vector2> selectedCardPrevPos = new Dictionary<GameObject,Vector2>(); 
@@ -21,7 +23,35 @@ public class CardScript : MonoBehaviour
     public static float selectedYposition = -95.0f;
     public static List<List<GameObject>> handsCS = S10Controller2.hands;
 
-    //public GetValueSuit getValueSuitScript;
+    public static Dictionary<string,List<string>> typesThatBeatMe = new Dictionary<string,List<string>>()
+    {
+        {"empty",new List<string>() {"single","double","S3","S4","S5","S6","S7","S8","S9","S10","S11","S12","D6","D8","D10","D12","D14","D16","D18","triple","4-4-Ace","doublejoker","quad","red10s"}},
+        {"single",new List<string>() {"triple","4-4-Ace","doublejoker","quad","red10s"}},
+        {"double",new List<string>() {"triple","4-4-Ace","doublejoker","quad","red10s"}},
+        {"S3",new List<string>() {"triple","4-4-Ace","doublejoker","quad","red10s"}},
+        {"S4",new List<string>() {"triple","4-4-Ace","doublejoker","quad","red10s"}},
+        {"S5",new List<string>() {"triple","4-4-Ace","doublejoker","quad","red10s"}},
+        {"S6",new List<string>() {"triple","4-4-Ace","doublejoker","quad","red10s"}},
+        {"S7",new List<string>() {"triple","4-4-Ace","doublejoker","quad","red10s"}},
+        {"S8",new List<string>() {"triple","4-4-Ace","doublejoker","quad","red10s"}},
+        {"S9",new List<string>() {"triple","4-4-Ace","doublejoker","quad","red10s"}},
+        {"S10",new List<string>() {"triple","4-4-Ace","doublejoker","quad","red10s"}},
+        {"S11",new List<string>() {"triple","4-4-Ace","doublejoker","quad","red10s"}},
+        {"S12",new List<string>() {"triple","4-4-Ace","doublejoker","quad","red10s"}},
+        {"D6",new List<string>() {"quad","red10s"}},
+        {"D8",new List<string>() {"quad","red10s"}},
+        {"D10",new List<string>() {"quad","red10s"}},
+        {"D12",new List<string>() {"quad","red10s"}},
+        {"D14",new List<string>() {"quad","red10s"}},
+        {"D16",new List<string>() {"quad","red10s"}},
+        {"D18",new List<string>() {"quad","red10s"}},
+        {"triple",new List<string>() {"4-4-Ace","doublejoker","quad","red10s"}},
+        {"4-4-Ace",new List<string>() {"doublejoker","quad","red10s"}},
+        {"doublejoker",new List<string>() {"quad","red10s"}},
+        {"quad",new List<string>() {"red10s"}},
+        {"red10s",new List<string>() {"black10sONred10s"}},
+        {"black10sONred10s",new List<string>() {"4-4-Ace","quad"}},
+    };
 
     void OnMouseDown()
     {
@@ -59,42 +89,6 @@ public class CardScript : MonoBehaviour
 
     }
 
-    public void PlayCards() // Add inputs for tableCardObjects and selectedCardObjects
-    {
-        
-        //characterize table card objects
-        //characterize selected card objects
-        string selectedType = characterize(selectedCardObjects);
-        Debug.Log(selectedType);
-
-        // pass "Error" message from characterize along as error for Play Cards, then skip code to play hand
-
-
-
-        // Validation of if selectedCardObjects beats tableCardObjects, with error if not
-
-        // If hand is valid
-        foreach (GameObject card in tableCardObjects)
-        {
-            Destroy(card);
-        }
-
-        Reposition(selectedCardObjects,-1.0f,92.0f);
-
-        foreach (GameObject card in selectedCardObjects)
-        {
-            handsCS[0].Remove(card);
-        }
-
-        tableCardObjects.Clear();
-        tableCardObjects.AddRange(selectedCardObjects);
-        selectedCardPrevPos.Clear();
-        selectedCardObjects.Clear();
-
-        Reposition(handsCS[0],47.0f,-205.0f);
-
-    }
-
     public void Reposition(List<GameObject> listOfCards, float increment, float yposition)
     {
         
@@ -128,6 +122,80 @@ public class CardScript : MonoBehaviour
 
     }
 
+    public void PlayCards() // Add inputs for tableCardObjects and selectedCardObjects
+    {
+        
+        string comparisonResult = compare(selectedCardObjects,tableCardObjects);
+        Debug.Log(comparisonResult);
+
+        // Validation of if selectedCardObjects beats tableCardObjects, with error if not
+
+        // If hand is valid
+        foreach (GameObject card in tableCardObjects)
+        {
+            Destroy(card);
+        }
+
+        Reposition(selectedCardObjects,-1.0f,92.0f);
+
+        foreach (GameObject card in selectedCardObjects)
+        {
+            handsCS[0].Remove(card);
+        }
+
+        tableCardObjects.Clear();
+        tableCardObjects.AddRange(selectedCardObjects);
+        selectedCardPrevPos.Clear();
+        selectedCardObjects.Clear();
+
+        Reposition(handsCS[0],47.0f,-205.0f);
+
+    }
+
+    public string compare(List<GameObject> playedCards,List<GameObject> tableCards)
+    {
+        string playedType = characterize(playedCards);
+        string tableType = characterize(tableCards);
+        List<int> playedCardValues = getCardValues(playedCards);
+        List<int> tableCardValues = getCardValues(tableCards);
+
+        Debug.Log(playedType);
+        Debug.Log(tableType);
+        Debug.Log(playedType == tableType);
+
+        if (playedType == "Invalid")
+        {
+            return "Invalid Hand";
+        }
+
+        if (playedType == "empty")
+        {
+            return "No cards selected";
+        }
+
+        playedType = (playedType == "black10s" && tableType == "red10s") ? "black10sONred10s" : "double";
+
+        if (playedType == tableType)
+        {
+            Debug.Log("hi");
+            return (playedCardValues[0] > tableCardValues[0]) ? "win" : "lose";
+        }
+
+        if (typesThatBeatMe[tableType].Contains(playedType))
+        {
+            return "win";
+        }
+        else if (typesThatBeatMe[playedType].Contains(tableType))
+        {
+            return "lose";
+        }
+        else
+        {
+            return "Incompatible Hand";
+        }
+
+    }
+
     public string characterize(List<GameObject> listOfCards)
     {
 
@@ -136,8 +204,8 @@ public class CardScript : MonoBehaviour
 
         string result = "";
 
-        if (listOfCards.Count == 1) 
-            {result = "single";}
+        if (listOfCards.Count == 0) 
+            {result = "empty";}
         else if (listOfCards.Count == 3 && 
             theseCardValues[0] == 4 && 
             theseCardValues[1] == 4 && 
@@ -159,6 +227,8 @@ public class CardScript : MonoBehaviour
             theseCardValues[0] == 16 &&
             isAllSame(theseCardValues)) 
             {result = "doublejoker";}
+        else if (listOfCards.Count == 1) 
+            {result = "single";}
         else if (listOfCards.Count == 2 && isAllSame(theseCardValues)) 
             {result = "double";}
         else if (listOfCards.Count == 3 && isAllSame(theseCardValues))
@@ -186,23 +256,23 @@ public class CardScript : MonoBehaviour
         else if (listOfCards.Count == 12 && isStraight(theseCardValues))
             {result = "S12";}
         else if (listOfCards.Count == 6 && isStraightOfDoubles(theseCardValues))
-            {result = "SD6";}
+            {result = "D6";}
         else if (listOfCards.Count == 8 && isStraightOfDoubles(theseCardValues))
-            {result = "SD8";}
+            {result = "D8";}
         else if (listOfCards.Count == 10 && isStraightOfDoubles(theseCardValues))
-            {result = "SD10";}
+            {result = "D10";}
         else if (listOfCards.Count == 12 && isStraightOfDoubles(theseCardValues))
-            {result = "SD12";}
+            {result = "D12";}
         else if (listOfCards.Count == 14 && isStraightOfDoubles(theseCardValues))
-            {result = "SD14";}
+            {result = "D14";}
         else if (listOfCards.Count == 16 && isStraightOfDoubles(theseCardValues))
-            {result = "SD16";}
+            {result = "D16";}
         else if (listOfCards.Count == 18 && isStraightOfDoubles(theseCardValues))
-            {result = "SD18";}
+            {result = "D18";}
 
         else
         {
-            result = "Error: Invalid Hand";
+            result = "Invalid";
         }
 
         return result;
@@ -280,7 +350,7 @@ public class CardScript : MonoBehaviour
 
     public bool isStraight(List<int> listOfCardValues)
     {
-        return isConsecutive(listOfCardValues) && !listOfCardValues.Contains(15) ? true : false;
+        return isConsecutive(listOfCardValues) && !listOfCardValues.Contains(15);
     }
 
     public bool isStraightOfDoubles(List<int> listOfCardValues)
@@ -304,9 +374,9 @@ public class CardScript : MonoBehaviour
 
         return isStraight(oddSDcards) && 
                isStraight(evenSDcards) && 
-               oddSDcards[0] == evenSDcards[0]
-               ? true : false;
+               oddSDcards[0] == evenSDcards[0];
     }
+
 
 
     // void Update()
