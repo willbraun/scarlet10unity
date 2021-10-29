@@ -50,8 +50,11 @@ public class CardScript : MonoBehaviour
         {"doublejoker",new List<string>() {"quad","red10s"}},
         {"quad",new List<string>() {"red10s"}},
         {"red10s",new List<string>() {"black10sONred10s"}},
-        {"black10sONred10s",new List<string>() {"4-4-Ace","quad"}},
+        {"black10sONred10s",new List<string>() {"4-4-Ace","quad"}}
     };
+
+    public static string tableType = "empty";
+    public static string playedType = "empty";
 
     void OnMouseDown()
     {
@@ -143,6 +146,7 @@ public class CardScript : MonoBehaviour
             handsCS[0].Remove(card);
         }
 
+        tableType = playedType;
         tableCardObjects.Clear();
         tableCardObjects.AddRange(selectedCardObjects);
         selectedCardPrevPos.Clear();
@@ -154,14 +158,9 @@ public class CardScript : MonoBehaviour
 
     public string compare(List<GameObject> playedCards,List<GameObject> tableCards)
     {
-        string playedType = characterize(playedCards);
-        string tableType = characterize(tableCards);
+        playedType = characterize(playedCards);
         List<int> playedCardValues = getCardValues(playedCards);
         List<int> tableCardValues = getCardValues(tableCards);
-
-        Debug.Log(playedType);
-        Debug.Log(tableType);
-        Debug.Log(playedType == tableType);
 
         if (playedType == "Invalid")
         {
@@ -173,15 +172,34 @@ public class CardScript : MonoBehaviour
             return "No cards selected";
         }
 
-        playedType = (playedType == "black10s" && tableType == "red10s") ? "black10sONred10s" : "double";
+        if (playedType == "black10s")
+        {
+            if (tableType == "red10s")
+            {
+                playedType = "black10sONred10s";
+            }
+            else
+            {
+                playedType = "double";
+            }
+        }
+
+        Debug.Log(playedType);
+        Debug.Log(tableType);
+        Debug.Log(playedType == tableType);
 
         if (playedType == tableType)
         {
-            Debug.Log("hi");
-            return (playedCardValues[0] > tableCardValues[0]) ? "win" : "lose";
+            if (playedCardValues[0] > tableCardValues[0])
+            {
+                return "win";
+            }
+            else
+            {
+                return "lose";
+            }
         }
-
-        if (typesThatBeatMe[tableType].Contains(playedType))
+        else if (typesThatBeatMe[tableType].Contains(playedType))
         {
             return "win";
         }
