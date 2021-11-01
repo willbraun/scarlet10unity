@@ -129,30 +129,36 @@ public class CardScript : MonoBehaviour
     {
         
         string comparisonResult = compare(selectedCardObjects,tableCardObjects);
-        Debug.Log(comparisonResult);
 
-        // Validation of if selectedCardObjects beats tableCardObjects, with error if not
-
-        // If hand is valid
-        foreach (GameObject card in tableCardObjects)
+        if (comparisonResult == "win")
         {
-            Destroy(card);
+            foreach (GameObject card in tableCardObjects)
+            {
+                Destroy(card);
+            }
+
+            foreach (GameObject card in selectedCardObjects)
+            {
+                handsCS[0].Remove(card);
+                Destroy(card.GetComponent<Collider2D>());
+            }
+
+            Reposition(selectedCardObjects,-1.0f,92.0f);
+            Reposition(handsCS[0],47.0f,-205.0f); 
+
+            tableType = playedType;
+            tableCardObjects.Clear();
+            tableCardObjects.AddRange(selectedCardObjects);
+            selectedCardPrevPos.Clear();
+            selectedCardObjects.Clear();
+            displayError("");
+                       
+        }
+        else
+        {
+            displayError(comparisonResult);
         }
 
-        Reposition(selectedCardObjects,-1.0f,92.0f);
-
-        foreach (GameObject card in selectedCardObjects)
-        {
-            handsCS[0].Remove(card);
-        }
-
-        tableType = playedType;
-        tableCardObjects.Clear();
-        tableCardObjects.AddRange(selectedCardObjects);
-        selectedCardPrevPos.Clear();
-        selectedCardObjects.Clear();
-
-        Reposition(handsCS[0],47.0f,-205.0f);
 
     }
 
@@ -164,7 +170,7 @@ public class CardScript : MonoBehaviour
 
         if (playedType == "Invalid")
         {
-            return "Invalid Hand";
+            return "Invalid hand";
         }
 
         if (playedType == "empty")
@@ -184,10 +190,6 @@ public class CardScript : MonoBehaviour
             }
         }
 
-        Debug.Log(playedType);
-        Debug.Log(tableType);
-        Debug.Log(playedType == tableType);
-
         if (playedType == tableType)
         {
             if (playedCardValues[0] > tableCardValues[0])
@@ -196,7 +198,7 @@ public class CardScript : MonoBehaviour
             }
             else
             {
-                return "lose";
+                return "Not strong enough";
             }
         }
         else if (typesThatBeatMe[tableType].Contains(playedType))
@@ -205,11 +207,11 @@ public class CardScript : MonoBehaviour
         }
         else if (typesThatBeatMe[playedType].Contains(tableType))
         {
-            return "lose";
+            return "Not strong enough";
         }
         else
         {
-            return "Incompatible Hand";
+            return "Incompatible hand";
         }
 
     }
@@ -395,6 +397,10 @@ public class CardScript : MonoBehaviour
                oddSDcards[0] == evenSDcards[0];
     }
 
+    public void displayError(string message)
+    {
+        ErrorText.GetComponent<UnityEngine.UI.Text>().text = message;
+    }
 
 
     // void Update()
