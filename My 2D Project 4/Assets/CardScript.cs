@@ -402,6 +402,48 @@ public class CardScript : MonoBehaviour
         ErrorText.GetComponent<UnityEngine.UI.Text>().text = message;
     }
 
+    // printcombos(new int[3]{3,4,5},0);
+
+    // public static void printcombos(int[] combo, int k) 
+    // {
+
+    //     // print each index that stores a nonzero value?
+    //     foreach (int num in combo)
+    //     {
+
+    //         //Debug.Log(num+" "+k+" "+combo.Length);
+
+    //     }
+
+    //     // Determine the smallest item that can go in slot k.
+    //     int start = 0;
+    //     if (k > 0) 
+    //     {
+    //         start = combo[k-1] + 1;
+    //     }
+    //     // Same as odometer, except a different start value.
+    //     for (int i = start; i < combo.Length; i++) 
+    //     {
+    //     combo[k] = i;
+    //     printcombos(combo, k+1);
+    //     }
+    // }
+
+
+    // public static void odometer(int[] digits, int numDigits, int k) 
+    // {
+    //     if (k == digits.Length) 
+    //     {
+    //         Debug.Log(digits);
+    //         return;
+    //     }
+    //     for (int i = 0; i < numDigits; i++) 
+    //     {
+    //         digits[k] = i;
+    //         odometer(digits, k+1, k);
+    //     }
+    // }
+
 
     // void Update()
     // {
