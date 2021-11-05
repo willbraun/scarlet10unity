@@ -23,6 +23,11 @@ public class CardScript : MonoBehaviour
     public static float selectedYposition = -95.0f;
     public static List<List<GameObject>> handsCS = S10Controller2.hands;
 
+    public static GameObject[] temporaryComboArray = new GameObject[18];
+    public static List<GameObject> temporaryCombo = new List<GameObject>();
+    public static List<List<GameObject>> comboList = new List<List<GameObject>>();
+    public static int numberOfCombos = 0;
+
     public static Dictionary<string,List<string>> typesThatBeatMe = new Dictionary<string,List<string>>()
     {
         {"empty",new List<string>() {"single","double","S3","S4","S5","S6","S7","S8","S9","S10","S11","S12","D6","D8","D10","D12","D14","D16","D18","triple","4-4-Ace","doublejoker","quad","red10s"}},
@@ -400,6 +405,71 @@ public class CardScript : MonoBehaviour
     public void displayError(string message)
     {
         ErrorText.GetComponent<UnityEngine.UI.Text>().text = message;
+    }
+
+    public void getLegalHands(List<GameObject> listOfCards, int k)
+    {
+        // K should start at 0, the position in the list of cards. 
+        // For each K, either change temporaryCardArray[k] to null (i=0) or listOfCards[k] (i=1)
+        // Call the function again for the next item in the list and repeat
+        // the function will stop once k reaches the max, then go back through each combination
+
+        if (k == listOfCards.Count)
+        {   
+            temporaryCombo.Clear();
+            temporaryCombo.AddRange(temporaryComboArray);
+            temporaryCombo.RemoveAll(x => x == null);
+
+            if (compare(temporaryCombo,tableCardObjects) == "win")
+            {
+                comboList.Add(temporaryCombo);
+                Debug.Log(intlist2string(getCardValues(temporaryCombo)));
+            }
+
+
+
+            // foreach (List<GameObject> L in comboList)
+            // {
+            //     Debug.Log(intlist2string(getCardValues(L)));
+            // }
+
+            // Debug.Log(intlist2string(getCardValues(temporaryCombo)));
+
+            // foreach (GameObject card in temporaryComboArray )
+            // {
+            //     if (card != null)
+            //     {
+            //         Debug.Log(card.GetComponent<GetValueSuit>().returnValue()+" Combo Number:"+numberOfCombos+" Index:"+Array.IndexOf(temporaryComboArray, card)+" k="+k);
+            //     }
+                    
+            // }
+
+            // numberOfCombos++;
+
+            return;
+        }
+
+        for (int i = 0; i < 2; i++)
+        {
+            temporaryComboArray[k] = (i == 1 ? listOfCards[k] : null);
+            getLegalHands(listOfCards,k+1);
+        }
+
+    }
+    
+    public void testGetLegalHands()
+    {
+        getLegalHands(selectedCardObjects, 0);
+    }
+
+    public string intlist2string(List<int> listOfIntegers)
+    {
+        string result = "";
+        foreach(int num in listOfIntegers)
+        {
+            result += (num.ToString() + " ");
+        }
+        return result;
     }
 
     // printcombos(new int[3]{3,4,5},0);
