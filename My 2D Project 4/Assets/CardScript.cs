@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public class CardScript : MonoBehaviour
 {
@@ -13,11 +14,12 @@ public class CardScript : MonoBehaviour
     public static Vector2 previousPosition;
     public static Dictionary<GameObject,Vector2> selectedCardPrevPos = new Dictionary<GameObject,Vector2>(); 
 
-    // List of selected cards for positioning
-    public static List<GameObject> selectedCardObjects = new List<GameObject>();
-
-    // List of cards on table
+    // Lists of cards
     public static List<GameObject> tableCardObjects = new List<GameObject>();
+    public static List<GameObject> selectedCardObjects = new List<GameObject>();
+    public static List<GameObject> player2CardObjects = new List<GameObject>();
+    public static List<GameObject> player3CardObjects = new List<GameObject>();
+    public static List<GameObject> player4CardObjects = new List<GameObject>();    
 
     public static char[] sortArray = new char[15] {'3','4','5','6','7','8','9','1','J','Q','K','A','2','B','R'};
     public static float selectedYposition = -95.0f;
@@ -157,7 +159,17 @@ public class CardScript : MonoBehaviour
             selectedCardPrevPos.Clear();
             selectedCardObjects.Clear();
             displayError("");
-                       
+                  
+            // Wait for 5 seconds
+
+            getLegalHands(handsCS[1], 0);
+            var rand = new System.Random();
+            player2CardObjects = comboList[rand.Next(comboList.Count)];
+            Reposition(player2CardObjects,-1.0f,92.0f);
+            // reset comboList, temporarycomboarray, temporarycombo
+
+            // turn repeatable computer player moves into a loop
+
         }
         else
         {
@@ -334,43 +346,29 @@ public class CardScript : MonoBehaviour
 
     public bool isConsecutive(List<int> listOfCardValues)
     {
-        bool result = false;
-        
         for (int i = 0; i < listOfCardValues.Count - 1; i++)
         {
             if (listOfCardValues[i] + 1 != listOfCardValues[i+1])
             {
-                break;
+                return false;
             }
-
-            result = true;
         }
 
-        return result;
+        return true;
 
     }
 
     public bool isAllSame(List<int> listOfCardValues)
     {
-        if (listOfCardValues.Count == 1)
-        {
-            return true;
-        }
-
-        bool result = false;
-
         for (int i = 0; i < listOfCardValues.Count - 1; i++)
         {
             if (listOfCardValues[i] != listOfCardValues[i+1])
             {
-                break;
+                return false;
             }
-
-            result = true;
         }
 
-        return result;
-
+        return true;
     }
 
     public bool isStraight(List<int> listOfCardValues)
@@ -422,29 +420,9 @@ public class CardScript : MonoBehaviour
 
             if (compare(temporaryCombo,tableCardObjects) == "win")
             {
-                comboList.Add(temporaryCombo);
-                Debug.Log(intlist2string(getCardValues(temporaryCombo)));
+                comboList.Add(new List<GameObject>());
+                comboList[comboList.Count-1].AddRange(temporaryCombo);
             }
-
-
-
-            // foreach (List<GameObject> L in comboList)
-            // {
-            //     Debug.Log(intlist2string(getCardValues(L)));
-            // }
-
-            // Debug.Log(intlist2string(getCardValues(temporaryCombo)));
-
-            // foreach (GameObject card in temporaryComboArray )
-            // {
-            //     if (card != null)
-            //     {
-            //         Debug.Log(card.GetComponent<GetValueSuit>().returnValue()+" Combo Number:"+numberOfCombos+" Index:"+Array.IndexOf(temporaryComboArray, card)+" k="+k);
-            //     }
-                    
-            // }
-
-            // numberOfCombos++;
 
             return;
         }
@@ -457,9 +435,10 @@ public class CardScript : MonoBehaviour
 
     }
     
-    public void testGetLegalHands()
+    public void testMethod()
     {
-        getLegalHands(selectedCardObjects, 0);
+        getLegalHands(handsCS[1], 0);
+
     }
 
     public string intlist2string(List<int> listOfIntegers)
@@ -471,6 +450,30 @@ public class CardScript : MonoBehaviour
         }
         return result;
     }
+
+
+    // foreach(List<GameObject> play in comboList)
+    // {
+    //     Debug.Log(intlist2string(getCardValues(play)));
+    // }
+
+    // foreach (List<GameObject> L in comboList)
+    // {
+    //     Debug.Log(intlist2string(getCardValues(L)));
+    // }
+
+    // Debug.Log(intlist2string(getCardValues(temporaryCombo)));
+
+    // foreach (GameObject card in temporaryComboArray )
+    // {
+    //     if (card != null)
+    //     {
+    //         Debug.Log(card.GetComponent<GetValueSuit>().returnValue()+" Combo Number:"+numberOfCombos+" Index:"+Array.IndexOf(temporaryComboArray, card)+" k="+k);
+    //     }
+            
+    // }
+
+    // numberOfCombos++;    
 
     // printcombos(new int[3]{3,4,5},0);
 

@@ -2993,7 +2993,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1456076308}
         m_TargetAssemblyTypeName: CardScript, Assembly-CSharp
-        m_MethodName: testGetLegalHands
+        m_MethodName: testMethod
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
