@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 public class CardScript : MonoBehaviour
 {
 
-    [SerializeField] private static GameObject ErrorText; 
-
     // Dictionary of 'CardScript' objects and their position before moving
     public static Vector2 previousPosition;
     public static Dictionary<GameObject,Vector2> selectedCardPrevPos = new Dictionary<GameObject,Vector2>(); 
@@ -62,7 +60,7 @@ public class CardScript : MonoBehaviour
         public int seat { get; set; }
     }
 
-    public static player player1 = new player(){seat = 1};
+    public static player player1 = new player(){cards = handsCS[0],seat = 1};
     //public static player player2 = new player(){cards = handsCS[1],legalHands = getLegalHands(handsCS[1]),seat = 2};
     //public static player player3 = new player(){cards = handsCS[2],legalHands = getLegalHands(handsCS[2]),seat = 3};
     //public static player player4 = new player(){cards = handsCS[3],legalHands = getLegalHands(handsCS[3]),seat = 4};
@@ -416,7 +414,7 @@ public class CardScript : MonoBehaviour
 
     public static void displayError(string message)
     {
-        ErrorText.GetComponent<UnityEngine.UI.Text>().text = message;
+        GameObject.Find("ErrorText").GetComponent<UnityEngine.UI.Text>().text = message;
     }
 
     public static List<List<GameObject>> getLegalHands(List<GameObject> listOfCards)
@@ -464,7 +462,7 @@ public class CardScript : MonoBehaviour
     public static void testMethod()
     {
 
-        Debug.Log(S10Controller2.hands[0][0].GetType());
+        Debug.Log(intlist2string(getCardValues(handsCS[0])));
         //PlayCardsComputer(player1);
 
     }
