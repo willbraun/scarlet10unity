@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 public class CardScript : MonoBehaviour
 {
 
-    [SerializeField] private GameObject ErrorText; 
+    [SerializeField] private static GameObject ErrorText; 
 
     // Dictionary of 'CardScript' objects and their position before moving
     public static Vector2 previousPosition;
@@ -16,19 +16,11 @@ public class CardScript : MonoBehaviour
 
     // Lists of cards
     public static List<GameObject> tableCardObjects = new List<GameObject>();
-    public static List<GameObject> selectedCardObjects = new List<GameObject>();
-    public static List<GameObject> player2CardObjects = new List<GameObject>();
-    public static List<GameObject> player3CardObjects = new List<GameObject>();
-    public static List<GameObject> player4CardObjects = new List<GameObject>();    
+    public static List<GameObject> selectedCardObjects = new List<GameObject>();   
 
     public static char[] sortArray = new char[15] {'3','4','5','6','7','8','9','1','J','Q','K','A','2','B','R'};
     public static float selectedYposition = -95.0f;
     public static List<List<GameObject>> handsCS = S10Controller2.hands;
-
-    public static GameObject[] temporaryComboArray = new GameObject[18];
-    public static List<GameObject> temporaryCombo = new List<GameObject>();
-    public static List<List<GameObject>> comboList = new List<List<GameObject>>();
-    public static int numberOfCombos = 0;
 
     public static Dictionary<string,List<string>> typesThatBeatMe = new Dictionary<string,List<string>>()
     {
@@ -63,6 +55,21 @@ public class CardScript : MonoBehaviour
     public static string tableType = "empty";
     public static string playedType = "empty";
 
+    public class player 
+    {
+        public List<GameObject> cards { get; set; }
+        public List<List<GameObject>> legalHands { get; set; }
+        public int seat { get; set; }
+    }
+
+    public static player player1 = new player(){seat = 1};
+    //public static player player2 = new player(){cards = handsCS[1],legalHands = getLegalHands(handsCS[1]),seat = 2};
+    //public static player player3 = new player(){cards = handsCS[2],legalHands = getLegalHands(handsCS[2]),seat = 3};
+    //public static player player4 = new player(){cards = handsCS[3],legalHands = getLegalHands(handsCS[3]),seat = 4};
+
+
+    //public static int playerTurn = 1;
+
     void OnMouseDown()
     {
         // "this" refers to the CardScript object
@@ -86,7 +93,7 @@ public class CardScript : MonoBehaviour
 
     }
 
-    public void ClearSelection()
+    public static void ClearSelection()
     {
 
         foreach (KeyValuePair<GameObject,Vector2> entry in selectedCardPrevPos)
@@ -99,7 +106,7 @@ public class CardScript : MonoBehaviour
 
     }
 
-    public void Reposition(List<GameObject> listOfCards, float increment, float yposition)
+    public static void Reposition(List<GameObject> listOfCards, float increment, float yposition)
     {
         
         char[] sortArray = new char[15] {'3','4','5','6','7','8','9','1','J','Q','K','A','2','B','R'};
@@ -132,7 +139,7 @@ public class CardScript : MonoBehaviour
 
     }
 
-    public void PlayCards() // Add inputs for tableCardObjects and selectedCardObjects
+    public static void PlayCards() // Add inputs for tableCardObjects and selectedCardObjects
     {
         
         string comparisonResult = compare(selectedCardObjects,tableCardObjects);
@@ -162,10 +169,10 @@ public class CardScript : MonoBehaviour
                   
             // Wait for 5 seconds
 
-            getLegalHands(handsCS[1], 0);
-            var rand = new System.Random();
-            player2CardObjects = comboList[rand.Next(comboList.Count)];
-            Reposition(player2CardObjects,-1.0f,92.0f);
+            // getLegalHands(handsCS[1], 0);
+            // var rand = new System.Random();
+            // player2CardObjects = comboList[rand.Next(comboList.Count)];
+            // Reposition(player2CardObjects,-1.0f,92.0f);
             // reset comboList, temporarycomboarray, temporarycombo
 
             // turn repeatable computer player moves into a loop
@@ -179,7 +186,14 @@ public class CardScript : MonoBehaviour
 
     }
 
-    public string compare(List<GameObject> playedCards,List<GameObject> tableCards)
+    public static void PlayCardsComputer(player thisPlayer)
+    {
+        System.Threading.Thread.Sleep(2000);
+        var rand = new System.Random();
+        Reposition(thisPlayer.legalHands[rand.Next(thisPlayer.legalHands.Count)],-1.0f,92.0f);
+    }
+
+    public static string compare(List<GameObject> playedCards,List<GameObject> tableCards)
     {
         playedType = characterize(playedCards);
         List<int> playedCardValues = getCardValues(playedCards);
@@ -233,7 +247,7 @@ public class CardScript : MonoBehaviour
 
     }
 
-    public string characterize(List<GameObject> listOfCards)
+    public static string characterize(List<GameObject> listOfCards)
     {
 
         List<int> theseCardValues = getCardValues(listOfCards);
@@ -316,7 +330,7 @@ public class CardScript : MonoBehaviour
 
     }
 
-    public List<int> getCardValues(List<GameObject> listOfCards)
+    public static List<int> getCardValues(List<GameObject> listOfCards)
     {
         
         List<int> cardValues = new List<int>();
@@ -330,7 +344,7 @@ public class CardScript : MonoBehaviour
 
     }
 
-    public List<string> getCardSuits(List<GameObject> listOfCards)
+    public static List<string> getCardSuits(List<GameObject> listOfCards)
     {
         
         List<string> cardSuits = new List<string>();
@@ -344,7 +358,7 @@ public class CardScript : MonoBehaviour
 
     }   
 
-    public bool isConsecutive(List<int> listOfCardValues)
+    public static bool isConsecutive(List<int> listOfCardValues)
     {
         for (int i = 0; i < listOfCardValues.Count - 1; i++)
         {
@@ -358,7 +372,7 @@ public class CardScript : MonoBehaviour
 
     }
 
-    public bool isAllSame(List<int> listOfCardValues)
+    public static bool isAllSame(List<int> listOfCardValues)
     {
         for (int i = 0; i < listOfCardValues.Count - 1; i++)
         {
@@ -371,12 +385,12 @@ public class CardScript : MonoBehaviour
         return true;
     }
 
-    public bool isStraight(List<int> listOfCardValues)
+    public static bool isStraight(List<int> listOfCardValues)
     {
         return isConsecutive(listOfCardValues) && !listOfCardValues.Contains(15);
     }
 
-    public bool isStraightOfDoubles(List<int> listOfCardValues)
+    public static bool isStraightOfDoubles(List<int> listOfCardValues)
     {
         if (listOfCardValues.Count < 6 || listOfCardValues.Count % 2 == 1)
         {
@@ -400,48 +414,62 @@ public class CardScript : MonoBehaviour
                oddSDcards[0] == evenSDcards[0];
     }
 
-    public void displayError(string message)
+    public static void displayError(string message)
     {
         ErrorText.GetComponent<UnityEngine.UI.Text>().text = message;
     }
 
-    public void getLegalHands(List<GameObject> listOfCards, int k)
+    public static List<List<GameObject>> getLegalHands(List<GameObject> listOfCards)
     {
-        // K should start at 0, the position in the list of cards. 
-        // For each K, either change temporaryCardArray[k] to null (i=0) or listOfCards[k] (i=1)
-        // Call the function again for the next item in the list and repeat
-        // the function will stop once k reaches the max, then go back through each combination
 
-        if (k == listOfCards.Count)
-        {   
-            temporaryCombo.Clear();
-            temporaryCombo.AddRange(temporaryComboArray);
-            temporaryCombo.RemoveAll(x => x == null);
+        GameObject[] temporaryComboArray = new GameObject[18];
+        List<GameObject> temporaryCombo = new List<GameObject>();
+        List<List<GameObject>> comboList = new List<List<GameObject>>();
 
-            if (compare(temporaryCombo,tableCardObjects) == "win")
-            {
-                comboList.Add(new List<GameObject>());
-                comboList[comboList.Count-1].AddRange(temporaryCombo);
+        void getLegalHandsInner(List<GameObject> listOfCardsInner, int k)
+        {
+            // K should start at 0, the position in the list of cards. 
+            // For each K, either change temporaryCardArray[k] to null (i=0) or listOfCardsInner[k] (i=1)
+            // Call the function again for the next item in the list and repeat
+            // the function will stop once k reaches the max, then go back through each combination
+
+            if (k == listOfCardsInner.Count)
+            {   
+                temporaryCombo.Clear();
+                temporaryCombo.AddRange(temporaryComboArray);
+                temporaryCombo.RemoveAll(x => x == null);
+
+                if (compare(temporaryCombo,tableCardObjects) == "win")
+                {
+                    comboList.Add(new List<GameObject>());
+                    comboList[comboList.Count-1].AddRange(temporaryCombo);
+                }
+
+                return;
             }
 
-            return;
+            for (int i = 0; i < 2; i++)
+            {
+                temporaryComboArray[k] = (i == 1 ? listOfCardsInner[k] : null);
+                getLegalHandsInner(listOfCardsInner,k+1);
+            }
+
         }
 
-        for (int i = 0; i < 2; i++)
-        {
-            temporaryComboArray[k] = (i == 1 ? listOfCards[k] : null);
-            getLegalHands(listOfCards,k+1);
-        }
+        getLegalHandsInner(listOfCards,0);
+        return comboList;
 
     }
     
-    public void testMethod()
+    public static void testMethod()
     {
-        getLegalHands(handsCS[1], 0);
+
+        Debug.Log(S10Controller2.hands[0][0].GetType());
+        //PlayCardsComputer(player1);
 
     }
 
-    public string intlist2string(List<int> listOfIntegers)
+    public static string intlist2string(List<int> listOfIntegers)
     {
         string result = "";
         foreach(int num in listOfIntegers)
@@ -451,15 +479,14 @@ public class CardScript : MonoBehaviour
         return result;
     }
 
+        // foreach(List<GameObject> play in getLegalHands(handsCS[1]))
+        // {
+        //     Debug.Log(intlist2string(getCardValues(play)));
+        // }    
 
     // foreach(List<GameObject> play in comboList)
     // {
     //     Debug.Log(intlist2string(getCardValues(play)));
-    // }
-
-    // foreach (List<GameObject> L in comboList)
-    // {
-    //     Debug.Log(intlist2string(getCardValues(L)));
     // }
 
     // Debug.Log(intlist2string(getCardValues(temporaryCombo)));
