@@ -55,12 +55,46 @@ public class CardScript : MonoBehaviour
 
     public class player 
     {
-        public List<GameObject> cards { get; set; }
-        public List<List<GameObject>> legalHands { get; set; }
-        public int seat { get; set; }
+
+        // private List<GameObject> cards;
+        // public List<GameObject> Cards
+        // {
+        //     get{return cards;}
+        //     set{cards = value;}
+        // }
+        // private List<List<GameObject>> legalHands;
+        // public List<List<GameObject>> LegalHands
+        // {
+        //     get{return legalHands;}
+        //     set{legalHands = value;}
+        // }
+        // private int seat;
+        // public int Seat
+        // {
+        //     get{return seat;}
+        //     set{seat = value;}
+        // }    
+        
+        public List<GameObject> cards;
+        public List<List<GameObject>> legalHands;
+        public int seat;
+
+        public player(List<GameObject> someCards)//, List<List<GameObject>> someLegalHands, int someSeat)
+        {
+            cards = new List<GameObject>();
+            cards.AddRange(someCards);
+            // this.legalHands = someLegalHands;
+            // this.seat = someSeat;
+        }
     }
 
-    public static player player1 = new player(){cards = handsCS[0],seat = 1};
+    // public static List<GameObject> test = handsCS[0];
+    public static player player1 = new player(handsCS[0]);//,getLegalHands(handsCS[0]),1);
+    //player1.Player(handsCS[0],getLegalHands(handsCS[0]),1);
+    // Type p1type = typeof(player1);
+    // PropertyInfo pinfo = p1type.GetProperty("Seat");
+    // pinfo.SetValue(player1,1);
+
     //public static player player2 = new player(){cards = handsCS[1],legalHands = getLegalHands(handsCS[1]),seat = 2};
     //public static player player3 = new player(){cards = handsCS[2],legalHands = getLegalHands(handsCS[2]),seat = 3};
     //public static player player4 = new player(){cards = handsCS[3],legalHands = getLegalHands(handsCS[3]),seat = 4};
