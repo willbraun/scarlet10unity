@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public class S10Controller2 : MonoBehaviour
 {
@@ -14,6 +15,23 @@ public class S10Controller2 : MonoBehaviour
 
     public static List<List<GameObject>> hands = new List<List<GameObject>>();
     public static char[] sortArray = new char[15] {'3','4','5','6','7','8','9','1','J','Q','K','A','2','B','R'};
+
+    public class player 
+    {  
+        public List<GameObject> cards {get; set;}
+        public List<List<GameObject>> legalHands {get; set;}
+        public int seat {get; set;}
+
+        public player(int someSeat)
+        {
+            seat = someSeat;
+        }
+    }
+    
+    public static player player1 = new player(1);
+    public static player player2 = new player(2);
+    public static player player3 = new player(3);
+    public static player player4 = new player(4);
 
     public void Start()
     {
@@ -50,6 +68,7 @@ public class S10Controller2 : MonoBehaviour
         for (int i = 0; i < numPlayers; i++) // Creates a list of empty lists, one for each player
         {
             hands.Add(new List<GameObject> {});
+
         }
 
         int n = 0;
@@ -86,8 +105,15 @@ public class S10Controller2 : MonoBehaviour
 
             yPosArrayIndex += 1;
         }
+
+        player1.cards = hands[0];
+        player2.cards = hands[1];
+        player3.cards = hands[2];
+        player4.cards = hands[3];
      
     }
+
+
 
     public void ExitGame()
     {

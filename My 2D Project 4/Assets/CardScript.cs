@@ -53,55 +53,6 @@ public class CardScript : MonoBehaviour
     public static string tableType = "empty";
     public static string playedType = "empty";
 
-    public class player 
-    {
-
-        // private List<GameObject> cards;
-        // public List<GameObject> Cards
-        // {
-        //     get{return cards;}
-        //     set{cards = value;}
-        // }
-        // private List<List<GameObject>> legalHands;
-        // public List<List<GameObject>> LegalHands
-        // {
-        //     get{return legalHands;}
-        //     set{legalHands = value;}
-        // }
-        // private int seat;
-        // public int Seat
-        // {
-        //     get{return seat;}
-        //     set{seat = value;}
-        // }    
-        
-        public List<GameObject> cards;
-        public List<List<GameObject>> legalHands;
-        public int seat;
-
-        public player(List<GameObject> someCards)//, List<List<GameObject>> someLegalHands, int someSeat)
-        {
-            cards = new List<GameObject>();
-            cards.AddRange(someCards);
-            // this.legalHands = someLegalHands;
-            // this.seat = someSeat;
-        }
-    }
-
-    // public static List<GameObject> test = handsCS[0];
-    public static player player1 = new player(handsCS[0]);//,getLegalHands(handsCS[0]),1);
-    //player1.Player(handsCS[0],getLegalHands(handsCS[0]),1);
-    // Type p1type = typeof(player1);
-    // PropertyInfo pinfo = p1type.GetProperty("Seat");
-    // pinfo.SetValue(player1,1);
-
-    //public static player player2 = new player(){cards = handsCS[1],legalHands = getLegalHands(handsCS[1]),seat = 2};
-    //public static player player3 = new player(){cards = handsCS[2],legalHands = getLegalHands(handsCS[2]),seat = 3};
-    //public static player player4 = new player(){cards = handsCS[3],legalHands = getLegalHands(handsCS[3]),seat = 4};
-
-
-    //public static int playerTurn = 1;
-
     void OnMouseDown()
     {
         // "this" refers to the CardScript object
@@ -218,12 +169,12 @@ public class CardScript : MonoBehaviour
 
     }
 
-    public static void PlayCardsComputer(player thisPlayer)
-    {
-        System.Threading.Thread.Sleep(2000);
-        var rand = new System.Random();
-        Reposition(thisPlayer.legalHands[rand.Next(thisPlayer.legalHands.Count)],-1.0f,92.0f);
-    }
+    // public static void PlayCardsComputer(player thisPlayer)
+    // {
+    //     System.Threading.Thread.Sleep(2000);
+    //     var rand = new System.Random();
+    //     Reposition(thisPlayer.legalHands[rand.Next(thisPlayer.legalHands.Count)],-1.0f,92.0f);
+    // }
 
     public static string compare(List<GameObject> playedCards,List<GameObject> tableCards)
     {
@@ -496,7 +447,7 @@ public class CardScript : MonoBehaviour
     public static void testMethod()
     {
 
-        Debug.Log(intlist2string(getCardValues(handsCS[0])));
+        Debug.Log(S10Controller2.player1.cards[0]);
         //PlayCardsComputer(player1);
 
     }
