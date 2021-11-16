@@ -1980,7 +1980,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartPage: {fileID: 611069434}
   StartGameButton: {fileID: 1364642098}
-  MainGame: {fileID: 0}
   ExitGameButton: {fileID: 232252830}
 --- !u!4 &413053798
 Transform:
@@ -2969,8 +2968,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1456076308}
-        m_TargetAssemblyTypeName: CardScript, Assembly-CSharp
+      - m_Target: {fileID: 413053797}
+        m_TargetAssemblyTypeName: S10Controller2, Assembly-CSharp
         m_MethodName: testMethod
         m_Mode: 1
         m_Arguments:
@@ -7505,8 +7504,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1456076308}
-        m_TargetAssemblyTypeName: CardScript, Assembly-CSharp
+      - m_Target: {fileID: 413053797}
+        m_TargetAssemblyTypeName: S10Controller2, Assembly-CSharp
         m_MethodName: PlayCards
         m_Mode: 1
         m_Arguments:
