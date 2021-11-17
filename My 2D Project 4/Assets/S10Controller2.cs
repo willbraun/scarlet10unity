@@ -13,12 +13,14 @@ public class S10Controller2 : MonoBehaviour
     [SerializeField] private GameObject ExitGameButton;
 
     public static List<List<GameObject>> hands = new List<List<GameObject>>();
-
     public static List<GameObject> tableCardObjects = new List<GameObject>();
     public static List<GameObject> selectedCardObjects = new List<GameObject>();   
     public static float selectedYposition = -95.0f;
     public static int numPlayers = 4;
     public static int playerTurn = 0;
+    public static int passCount = 0;
+    public static string tableType = "empty";
+    public static string playedType = "empty";
 
     public static Dictionary<string,List<string>> typesThatBeatMe = new Dictionary<string,List<string>>()
     {
@@ -50,18 +52,13 @@ public class S10Controller2 : MonoBehaviour
         {"black10sONred10s",new List<string>() {"4-4-Ace","quad"}}
     };
 
-    public static string tableType = "empty";
-    public static string playedType = "empty";
-
     public class player 
     {  
         public List<GameObject> cards {get; set;}
-        public List<List<GameObject>> legalHands {get; set;}
         public int seat {get; set;}
     }
 
     public static player[] players = new player[numPlayers];
-
 
     public void StartGame()
     {
@@ -120,7 +117,6 @@ public class S10Controller2 : MonoBehaviour
         {
             players[i] = new player();
             players[i].cards = hands[i];
-            players[i].legalHands = getLegalHands(hands[i]);
             players[i].seat = i;
         }
      
@@ -159,7 +155,7 @@ public class S10Controller2 : MonoBehaviour
 
     public static void PlayCards()
     {
-        string comparisonResult = compare(selectedCardObjects,tableCardObjects);
+        string comparisonResult = Compare(selectedCardObjects,tableCardObjects);
 
         if (comparisonResult == "win")
         {
@@ -182,45 +178,111 @@ public class S10Controller2 : MonoBehaviour
             tableCardObjects.AddRange(selectedCardObjects);
             CardScript.selectedCardPrevPos.Clear();
             selectedCardObjects.Clear();
-            displayError("");
+            passCount = 0;
+            DisplayError("");
         }
-        else
+        else 
         {
-            displayError(comparisonResult);
+            DisplayError(comparisonResult);
         }
+        // You can't select Pass object, will never appear here. Human must pass with button.
+    }
+
+    public static void Pass()
+    {
+        Debug.Log("Rotate");
+        passCount++;
+        // Add call to Rotate function
     }
 
     public static void PlayCardsComputer(player thisPlayer)
     {
         // Update hands that are legal since the table has changed, choose play
-        thisPlayer.legalHands = getLegalHands(thisPlayer.cards);
+        List<List<GameObject>> legalHands = GetLegalHands(thisPlayer.cards);
+        
+        // list legal hands in debug
+        // foreach (List<GameObject> LH in legalHands)
+        // {
+        //     Debug.Log(intlist2string(GetCardValues(LH)));
+        // }
+
         var rand = new System.Random();
-        List<GameObject> computerPlay = thisPlayer.legalHands[rand.Next(thisPlayer.legalHands.Count)];
+        List<GameObject> computerPlay = legalHands[rand.Next(legalHands.Count-1)];
 
-        foreach (GameObject card in tableCardObjects)
+        if (Characterize(computerPlay) != "passType")
         {
-            Destroy(card);
-        }
+            foreach (GameObject card in tableCardObjects)
+            {
+                Destroy(card);
+            }
 
-        foreach (GameObject card in computerPlay)
+            foreach (GameObject card in computerPlay)
+            {
+                thisPlayer.cards.Remove(card);
+                Destroy(card.GetComponent<Collider2D>());
+            }
+
+            Reposition(computerPlay,-1.0f,92.0f);
+            tableType = playedType;
+            tableCardObjects.Clear();
+            tableCardObjects.AddRange(computerPlay);
+            passCount = 0;
+            DisplayError("");
+        }
+        else
         {
-            thisPlayer.cards.Remove(card);
-            Destroy(card.GetComponent<Collider2D>());
+            passCount++;
         }
-
-        Reposition(computerPlay,-1.0f,92.0f);
-
-        tableType = playedType;
-        tableCardObjects.Clear();
-        tableCardObjects.AddRange(computerPlay);
-        displayError("");
     }
 
-    public static string compare(List<GameObject> playedCards,List<GameObject> tableCards)
+    public static List<List<GameObject>> GetLegalHands(List<GameObject> listOfCards)
     {
-        playedType = characterize(playedCards);
-        List<int> playedCardValues = getCardValues(playedCards);
-        List<int> tableCardValues = getCardValues(tableCards);
+
+        GameObject[] temporaryComboArray = new GameObject[18];
+        List<GameObject> temporaryCombo = new List<GameObject>();
+        List<List<GameObject>> comboList = new List<List<GameObject>>();
+
+        void GetLegalHandsInner(List<GameObject> listOfCardsInner, int k)
+        {
+            // K should start at 0, the position in the list of cards. 
+            // For each K, either change temporaryCardArray[k] to null (i=0) or listOfCardsInner[k] (i=1)
+            // Call the function again for the next item in the list and repeat
+            // the function will stop once k reaches the max, then go back through each combination
+
+            if (k == listOfCardsInner.Count)
+            {   
+                temporaryCombo.Clear();
+                temporaryCombo.AddRange(temporaryComboArray);
+                temporaryCombo.RemoveAll(x => x == null);
+
+                if (Compare(temporaryCombo,tableCardObjects) == "win")
+                {
+                    comboList.Add(new List<GameObject>());
+                    comboList[comboList.Count-1].AddRange(temporaryCombo);
+                }
+
+                return;
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                temporaryComboArray[k] = (i == 1 ? listOfCardsInner[k] : null);
+                GetLegalHandsInner(listOfCardsInner,k+1);
+            }
+
+        }
+
+        GetLegalHandsInner(listOfCards,0);
+        comboList.Add(new List<GameObject>(){GameObject.Find("PassPlaceholder")});
+        return comboList;
+
+    }
+
+    public static string Compare(List<GameObject> playedCards,List<GameObject> tableCards)
+    {
+        playedType = Characterize(playedCards);
+        List<int> playedCardValues = GetCardValues(playedCards);
+        List<int> tableCardValues = GetCardValues(tableCards);
 
         if (playedType == "Invalid")
         {
@@ -230,7 +292,12 @@ public class S10Controller2 : MonoBehaviour
         if (playedType == "empty")
         {
             return "No cards selected";
-        }
+        }      
+
+        if (playedType == "passType")
+        {
+            return "pass";
+        }  
 
         if (playedType == "black10s")
         {
@@ -267,16 +334,20 @@ public class S10Controller2 : MonoBehaviour
         {
             return "Incompatible hand";
         }
+
+
     }
 
-    public static string characterize(List<GameObject> listOfCards)
+    public static string Characterize(List<GameObject> listOfCards)
     {
-        List<int> theseCardValues = getCardValues(listOfCards);
-        List<string> theseCardSuits = getCardSuits(listOfCards);
+        List<int> theseCardValues = GetCardValues(listOfCards);
+        List<string> theseCardSuits = GetCardSuits(listOfCards);
 
         string result = "";
 
-        if (listOfCards.Count == 0) 
+        if (listOfCards.Count == 1 && theseCardSuits[0] == "passSuit")
+            {result = "passType";}
+        else if (listOfCards.Count == 0) 
             {result = "empty";}
         else if (listOfCards.Count == 3 && 
             theseCardValues[0] == 4 && 
@@ -351,7 +422,7 @@ public class S10Controller2 : MonoBehaviour
 
     }
 
-    public static List<int> getCardValues(List<GameObject> listOfCards)
+    public static List<int> GetCardValues(List<GameObject> listOfCards)
     {
         List<int> cardValues = new List<int>();
 
@@ -363,7 +434,7 @@ public class S10Controller2 : MonoBehaviour
         return cardValues;
     }
 
-    public static List<string> getCardSuits(List<GameObject> listOfCards)
+    public static List<string> GetCardSuits(List<GameObject> listOfCards)
     {  
         List<string> cardSuits = new List<string>();
 
@@ -430,60 +501,20 @@ public class S10Controller2 : MonoBehaviour
                oddSDcards[0] == evenSDcards[0];
     }
 
-    public static void displayError(string message)
+    public static void DisplayError(string message)
     {
         GameObject.Find("ErrorText").GetComponent<UnityEngine.UI.Text>().text = message;
     }
 
-    public static List<List<GameObject>> getLegalHands(List<GameObject> listOfCards)
-    {
 
-        GameObject[] temporaryComboArray = new GameObject[18];
-        List<GameObject> temporaryCombo = new List<GameObject>();
-        List<List<GameObject>> comboList = new List<List<GameObject>>();
-
-        void getLegalHandsInner(List<GameObject> listOfCardsInner, int k)
-        {
-            // K should start at 0, the position in the list of cards. 
-            // For each K, either change temporaryCardArray[k] to null (i=0) or listOfCardsInner[k] (i=1)
-            // Call the function again for the next item in the list and repeat
-            // the function will stop once k reaches the max, then go back through each combination
-
-            if (k == listOfCardsInner.Count)
-            {   
-                temporaryCombo.Clear();
-                temporaryCombo.AddRange(temporaryComboArray);
-                temporaryCombo.RemoveAll(x => x == null);
-
-                if (compare(temporaryCombo,tableCardObjects) == "win")
-                {
-                    comboList.Add(new List<GameObject>());
-                    comboList[comboList.Count-1].AddRange(temporaryCombo);
-                }
-
-                return;
-            }
-
-            for (int i = 0; i < 2; i++)
-            {
-                temporaryComboArray[k] = (i == 1 ? listOfCardsInner[k] : null);
-                getLegalHandsInner(listOfCardsInner,k+1);
-            }
-
-        }
-
-        getLegalHandsInner(listOfCards,0);
-        return comboList;
-
-    }
     
     public static void testMethod()
     {
         PlayCardsComputer(players[1]);
-        foreach (List<GameObject> LH in players[1].legalHands)
-        {
-            Debug.Log(intlist2string(getCardValues(LH)));
-        }
+        // foreach (List<GameObject> LH in players[1].legalHands)
+        // {
+        //     Debug.Log(intlist2string(GetCardValues(LH)));
+        // }
     }
 
     public static string intlist2string(List<int> listOfIntegers)
