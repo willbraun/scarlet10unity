@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Threading.Tasks;
+using System.Threading;
 
 public class S10Controller2 : MonoBehaviour
 {
@@ -180,6 +180,7 @@ public class S10Controller2 : MonoBehaviour
             selectedCardObjects.Clear();
             passCount = 0;
             DisplayError("");
+            Rotate();
         }
         else 
         {
@@ -190,8 +191,8 @@ public class S10Controller2 : MonoBehaviour
 
     public static void Pass()
     {
-        Debug.Log("Rotate");
         passCount++;
+        Rotate();
         // Add call to Rotate function
     }
 
@@ -208,8 +209,9 @@ public class S10Controller2 : MonoBehaviour
 
         var rand = new System.Random();
         List<GameObject> computerPlay = legalHands[rand.Next(legalHands.Count-1)];
+        string computerPlayType = Characterize(computerPlay);
 
-        if (Characterize(computerPlay) != "passType")
+        if (computerPlayType != "passType")
         {
             foreach (GameObject card in tableCardObjects)
             {
@@ -223,7 +225,7 @@ public class S10Controller2 : MonoBehaviour
             }
 
             Reposition(computerPlay,-1.0f,92.0f);
-            tableType = playedType;
+            tableType = computerPlayType;
             tableCardObjects.Clear();
             tableCardObjects.AddRange(computerPlay);
             passCount = 0;
@@ -232,6 +234,37 @@ public class S10Controller2 : MonoBehaviour
         else
         {
             passCount++;
+        }
+    }
+
+    public static void Rotate()
+    {
+        
+        playerTurn++;
+
+        if (playerTurn == 4)
+        {
+            playerTurn = 0;
+            return;
+        }
+        else
+        {
+            //Thread.sleep? Wait some time?
+
+            Debug.Log("before "+ tableType);
+            PlayCardsComputer(players[playerTurn]);
+            Debug.Log("after "+ tableType);
+
+            if (passCount == 3)
+            {
+                tableType = "empty";
+                tableCardObjects.Clear();
+                passCount = 0;
+            }
+
+            Debug.Log("pass "+ passCount.ToString());
+            Debug.Log("turn "+ playerTurn.ToString());
+            Rotate();
         }
     }
 
