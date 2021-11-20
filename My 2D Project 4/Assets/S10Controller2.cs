@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Threading;
+using System.Threading.Tasks;
 
 public class S10Controller2 : MonoBehaviour
 {
@@ -237,9 +237,8 @@ public class S10Controller2 : MonoBehaviour
         }
     }
 
-    public static void Rotate()
+    public static async void Rotate()
     {
-        
         playerTurn++;
 
         if (playerTurn == 4)
@@ -249,7 +248,7 @@ public class S10Controller2 : MonoBehaviour
         }
         else
         {
-            //Thread.sleep? Wait some time?
+            await Task.Delay(3000);
 
             Debug.Log("before "+ tableType);
             PlayCardsComputer(players[playerTurn]);
