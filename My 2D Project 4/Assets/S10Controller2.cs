@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Threading.Tasks;
+using System.Linq;
 
 public class S10Controller2 : MonoBehaviour
 {
@@ -159,27 +160,10 @@ public class S10Controller2 : MonoBehaviour
 
         if (comparisonResult == "win")
         {
-            foreach (GameObject card in tableCardObjects)
-            {
-                Destroy(card);
-            }
-
-            foreach (GameObject card in selectedCardObjects)
-            {
-                players[0].cards.Remove(card);
-                Destroy(card.GetComponent<Collider2D>());
-            }
-
-            Reposition(selectedCardObjects,-1.0f,92.0f);
+            ReplaceTable(players[0],selectedCardObjects);
             Reposition(players[0].cards,47.0f,-205.0f); 
-
-            tableType = playedType;
-            tableCardObjects.Clear();
-            tableCardObjects.AddRange(selectedCardObjects);
             CardScript.selectedCardPrevPos.Clear();
             selectedCardObjects.Clear();
-            passCount = 0;
-            DisplayError("");
             Rotate();
         }
         else 
@@ -213,23 +197,7 @@ public class S10Controller2 : MonoBehaviour
 
         if (computerPlayType != "passType")
         {
-            foreach (GameObject card in tableCardObjects)
-            {
-                Destroy(card);
-            }
-
-            foreach (GameObject card in computerPlay)
-            {
-                thisPlayer.cards.Remove(card);
-                Destroy(card.GetComponent<Collider2D>());
-            }
-
-            Reposition(computerPlay,-1.0f,92.0f);
-            tableType = computerPlayType;
-            tableCardObjects.Clear();
-            tableCardObjects.AddRange(computerPlay);
-            passCount = 0;
-            DisplayError("");
+            ReplaceTable(thisPlayer,computerPlay);
         }
         else
         {
@@ -241,30 +209,112 @@ public class S10Controller2 : MonoBehaviour
     {
         playerTurn++;
 
-        if (playerTurn == 4)
+        // Check other players for Double to steal turn
+        if (tableCardObjects.Count == 1)
+        {
+            player[] otherPlayers1 = Array.FindAll(players, x => x.seat != playerTurn-1).ToArray();
+            foreach(player thisPlayer in otherPlayers1)
+            {
+                List<GameObject> sameValueCards = thisPlayer.cards.FindAll(x => x.GetComponent<GetValueSuit>().returnValue() == GetCardValues(tableCardObjects)[0]);
+                if (sameValueCards.Count >= 2)
+                {
+                    if (thisPlayer.seat == 0)
+                    {
+                        GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = true;
+                        break;
+                    }
+                    else
+                    {
+                        var rand = new System.Random();
+                        if (rand.Next(1) == 0)
+                        {
+                            await Task.Delay(2000);
+                            List<GameObject> playedDouble = new List<GameObject>();
+                            playedDouble.Add(sameValueCards[0]);
+                            playedDouble.Add(sameValueCards[1]);
+                            ReplaceTable(thisPlayer,playedDouble);
+                            tableType = "empty";
+                            playerTurn = thisPlayer.seat;
+                        }
+
+                        // Check other players for final single to steal turn
+                        player[] otherPlayers2 = Array.FindAll(players, x => x.seat != thisPlayer.seat).ToArray(); 
+
+                        foreach(player thisPlayerFinal in otherPlayers2)
+                        {
+                            List<GameObject> finalSingle = thisPlayerFinal.cards.FindAll(x => x.GetComponent<GetValueSuit>().returnValue() == GetCardValues(tableCardObjects)[0]);
+                            if (thisPlayerFinal.seat == 0)
+                            {
+                                GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = true;
+                                break;
+                            }    
+                            else
+                            {
+                                var rand2 = new System.Random();
+                                if (rand2.Next(1) == 0)
+                                {
+                                    await Task.Delay(2000);
+                                    ReplaceTable(thisPlayerFinal,finalSingle);
+                                    tableType = "empty";
+                                    playerTurn = thisPlayerFinal.seat;
+                                    break;
+                                } 
+                            }                      
+                        }
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (playerTurn == 0 || playerTurn == 4)
         {
             playerTurn = 0;
             return;
         }
-        else
+        
+        await Task.Delay(4000);
+
+        GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = false;
+        PlayCardsComputer(players[playerTurn]);
+
+        if (passCount == 3)
         {
-            await Task.Delay(3000);
-
-            Debug.Log("before "+ tableType);
-            PlayCardsComputer(players[playerTurn]);
-            Debug.Log("after "+ tableType);
-
-            if (passCount == 3)
+            foreach (GameObject card in tableCardObjects)
             {
-                tableType = "empty";
-                tableCardObjects.Clear();
-                passCount = 0;
+                DestroyImmediate(card);
             }
-
-            Debug.Log("pass "+ passCount.ToString());
-            Debug.Log("turn "+ playerTurn.ToString());
-            Rotate();
+            tableCardObjects.Clear();
+            tableType = "empty";
+            passCount = 0;
         }
+
+        // Debug.Log("pass "+ passCount.ToString());
+        // Debug.Log("turn "+ playerTurn.ToString());
+        Rotate();
+        
+    }
+
+    public static void ReplaceTable(player thisPlayer, List<GameObject> playedCards)
+    {
+        foreach (GameObject card in tableCardObjects)
+        {
+            DestroyImmediate(card);
+        }
+
+        foreach (GameObject card in playedCards)
+        {
+            thisPlayer.cards.Remove(card);
+            card.GetComponent<Collider2D>().enabled = false;
+        }
+
+        Reposition(playedCards,-1.0f,92.0f);
+        tableType = Characterize(playedCards);
+        tableCardObjects.Clear();
+        tableCardObjects.AddRange(playedCards);
+        passCount = 0;
+        DisplayError("");
     }
 
     public static List<List<GameObject>> GetLegalHands(List<GameObject> listOfCards)
