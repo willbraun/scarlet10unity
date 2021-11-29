@@ -21,7 +21,7 @@ public class S10Controller2 : MonoBehaviour
     public static int playerTurn = 0;
     public static int passCount = 0;
     public static string tableType = "empty";
-    public static string playedType = "empty";
+    public static string playedType = "empty"; 
 
     public static Dictionary<string,List<string>> typesThatBeatMe = new Dictionary<string,List<string>>()
     {
@@ -57,6 +57,7 @@ public class S10Controller2 : MonoBehaviour
     {  
         public List<GameObject> cards {get; set;}
         public int seat {get; set;}
+        public GameObject icon {get; set;}
     }
 
     public static player[] players = new player[numPlayers];
@@ -67,6 +68,12 @@ public class S10Controller2 : MonoBehaviour
         
         // Define deck
         var deckArray = GameObject.FindGameObjectsWithTag("Card");
+
+        foreach(GameObject card in deckArray)
+        {
+            card.SetActive(true);
+        }
+
         List<GameObject> deck = new List<GameObject>(deckArray);
         deck.Remove(GameObject.Find("Redjoker"));
         deck.Remove(GameObject.Find("Blackjoker"));
@@ -120,6 +127,15 @@ public class S10Controller2 : MonoBehaviour
             players[i].cards = hands[i];
             players[i].seat = i;
         }
+
+        players[0].icon = GameObject.Find("Player1");
+        players[1].icon = GameObject.Find("Player2");
+        players[2].icon = GameObject.Find("Player3");
+        players[3].icon = GameObject.Find("Player4");
+
+        // I start
+        playerTurn = 0;
+        players[0].icon.GetComponent<Image>().color = new Color(0, 255, 0);
      
     }
 
@@ -207,7 +223,7 @@ public class S10Controller2 : MonoBehaviour
 
     public static async void Rotate()
     {
-        playerTurn++;
+        ChangeTurn(null);
 
         // Check other players for Double to steal turn
         if (tableCardObjects.Count == 1)
@@ -234,7 +250,8 @@ public class S10Controller2 : MonoBehaviour
                             playedDouble.Add(sameValueCards[1]);
                             ReplaceTable(thisPlayer,playedDouble);
                             tableType = "empty";
-                            playerTurn = thisPlayer.seat;
+                            ChangeTurn(thisPlayer.seat);
+                            Debug.Log("steal double");
                         }
 
                         // Check other players for final single to steal turn
@@ -256,21 +273,21 @@ public class S10Controller2 : MonoBehaviour
                                     await Task.Delay(2000);
                                     ReplaceTable(thisPlayerFinal,finalSingle);
                                     tableType = "empty";
-                                    playerTurn = thisPlayerFinal.seat;
+                                    ChangeTurn(thisPlayerFinal.seat);
+                                    Debug.Log("steal single");
                                     break;
                                 } 
                             }                      
                         }
-
                         break;
                     }
                 }
             }
         }
 
-        if (playerTurn == 0 || playerTurn == 4)
+        if (playerTurn != 1 && playerTurn != 2 && playerTurn != 3)
         {
-            playerTurn = 0;
+            Debug.Log("Return");
             return;
         }
         
@@ -283,7 +300,7 @@ public class S10Controller2 : MonoBehaviour
         {
             foreach (GameObject card in tableCardObjects)
             {
-                DestroyImmediate(card);
+                card.SetActive(false);
             }
             tableCardObjects.Clear();
             tableType = "empty";
@@ -292,6 +309,7 @@ public class S10Controller2 : MonoBehaviour
 
         // Debug.Log("pass "+ passCount.ToString());
         // Debug.Log("turn "+ playerTurn.ToString());
+        Debug.Log("Rotate");
         Rotate();
         
     }
@@ -300,7 +318,7 @@ public class S10Controller2 : MonoBehaviour
     {
         foreach (GameObject card in tableCardObjects)
         {
-            DestroyImmediate(card);
+            card.SetActive(false);
         }
 
         foreach (GameObject card in playedCards)
@@ -315,6 +333,18 @@ public class S10Controller2 : MonoBehaviour
         tableCardObjects.AddRange(playedCards);
         passCount = 0;
         DisplayError("");
+    }
+
+    public static async void ChangeTurn(int? newTurn)
+    {
+        Debug.Log(playerTurn);
+        playerTurn = newTurn ?? playerTurn+1;
+        Debug.Log(playerTurn);
+
+        await Task.Delay(100);
+        players[playerTurn-1].icon.GetComponent<Image>().color = new Color32(183,183,183,255);
+        playerTurn = (playerTurn == 4) ? 0 : playerTurn;
+        players[playerTurn].icon.GetComponent<Image>().color = new Color32(255,255,0,255);
     }
 
     public static List<List<GameObject>> GetLegalHands(List<GameObject> listOfCards)
