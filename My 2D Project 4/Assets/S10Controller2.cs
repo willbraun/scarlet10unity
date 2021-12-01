@@ -414,6 +414,36 @@ public class S10Controller2 : MonoBehaviour
 
     }
 
+    public static async void CheckCompForSteal(player excludedPlayer, int targetCardCount)
+    {
+        player[] otherPlayers = Array.FindAll(players, x => x != excludedPlayer).ToArray(); 
+            
+            foreach (player thisPlayer in otherPlayers)
+                {
+                    List<GameObject> potentialSteal = thisPlayer.cards.FindAll(x => x.GetComponent<GetValueSuit>().returnValue() == GetCardValues(tableCardObjects)[0]);
+                    if (potentialSteal.Count == targetCardCount)
+                    {
+                        if (thisPlayer.seat == 0)
+                        {
+                            GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = true;
+                            break;
+                        } 
+                        else
+                        {
+                            var rand2 = new System.Random();
+                            if (rand2.Next(1) == 0)
+                                {
+                                    await Task.Delay(3000);
+                                    ReplaceTable(thisPlayer,potentialSteal);
+                                    tableType = "empty";
+                                    break;
+                                }
+                        }
+                    }                  
+                }
+
+    }
+
     public static List<List<GameObject>> GetLegalHands(List<GameObject> listOfCards)
     {
 
