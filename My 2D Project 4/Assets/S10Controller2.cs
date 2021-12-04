@@ -25,6 +25,8 @@ public class S10Controller2 : MonoBehaviour
     static Color32 turnColor = new Color32(255,255,0,255);
     static Color32 notTurnColor = new Color32(183,183,183,255);
     static bool exitRotate = false;
+    static bool stolen1 = false;
+    static bool stolen2 = false;
 
     public static Dictionary<string,List<string>> typesThatBeatMe = new Dictionary<string,List<string>>()
     {
@@ -196,7 +198,6 @@ public class S10Controller2 : MonoBehaviour
     {
         passCount++;
         Rotate();
-        // Add call to Rotate function
     }
 
     public static void PlayCardsComputer(player thisPlayer)
@@ -228,86 +229,22 @@ public class S10Controller2 : MonoBehaviour
     {
         ChangeTurn(null);
         exitRotate = false;
+        stolen1 = false;
+        stolen2 = false;
 
         // Check other players for Double to steal turn
         if (tableCardObjects.Count == 1)
         {
-            player[] otherPlayers1 = Array.FindAll(players, x => x.seat != playerTurn-1).ToArray();
-            foreach (player thisPlayer in otherPlayers1)
+            int prevIndex = playerTurn == 0 ? 3 : playerTurn-1; 
+            CheckOthersForSteal(players[prevIndex],2);
+
+            if (stolen1)
             {
-                List<GameObject> sameValueCards = thisPlayer.cards.FindAll(x => x.GetComponent<GetValueSuit>().returnValue() == GetCardValues(tableCardObjects)[0]);
-                if (sameValueCards.Count >= 2)
-                {
-                    if (thisPlayer.seat == 0)
-                    {
-                        GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = true;
-                        break;
-                    }
-                    else
-                    {
-                        var rand = new System.Random();
-                        if (rand.Next(1) == 0)
-                        {
-                            await Task.Delay(3000);
-                            List<GameObject> stolenDouble = new List<GameObject>(){sameValueCards[0],sameValueCards[1]};
-                            ReplaceTable(thisPlayer,stolenDouble);
-                            tableType = "empty";
-                            ChangeTurn(thisPlayer.seat);
-                            Debug.Log("steal double");
-                        }
-
-                        // Check other players for final single to steal turn
-                        player[] otherPlayers2 = Array.FindAll(players, x => x.seat != thisPlayer.seat).ToArray(); 
-
-                        foreach (player thisPlayerFinal in otherPlayers2)
-                        {
-                            List<GameObject> stolenSingle = thisPlayerFinal.cards.FindAll(x => x.GetComponent<GetValueSuit>().returnValue() == GetCardValues(tableCardObjects)[0]);
-                            if (stolenSingle.Count == 1)
-                            {
-                                if (thisPlayerFinal.seat == 0)
-                                {
-                                    GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = true;
-                                    break;
-                                }    
-                                else
-                                {
-                                    var rand2 = new System.Random();
-                                    if (rand2.Next(1) == 0)
-                                    {
-                                        await Task.Delay(3000);
-                                        ReplaceTable(thisPlayerFinal,stolenSingle);
-                                        tableType = "empty";
-                                        ChangeTurn(thisPlayerFinal.seat);
-                                        Debug.Log("steal single");
-                                        break;
-                                    } 
-                                }
-                            }                          
-                        }
-                    break;
-                    }
-                }
+                CheckOthersForSteal(players[playerTurn],1);
             }
         }
 
-        if (playerTurn != 1 && playerTurn != 2 && playerTurn != 3)
-        {
-            Debug.Log("Return");
-            return;
-        }
-        
-        await Task.Delay(6000);
-        
-        if (exitRotate == true) 
-        {
-            Debug.Log("Exit Rotate");
-            return;
-        }
-
-        GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = false;
-        PlayCardsComputer(players[playerTurn]);
-
-        if (passCount == 3)
+        if (passCount >= 3)
         {
             foreach (GameObject card in tableCardObjects)
             {
@@ -318,6 +255,23 @@ public class S10Controller2 : MonoBehaviour
             passCount = 0;
             Debug.Log("Pass count reset");
         }
+
+        if (playerTurn != 1 && playerTurn != 2 && playerTurn != 3)
+        {
+            Debug.Log("Return");
+            return;
+        }
+        
+        await Task.Delay(5000);
+        
+        if (exitRotate == true) 
+        {
+            Debug.Log("Exit Rotate");
+            return;
+        }
+
+        GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = false;
+        PlayCardsComputer(players[playerTurn]);
 
         Debug.Log("Rotate");
         Rotate();
@@ -359,7 +313,7 @@ public class S10Controller2 : MonoBehaviour
         players[playerTurn].icon.GetComponent<Image>().color = turnColor;
     }
 
-    public static async void StealTurn()
+    public static void StealTurn()
     {
         exitRotate = true;
         List<GameObject> sameValueCardsHuman = players[0].cards.FindAll(x => x.GetComponent<GetValueSuit>().returnValue() == GetCardValues(tableCardObjects)[0]);
@@ -369,32 +323,19 @@ public class S10Controller2 : MonoBehaviour
             List<GameObject> stolenDoubleHuman = new List<GameObject>(){sameValueCardsHuman[0],sameValueCardsHuman[1]};
             ReplaceTable(players[0],stolenDoubleHuman);
             tableType = "empty";
+            stolen1 = true;
             ChangeTurn(0);
             GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = false;
-            Debug.Log("steal double human");
 
-
-            player[] otherPlayersComps = Array.FindAll(players, x => x.seat != 0).ToArray(); 
+            CheckOthersForSteal(players[0],1);
             
-            foreach (player thisPlayerFinalComps in otherPlayersComps)
-                {
-                    List<GameObject> stolenSingleComps = thisPlayerFinalComps.cards.FindAll(x => x.GetComponent<GetValueSuit>().returnValue() == GetCardValues(tableCardObjects)[0]);
-                    if (stolenSingleComps.Count == 1)
-                    {
-                        var rand2 = new System.Random();
-                        if (rand2.Next(1) == 0)
-                        {
-                            await Task.Delay(3000);
-                            ReplaceTable(thisPlayerFinalComps,stolenSingleComps);
-                            tableType = "empty";
-                            ChangeTurn(thisPlayerFinalComps.seat-1); // temporarily changes to person before it should be, then Rotate corrects it
-                            Rotate();
-                            GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = false;
-                            Debug.Log("steal single computer after human");
-                            break;
-                        }
-                    }                  
-                }
+            if (stolen2)
+            {
+                int prevIndexSteal = playerTurn == 0 ? 3 : playerTurn-1;
+                ChangeTurn(prevIndexSteal);
+                exitRotate = false;
+                Rotate();                
+            }
 
         }
         else if (tableCardObjects.Count == 2)
@@ -414,13 +355,18 @@ public class S10Controller2 : MonoBehaviour
 
     }
 
-    public static async void CheckCompForSteal(player excludedPlayer, int targetCardCount)
+    public static async void CheckOthersForSteal(player excludedPlayer, int targetCardCount)
     {
         player[] otherPlayers = Array.FindAll(players, x => x != excludedPlayer).ToArray(); 
             
             foreach (player thisPlayer in otherPlayers)
                 {
                     List<GameObject> potentialSteal = thisPlayer.cards.FindAll(x => x.GetComponent<GetValueSuit>().returnValue() == GetCardValues(tableCardObjects)[0]);
+                    if (targetCardCount == 2 && potentialSteal.Count == 3)
+                    {
+                        potentialSteal = new List<GameObject>(){potentialSteal[0],potentialSteal[1]};
+                    }
+
                     if (potentialSteal.Count == targetCardCount)
                     {
                         if (thisPlayer.seat == 0)
@@ -436,6 +382,12 @@ public class S10Controller2 : MonoBehaviour
                                     await Task.Delay(3000);
                                     ReplaceTable(thisPlayer,potentialSteal);
                                     tableType = "empty";
+                                    if (targetCardCount == 2)
+                                        {stolen1 = true;}
+                                    if (targetCardCount == 1)
+                                        {stolen2 = true;}
+                                    GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = false;
+                                    ChangeTurn(thisPlayer.seat);
                                     break;
                                 }
                         }
