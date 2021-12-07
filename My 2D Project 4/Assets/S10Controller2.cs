@@ -27,6 +27,7 @@ public class S10Controller2 : MonoBehaviour
     static bool exitRotate = false;
     static bool stolen1 = false;
     static bool stolen2 = false;
+    static List<int> activePlayers = Enumerable.Range(0,numPlayers).ToList();
 
     public static Dictionary<string,List<string>> typesThatBeatMe = new Dictionary<string,List<string>>()
     {
@@ -77,6 +78,7 @@ public class S10Controller2 : MonoBehaviour
         foreach(GameObject card in deckArray)
         {
             card.SetActive(true);
+            card.GetComponent<Collider2D>().enabled = true;
         }
 
         List<GameObject> deck = new List<GameObject>(deckArray);
@@ -185,6 +187,7 @@ public class S10Controller2 : MonoBehaviour
             Reposition(players[0].cards,47.0f,-205.0f); 
             CardScript.selectedCardPrevPos.Clear();
             selectedCardObjects.Clear();
+            CheckIfOut(players[0]);
             Rotate();
         }
         else 
@@ -197,6 +200,7 @@ public class S10Controller2 : MonoBehaviour
     public static void Pass()
     {
         passCount++;
+        DisplayError("");
         Rotate();
     }
 
@@ -236,15 +240,20 @@ public class S10Controller2 : MonoBehaviour
         if (tableCardObjects.Count == 1)
         {
             int prevIndex = playerTurn == 0 ? 3 : playerTurn-1; 
-            CheckOthersForSteal(players[prevIndex],2);
+            await CheckOthersForSteal(players[prevIndex],2);
 
             if (stolen1)
             {
-                CheckOthersForSteal(players[playerTurn],1);
+                Debug.Log("comp steal double");
+                await CheckOthersForSteal(players[playerTurn],1);
+                if (stolen2)
+                {
+                    Debug.Log("comp steal double + single");
+                }
             }
         }
 
-        if (passCount >= 3)
+        if (passCount >= activePlayers.Count-1)
         {
             foreach (GameObject card in tableCardObjects)
             {
@@ -262,7 +271,7 @@ public class S10Controller2 : MonoBehaviour
             return;
         }
         
-        await Task.Delay(5000);
+        await Task.Delay(3000);
         
         if (exitRotate == true) 
         {
@@ -272,6 +281,8 @@ public class S10Controller2 : MonoBehaviour
 
         GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = false;
         PlayCardsComputer(players[playerTurn]);
+
+        CheckIfOut(players[playerTurn]);
 
         Debug.Log("Rotate");
         Rotate();
@@ -302,7 +313,9 @@ public class S10Controller2 : MonoBehaviour
     public static void ChangeTurn(int? newTurn)
     {
         Debug.Log(playerTurn);
-        playerTurn = newTurn ?? playerTurn+1;
+        int nextPlayerIndex = activePlayers.IndexOf(playerTurn) + 1;
+        int newActivePlayer = nextPlayerIndex >= activePlayers.Count ? activePlayers[0] : activePlayers[nextPlayerIndex];
+        playerTurn = newTurn ?? newActivePlayer;
         Debug.Log(playerTurn);
 
         //await Task.Delay(100);
@@ -313,38 +326,44 @@ public class S10Controller2 : MonoBehaviour
         players[playerTurn].icon.GetComponent<Image>().color = turnColor;
     }
 
-    public static void StealTurn()
+    public static async void StealTurn()
     {
         exitRotate = true;
         List<GameObject> sameValueCardsHuman = players[0].cards.FindAll(x => x.GetComponent<GetValueSuit>().returnValue() == GetCardValues(tableCardObjects)[0]);
         
+        // Human steal double
         if (tableCardObjects.Count == 1)
         {
             List<GameObject> stolenDoubleHuman = new List<GameObject>(){sameValueCardsHuman[0],sameValueCardsHuman[1]};
             ReplaceTable(players[0],stolenDoubleHuman);
+            Reposition(players[0].cards,47.0f,-205);
             tableType = "empty";
             stolen1 = true;
             ChangeTurn(0);
             GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = false;
+            Debug.Log("human steal double");
 
-            CheckOthersForSteal(players[0],1);
-            
+            await CheckOthersForSteal(players[0],1);
+            Debug.Log(stolen2);
+
+        // Computer steal single from human
             if (stolen2)
             {
                 int prevIndexSteal = playerTurn == 0 ? 3 : playerTurn-1;
                 ChangeTurn(prevIndexSteal);
-                exitRotate = false;
+                Debug.Log("comp steal single after human");
                 Rotate();                
             }
 
         }
+        // Human steal final single
         else if (tableCardObjects.Count == 2)
         {
-            Debug.Log("stolen value "+intlist2string(GetCardValues(sameValueCardsHuman)));
             List<GameObject> stolenSingleHuman = new List<GameObject>(){sameValueCardsHuman[0]};
             ReplaceTable(players[0],stolenSingleHuman);
+            Reposition(players[0].cards,47.0f,-205);
             tableType = "empty";
-            ChangeTurn(0);
+            ChangeTurn(players[0].cards.Count == 0 ? 1 : 0);
             GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = false;
             Debug.Log("steal single human");
         }
@@ -355,7 +374,7 @@ public class S10Controller2 : MonoBehaviour
 
     }
 
-    public static async void CheckOthersForSteal(player excludedPlayer, int targetCardCount)
+    public static async Task CheckOthersForSteal(player excludedPlayer, int targetCardCount)
     {
         player[] otherPlayers = Array.FindAll(players, x => x != excludedPlayer).ToArray(); 
             
@@ -379,7 +398,7 @@ public class S10Controller2 : MonoBehaviour
                             var rand2 = new System.Random();
                             if (rand2.Next(1) == 0)
                                 {
-                                    await Task.Delay(3000);
+                                    await Task.Delay(1500);
                                     ReplaceTable(thisPlayer,potentialSteal);
                                     tableType = "empty";
                                     if (targetCardCount == 2)
@@ -667,15 +686,18 @@ public class S10Controller2 : MonoBehaviour
         GameObject.Find("ErrorText").GetComponent<UnityEngine.UI.Text>().text = message;
     }
 
+    public static void CheckIfOut(player thisPlayer)
+    {
+        if (thisPlayer.cards.Count == 0)
+        {
+            activePlayers.Remove(thisPlayer.seat);
+            Debug.Log("Active: "+intlist2string(activePlayers));
+        }
+    }
 
-    
     public static void testMethod()
     {
-        PlayCardsComputer(players[1]);
-        // foreach (List<GameObject> LH in players[1].legalHands)
-        // {
-        //     Debug.Log(intlist2string(GetCardValues(LH)));
-        // }
+        Debug.Log(intlist2string(activePlayers));
     }
 
     public static string intlist2string(List<int> listOfIntegers)
