@@ -29,6 +29,8 @@ public class S10Controller2 : MonoBehaviour
     static bool stolen2 = false;
     static List<int> activePlayers = Enumerable.Range(0,numPlayers).ToList();
 
+    
+
     public static Dictionary<string,List<string>> typesThatBeatMe = new Dictionary<string,List<string>>()
     {
         {"empty",new List<string>() {"single","double","S3","S4","S5","S6","S7","S8","S9","S10","S11","S12","D6","D8","D10","D12","D14","D16","D18","triple","4-4-Ace","doublejoker","quad","red10s"}},
@@ -67,6 +69,11 @@ public class S10Controller2 : MonoBehaviour
     }
 
     public static player[] players = new player[numPlayers];
+
+    public void Start()
+    {
+        StartPage.SetActive(true);
+    }
 
     public void StartGame()
     {
@@ -690,6 +697,15 @@ public class S10Controller2 : MonoBehaviour
     {
         if (thisPlayer.cards.Count == 0)
         {
+            if (activePlayers.Count == 4)
+                {thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("GoldMedal").GetComponent<SpriteRenderer>().sprite;}
+            if (activePlayers.Count == 3)
+                {thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("SilverMedal").GetComponent<SpriteRenderer>().sprite;}
+            if (activePlayers.Count == 2)
+                {thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("BronzeMedal").GetComponent<SpriteRenderer>().sprite;}
+
+            thisPlayer.icon.GetComponent<Image>().color = new Color32(255,255,255,255);
+            thisPlayer.icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (70,70);
             activePlayers.Remove(thisPlayer.seat);
             Debug.Log("Active: "+intlist2string(activePlayers));
         }
@@ -697,7 +713,9 @@ public class S10Controller2 : MonoBehaviour
 
     public static void testMethod()
     {
-        Debug.Log(intlist2string(activePlayers));
+        players[0].icon.GetComponent<Image>().sprite = GameObject.Find("GoldMedal").GetComponent<SpriteRenderer>().sprite;
+        players[0].icon.GetComponent<Image>().color = new Color32(255,255,255,255);
+        players[0].icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (70,70);
     }
 
     public static string intlist2string(List<int> listOfIntegers)
@@ -713,11 +731,6 @@ public class S10Controller2 : MonoBehaviour
     public static void ExitRotateManual()
     {
         exitRotate = true;
-    }
-
-    public void Start()
-    {
-        StartPage.SetActive(true);
     }
 
     public void ExitGame()
