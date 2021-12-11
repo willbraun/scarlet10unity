@@ -29,8 +29,6 @@ public class S10Controller2 : MonoBehaviour
     static bool stolen2 = false;
     static List<int> activePlayers = Enumerable.Range(0,numPlayers).ToList();
 
-    
-
     public static Dictionary<string,List<string>> typesThatBeatMe = new Dictionary<string,List<string>>()
     {
         {"empty",new List<string>() {"single","double","S3","S4","S5","S6","S7","S8","S9","S10","S11","S12","D6","D8","D10","D12","D14","D16","D18","triple","4-4-Ace","doublejoker","quad","red10s"}},
@@ -66,6 +64,7 @@ public class S10Controller2 : MonoBehaviour
         public List<GameObject> cards {get; set;}
         public int seat {get; set;}
         public GameObject icon {get; set;}
+        public GameObject cardCountText {get; set;}
     }
 
     public static player[] players = new player[numPlayers];
@@ -135,17 +134,14 @@ public class S10Controller2 : MonoBehaviour
         }
 
         // Create player objects
-        for(int i = 0; i < numPlayers; i++)
+        for (int i = 0; i < numPlayers; i++)
         {
             players[i] = new player();
             players[i].cards = hands[i];
             players[i].seat = i;
+            players[i].icon = GameObject.Find("Player"+(i+1).ToString());
+            players[i].cardCountText = GameObject.Find("P"+(i+1).ToString()+"Count");
         }
-
-        players[0].icon = GameObject.Find("Player1");
-        players[1].icon = GameObject.Find("Player2");
-        players[2].icon = GameObject.Find("Player3");
-        players[3].icon = GameObject.Find("Player4");
 
         // I start
         playerTurn = 0;
@@ -238,6 +234,11 @@ public class S10Controller2 : MonoBehaviour
 
     public static async void Rotate()
     {
+        if (activePlayers.Count == 1)
+        {
+            Debug.Log("Game Over");
+            return;
+        }
         ChangeTurn(null);
         exitRotate = false;
         stolen1 = false;
@@ -278,7 +279,7 @@ public class S10Controller2 : MonoBehaviour
             return;
         }
         
-        await Task.Delay(3000);
+        await Task.Delay(2000);
         
         if (exitRotate == true) 
         {
@@ -288,7 +289,6 @@ public class S10Controller2 : MonoBehaviour
 
         GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = false;
         PlayCardsComputer(players[playerTurn]);
-
         CheckIfOut(players[playerTurn]);
 
         Debug.Log("Rotate");
@@ -298,6 +298,9 @@ public class S10Controller2 : MonoBehaviour
 
     public static void ReplaceTable(player thisPlayer, List<GameObject> playedCards)
     {
+        Compare(playedCards,tableCardObjects);
+        tableType = playedType;
+
         foreach (GameObject card in tableCardObjects)
         {
             card.SetActive(false);
@@ -310,26 +313,32 @@ public class S10Controller2 : MonoBehaviour
         }
 
         Reposition(playedCards,-1.0f,92.0f);
-        tableType = Characterize(playedCards);
         tableCardObjects.Clear();
         tableCardObjects.AddRange(playedCards);
         passCount = 0;
+        ChangeCountText(thisPlayer);
         DisplayError("");
     }
 
     public static void ChangeTurn(int? newTurn)
     {
         Debug.Log(playerTurn);
+        player oldPlayer = players[playerTurn];
+
+        if (activePlayers.Contains(oldPlayer.seat))
+        {
+            oldPlayer.icon.GetComponent<Image>().color = notTurnColor;
+        }
+        
         int nextPlayerIndex = activePlayers.IndexOf(playerTurn) + 1;
         int newActivePlayer = nextPlayerIndex >= activePlayers.Count ? activePlayers[0] : activePlayers[nextPlayerIndex];
         playerTurn = newTurn ?? newActivePlayer;
         Debug.Log(playerTurn);
-
-        //await Task.Delay(100);
-        player oldPlayer = Array.Find(players,x => x.icon.GetComponent<Image>().color == turnColor);
-        oldPlayer.icon.GetComponent<Image>().color = notTurnColor;
-
+        
         playerTurn = (playerTurn == 4) ? 0 : playerTurn;
+        bool isMyTurn = playerTurn == 0;
+        GameObject.Find("PlayCardsButton").GetComponent<Button>().interactable = isMyTurn;
+        GameObject.Find("PassButton").GetComponent<Button>().interactable = isMyTurn;
         players[playerTurn].icon.GetComponent<Image>().color = turnColor;
     }
 
@@ -398,6 +407,7 @@ public class S10Controller2 : MonoBehaviour
                         if (thisPlayer.seat == 0)
                         {
                             GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = true;
+                            Debug.Log("Wait for human");
                             break;
                         } 
                         else
@@ -405,7 +415,7 @@ public class S10Controller2 : MonoBehaviour
                             var rand2 = new System.Random();
                             if (rand2.Next(1) == 0)
                                 {
-                                    await Task.Delay(1500);
+                                    await Task.Delay(1000);
                                     ReplaceTable(thisPlayer,potentialSteal);
                                     tableType = "empty";
                                     if (targetCardCount == 2)
@@ -711,11 +721,21 @@ public class S10Controller2 : MonoBehaviour
         }
     }
 
+    public static void ChangeCountText(player thisPlayer)
+    {
+        if (0 < thisPlayer.cards.Count && thisPlayer.cards.Count < 6)
+        {
+            thisPlayer.cardCountText.GetComponent<UnityEngine.UI.Text>().text = thisPlayer.cards.Count.ToString();
+        }
+        else
+        {
+            thisPlayer.cardCountText.GetComponent<UnityEngine.UI.Text>().text = "";
+        }
+    }
+
     public static void testMethod()
     {
-        players[0].icon.GetComponent<Image>().sprite = GameObject.Find("GoldMedal").GetComponent<SpriteRenderer>().sprite;
-        players[0].icon.GetComponent<Image>().color = new Color32(255,255,255,255);
-        players[0].icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (70,70);
+        Debug.Log(typesThatBeatMe["black10sONred10s"][0]);
     }
 
     public static string intlist2string(List<int> listOfIntegers)
