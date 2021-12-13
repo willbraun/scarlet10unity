@@ -9,9 +9,14 @@ using System.Linq;
 public class S10Controller2 : MonoBehaviour
 {
 
-    [SerializeField] private GameObject StartPage; 
-    [SerializeField] private GameObject StartGameButton;
-    [SerializeField] private GameObject ExitGameButton;
+    public static GameObject StartPage;
+    public GameObject StartPageInspector; 
+    public static GameObject StartGameButton;
+    public GameObject StartGameButtonInspector;
+    public static GameObject ExitGameButton;
+    public GameObject ExitGameButtonInspector;
+    public static GameObject GameOverWindow;
+    public GameObject GameOverWindowInspector;
 
     public static List<List<GameObject>> hands = new List<List<GameObject>>();
     public static List<GameObject> tableCardObjects = new List<GameObject>();
@@ -65,18 +70,29 @@ public class S10Controller2 : MonoBehaviour
         public int seat {get; set;}
         public GameObject icon {get; set;}
         public GameObject cardCountText {get; set;}
+        public string place {get; set;}
     }
 
     public static player[] players = new player[numPlayers];
 
-    public void Start()
+    private void Awake()
     {
-        StartPage.SetActive(true);
+        StartPage = StartPageInspector;
+        StartGameButton = StartGameButtonInspector;
+        ExitGameButton = ExitGameButtonInspector;
+        GameOverWindow = GameOverWindowInspector;
     }
 
-    public void StartGame()
+    public void Start()
+    {
+        StartPageInspector.SetActive(true);
+        GameOverWindowInspector.SetActive(false);
+    }
+
+    public static void StartGame()
     {
         StartPage.SetActive(false);
+        GameOverWindow.SetActive(false);
         
         // Define deck
         var deckArray = GameObject.FindGameObjectsWithTag("Card");
@@ -236,9 +252,20 @@ public class S10Controller2 : MonoBehaviour
     {
         if (activePlayers.Count == 1)
         {
+            player lastPlayer = players[activePlayers[0]];
+            lastPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("4thPlaceSadFace").GetComponent<SpriteRenderer>().sprite;
+            lastPlayer.cardCountText.GetComponent<UnityEngine.UI.Text>().text = "";
+            lastPlayer.place = "4th place";
+            lastPlayer.icon.GetComponent<Image>().color = new Color32(255,255,255,255);
+            lastPlayer.icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (70,70);
             Debug.Log("Game Over");
+            
+            await Task.Delay(2000);
+            GameOverWindow.SetActive(true);
+            GameObject.Find("YouGotXPlaceText").GetComponent<UnityEngine.UI.Text>().text = "You got "+players[0].place;
             return;
         }
+        
         ChangeTurn(null);
         exitRotate = false;
         stolen1 = false;
@@ -325,15 +352,20 @@ public class S10Controller2 : MonoBehaviour
         Debug.Log(playerTurn);
         player oldPlayer = players[playerTurn];
 
-        if (activePlayers.Contains(oldPlayer.seat))
-        {
-            oldPlayer.icon.GetComponent<Image>().color = notTurnColor;
-        }
-        
         int nextPlayerIndex = activePlayers.IndexOf(playerTurn) + 1;
         int newActivePlayer = nextPlayerIndex >= activePlayers.Count ? activePlayers[0] : activePlayers[nextPlayerIndex];
         playerTurn = newTurn ?? newActivePlayer;
         Debug.Log(playerTurn);
+
+        if (oldPlayer.cards.Count == 0)
+        {
+            activePlayers.Remove(oldPlayer.seat);
+            Debug.Log("Active: "+intlist2string(activePlayers));
+        }
+        else
+        {
+            oldPlayer.icon.GetComponent<Image>().color = notTurnColor;
+        }
         
         playerTurn = (playerTurn == 4) ? 0 : playerTurn;
         bool isMyTurn = playerTurn == 0;
@@ -413,7 +445,7 @@ public class S10Controller2 : MonoBehaviour
                         else
                         {
                             var rand2 = new System.Random();
-                            if (rand2.Next(1) == 0)
+                            if (rand2.Next(2) == 1)
                                 {
                                     await Task.Delay(1000);
                                     ReplaceTable(thisPlayer,potentialSteal);
@@ -707,17 +739,23 @@ public class S10Controller2 : MonoBehaviour
     {
         if (thisPlayer.cards.Count == 0)
         {
-            if (activePlayers.Count == 4)
-                {thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("GoldMedal").GetComponent<SpriteRenderer>().sprite;}
-            if (activePlayers.Count == 3)
-                {thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("SilverMedal").GetComponent<SpriteRenderer>().sprite;}
-            if (activePlayers.Count == 2)
-                {thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("BronzeMedal").GetComponent<SpriteRenderer>().sprite;}
-
             thisPlayer.icon.GetComponent<Image>().color = new Color32(255,255,255,255);
             thisPlayer.icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (70,70);
-            activePlayers.Remove(thisPlayer.seat);
-            Debug.Log("Active: "+intlist2string(activePlayers));
+            if (activePlayers.Count == 4)
+                {
+                    thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("GoldMedal").GetComponent<SpriteRenderer>().sprite;
+                    thisPlayer.place = "1st place!";
+                }
+            if (activePlayers.Count == 3)
+                {
+                    thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("SilverMedal").GetComponent<SpriteRenderer>().sprite;
+                    thisPlayer.place = "2nd place";
+                }
+            if (activePlayers.Count == 2)
+                {
+                    thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("BronzeMedal").GetComponent<SpriteRenderer>().sprite;
+                    thisPlayer.place = "3rd place";
+                }
         }
     }
 
@@ -735,7 +773,8 @@ public class S10Controller2 : MonoBehaviour
 
     public static void testMethod()
     {
-        Debug.Log(typesThatBeatMe["black10sONred10s"][0]);
+       players[0].icon.GetComponent<Image>().color = new Color32(255,255,255,255);
+       players[0].icon.GetComponent<Image>().sprite = GameObject.Find("GoldMedal").GetComponent<SpriteRenderer>().sprite;
     }
 
     public static string intlist2string(List<int> listOfIntegers)
@@ -753,7 +792,7 @@ public class S10Controller2 : MonoBehaviour
         exitRotate = true;
     }
 
-    public void ExitGame()
+    public static void ExitGame()
     {
         StartPage.SetActive(true);
         // Potentially more stuff here to reset things if quit mid game
