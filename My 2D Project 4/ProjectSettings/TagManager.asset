@@ -5,26 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - Card
-  - 2Tag
-  - 3Tag
-  - 4Tag
-  - 5Tag
-  - 6Tag
-  - 7Tag
-  - 8Tag
-  - 9Tag
-  - 10Tag
-  - JackTag
-  - QueenTag
-  - KingTag
-  - AceTag
-  - JokerTag
-  - ClubTag
-  - DiamondTag
-  - HeartTag
-  - SpadeTag
-  - RedTag
-  - BlackTag
   layers:
   - Default
   - TransparentFX

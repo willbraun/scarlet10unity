@@ -18,10 +18,8 @@ public class S10Controller2 : MonoBehaviour
     public static GameObject GameOverWindow;
     public GameObject GameOverWindowInspector;
 
-    public static List<List<GameObject>> hands = new List<List<GameObject>>();
     public static List<GameObject> tableCardObjects = new List<GameObject>();
     public static List<GameObject> selectedCardObjects = new List<GameObject>();   
-    public static float selectedYposition = -95.0f;
     public static int numPlayers = 4;
     public static int playerTurn = 0;
     public static int passCount = 0;
@@ -33,6 +31,8 @@ public class S10Controller2 : MonoBehaviour
     static bool stolen1 = false;
     static bool stolen2 = false;
     static List<int> activePlayers = Enumerable.Range(0,numPlayers).ToList();
+    static int gameCount = 0;
+    static int prevWinner = 0;
 
     public static Dictionary<string,List<string>> typesThatBeatMe = new Dictionary<string,List<string>>()
     {
@@ -93,6 +93,9 @@ public class S10Controller2 : MonoBehaviour
     {
         StartPage.SetActive(false);
         GameOverWindow.SetActive(false);
+        gameCount++;
+        activePlayers = Enumerable.Range(0,numPlayers).ToList();
+        List<List<GameObject>> hands = new List<List<GameObject>>();
         
         // Define deck
         var deckArray = GameObject.FindGameObjectsWithTag("Card");
@@ -156,13 +159,35 @@ public class S10Controller2 : MonoBehaviour
             players[i].cards = hands[i];
             players[i].seat = i;
             players[i].icon = GameObject.Find("Player"+(i+1).ToString());
+            players[i].icon.GetComponent<Image>().color = notTurnColor;
             players[i].cardCountText = GameObject.Find("P"+(i+1).ToString()+"Count");
         }
 
-        // I start
-        playerTurn = 0;
-        players[0].icon.GetComponent<Image>().color = turnColor;
-     
+        // Player with 3 of hearts starts first game, otherwise it's the previous game's winner
+        if (gameCount == 1)
+        {
+            foreach (player player in players)
+            {
+                if (player.cards.Contains(GameObject.Find("3ofhearts")))
+                {
+                    playerTurn = player.seat;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            playerTurn = prevWinner;
+        }
+
+        players[playerTurn].icon.GetComponent<Image>().color = turnColor;
+        Debug.Log(playerTurn);
+
+        if (playerTurn != 0)
+        {
+            playerTurn --;
+            Rotate();
+        }
     }
 
     public static void Reposition(List<GameObject> listOfCards, float increment, float yposition)
@@ -225,14 +250,7 @@ public class S10Controller2 : MonoBehaviour
 
     public static void PlayCardsComputer(player thisPlayer)
     {
-        // Update hands that are legal since the table has changed, choose play
         List<List<GameObject>> legalHands = GetLegalHands(thisPlayer.cards);
-        
-        // list legal hands in debug
-        // foreach (List<GameObject> LH in legalHands)
-        // {
-        //     Debug.Log(intlist2string(GetCardValues(LH)));
-        // }
 
         var rand = new System.Random();
         List<GameObject> computerPlay = legalHands[rand.Next(legalHands.Count-1)];
@@ -349,13 +367,10 @@ public class S10Controller2 : MonoBehaviour
 
     public static void ChangeTurn(int? newTurn)
     {
-        Debug.Log(playerTurn);
         player oldPlayer = players[playerTurn];
-
         int nextPlayerIndex = activePlayers.IndexOf(playerTurn) + 1;
         int newActivePlayer = nextPlayerIndex >= activePlayers.Count ? activePlayers[0] : activePlayers[nextPlayerIndex];
         playerTurn = newTurn ?? newActivePlayer;
-        Debug.Log(playerTurn);
 
         if (oldPlayer.cards.Count == 0)
         {
@@ -377,6 +392,7 @@ public class S10Controller2 : MonoBehaviour
     public static async void StealTurn()
     {
         exitRotate = true;
+        CardScript.ClearSelection();
         List<GameObject> sameValueCardsHuman = players[0].cards.FindAll(x => x.GetComponent<GetValueSuit>().returnValue() == GetCardValues(tableCardObjects)[0]);
         
         // Human steal double
@@ -741,6 +757,7 @@ public class S10Controller2 : MonoBehaviour
         {
             thisPlayer.icon.GetComponent<Image>().color = new Color32(255,255,255,255);
             thisPlayer.icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (70,70);
+            prevWinner = thisPlayer.seat;
             if (activePlayers.Count == 4)
                 {
                     thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("GoldMedal").GetComponent<SpriteRenderer>().sprite;
@@ -773,8 +790,7 @@ public class S10Controller2 : MonoBehaviour
 
     public static void testMethod()
     {
-       players[0].icon.GetComponent<Image>().color = new Color32(255,255,255,255);
-       players[0].icon.GetComponent<Image>().sprite = GameObject.Find("GoldMedal").GetComponent<SpriteRenderer>().sprite;
+       GameOverWindow.SetActive(true);
     }
 
     public static string intlist2string(List<int> listOfIntegers)
@@ -795,7 +811,8 @@ public class S10Controller2 : MonoBehaviour
     public static void ExitGame()
     {
         StartPage.SetActive(true);
-        // Potentially more stuff here to reset things if quit mid game
+        exitRotate = true;
+
     }
 
 }

@@ -10,12 +10,13 @@ public class CardScript : MonoBehaviour
     public static Vector2 previousPosition;
     public static Dictionary<GameObject,Vector2> selectedCardPrevPos = new Dictionary<GameObject,Vector2>(); 
     public static List<GameObject> selectedCardObjectsCS = S10Controller2.selectedCardObjects;
+    public static float selectedYposition = -95.0f;
 
     void OnMouseDown()
     {
         // "this" refers to the CardScript object
 
-        if (this.gameObject.transform.position.y != S10Controller2.selectedYposition)
+        if (this.gameObject.transform.position.y != selectedYposition)
         {
             // On Select, save previous position, add card object to "selected" dictionary and list
             previousPosition = this.gameObject.transform.position;
@@ -30,7 +31,7 @@ public class CardScript : MonoBehaviour
             selectedCardObjectsCS.Remove(this.gameObject);
         }
         
-        S10Controller2.Reposition(selectedCardObjectsCS,47.0f,S10Controller2.selectedYposition);
+        S10Controller2.Reposition(selectedCardObjectsCS,47.0f,selectedYposition);
 
     }
 
