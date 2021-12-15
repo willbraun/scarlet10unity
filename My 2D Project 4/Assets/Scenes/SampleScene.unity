@@ -2795,6 +2795,59 @@ MonoBehaviour:
   StartGameButtonInspector: {fileID: 1364642098}
   ExitGameButtonInspector: {fileID: 232252830}
   GameOverWindowInspector: {fileID: 1863783004}
+  deckArrayInspector:
+  - {fileID: 1621069441}
+  - {fileID: 1643486230}
+  - {fileID: 1584180035}
+  - {fileID: 1326165306}
+  - {fileID: 1234168787}
+  - {fileID: 1935272149}
+  - {fileID: 119441021}
+  - {fileID: 1203540867}
+  - {fileID: 2146033440}
+  - {fileID: 645097325}
+  - {fileID: 1226072415}
+  - {fileID: 1590337501}
+  - {fileID: 1449981444}
+  - {fileID: 2122249596}
+  - {fileID: 1033355480}
+  - {fileID: 1513954071}
+  - {fileID: 152805895}
+  - {fileID: 620321894}
+  - {fileID: 209445200}
+  - {fileID: 1316825665}
+  - {fileID: 1267992279}
+  - {fileID: 2006171100}
+  - {fileID: 1931098496}
+  - {fileID: 1802861749}
+  - {fileID: 826287487}
+  - {fileID: 2060637825}
+  - {fileID: 785579405}
+  - {fileID: 771378862}
+  - {fileID: 962011277}
+  - {fileID: 100221357}
+  - {fileID: 1494111045}
+  - {fileID: 1881868128}
+  - {fileID: 445923137}
+  - {fileID: 1115354089}
+  - {fileID: 642529947}
+  - {fileID: 896132148}
+  - {fileID: 796003374}
+  - {fileID: 1582404002}
+  - {fileID: 1602119514}
+  - {fileID: 148525316}
+  - {fileID: 316269122}
+  - {fileID: 1860042854}
+  - {fileID: 760197436}
+  - {fileID: 71855314}
+  - {fileID: 1750245525}
+  - {fileID: 640803113}
+  - {fileID: 323514363}
+  - {fileID: 1965193639}
+  - {fileID: 770110303}
+  - {fileID: 1129443129}
+  - {fileID: 820013452}
+  - {fileID: 917324642}
 --- !u!4 &413053798
 Transform:
   m_ObjectHideFlags: 0

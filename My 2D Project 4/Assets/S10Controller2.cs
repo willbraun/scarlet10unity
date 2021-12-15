@@ -17,14 +17,16 @@ public class S10Controller2 : MonoBehaviour
     public GameObject ExitGameButtonInspector;
     public static GameObject GameOverWindow;
     public GameObject GameOverWindowInspector;
+    public static GameObject[] deckArray;
+    public GameObject[] deckArrayInspector;
 
     public static List<GameObject> tableCardObjects = new List<GameObject>();
     public static List<GameObject> selectedCardObjects = new List<GameObject>();   
-    public static int numPlayers = 4;
-    public static int playerTurn = 0;
-    public static int passCount = 0;
-    public static string tableType = "empty";
-    public static string playedType = "empty";
+    static int numPlayers = 4;
+    static int playerTurn = 3;
+    static int passCount = 0;
+    static string tableType = "empty";
+    static string playedType = "empty";
     static Color32 turnColor = new Color32(255,255,0,255);
     static Color32 notTurnColor = new Color32(183,183,183,255);
     static bool exitRotate = false;
@@ -32,9 +34,9 @@ public class S10Controller2 : MonoBehaviour
     static bool stolen2 = false;
     static List<int> activePlayers = Enumerable.Range(0,numPlayers).ToList();
     static int gameCount = 0;
-    static int prevWinner = 0;
+    static int prevWinner = 3;
 
-    public static Dictionary<string,List<string>> typesThatBeatMe = new Dictionary<string,List<string>>()
+    static Dictionary<string,List<string>> typesThatBeatMe = new Dictionary<string,List<string>>()
     {
         {"empty",new List<string>() {"single","double","S3","S4","S5","S6","S7","S8","S9","S10","S11","S12","D6","D8","D10","D12","D14","D16","D18","triple","4-4-Ace","doublejoker","quad","red10s"}},
         {"single",new List<string>() {"triple","4-4-Ace","doublejoker","quad","red10s"}},
@@ -73,7 +75,7 @@ public class S10Controller2 : MonoBehaviour
         public string place {get; set;}
     }
 
-    public static player[] players = new player[numPlayers];
+    static player[] players = new player[numPlayers];
 
     private void Awake()
     {
@@ -81,6 +83,7 @@ public class S10Controller2 : MonoBehaviour
         StartGameButton = StartGameButtonInspector;
         ExitGameButton = ExitGameButtonInspector;
         GameOverWindow = GameOverWindowInspector;
+        deckArray = deckArrayInspector;
     }
 
     public void Start()
@@ -94,11 +97,14 @@ public class S10Controller2 : MonoBehaviour
         StartPage.SetActive(false);
         GameOverWindow.SetActive(false);
         gameCount++;
+        passCount = 0;
+        tableType = "empty";
+        playedType = "empty";
+        exitRotate = false;
+        stolen1 = false;
+        stolen2 = false;
         activePlayers = Enumerable.Range(0,numPlayers).ToList();
         List<List<GameObject>> hands = new List<List<GameObject>>();
-        
-        // Define deck
-        var deckArray = GameObject.FindGameObjectsWithTag("Card");
 
         foreach(GameObject card in deckArray)
         {
@@ -107,8 +113,6 @@ public class S10Controller2 : MonoBehaviour
         }
 
         List<GameObject> deck = new List<GameObject>(deckArray);
-        deck.Remove(GameObject.Find("Redjoker"));
-        deck.Remove(GameObject.Find("Blackjoker"));
 
         // Shuffle deck - for 1000 turns, switch the values of two random cards
         int deckSize = deck.Count;
@@ -160,6 +164,8 @@ public class S10Controller2 : MonoBehaviour
             players[i].seat = i;
             players[i].icon = GameObject.Find("Player"+(i+1).ToString());
             players[i].icon.GetComponent<Image>().color = notTurnColor;
+            players[i].icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (50,50);
+            players[i].icon.GetComponent<Image>().sprite = null;
             players[i].cardCountText = GameObject.Find("P"+(i+1).ToString()+"Count");
         }
 
@@ -181,7 +187,6 @@ public class S10Controller2 : MonoBehaviour
         }
 
         players[playerTurn].icon.GetComponent<Image>().color = turnColor;
-        Debug.Log(playerTurn);
 
         if (playerTurn != 0)
         {
@@ -268,6 +273,7 @@ public class S10Controller2 : MonoBehaviour
 
     public static async void Rotate()
     {
+        // Check for game over
         if (activePlayers.Count == 1)
         {
             player lastPlayer = players[activePlayers[0]];
@@ -345,6 +351,7 @@ public class S10Controller2 : MonoBehaviour
     {
         Compare(playedCards,tableCardObjects);
         tableType = playedType;
+        Debug.Log(intlist2string(GetCardValues(playedCards)));
 
         foreach (GameObject card in tableCardObjects)
         {
