@@ -27,8 +27,6 @@ public class S10Controller2 : MonoBehaviour
     static int passCount = 0;
     static string tableType = "empty";
     static string playedType = "empty";
-    static Color32 turnColor = new Color32(255,255,0,255);
-    static Color32 notTurnColor = new Color32(183,183,183,255);
     static bool exitRotate = false;
     static bool stolen1 = false;
     static bool stolen2 = false;
@@ -71,8 +69,8 @@ public class S10Controller2 : MonoBehaviour
         public List<GameObject> cards {get; set;}
         public int seat {get; set;}
         public GameObject icon {get; set;}
-        public GameObject cardCountText {get; set;}
         public string place {get; set;}
+        public GameObject scoreCard {get; set;}
     }
 
     static player[] players = new player[numPlayers];
@@ -94,17 +92,24 @@ public class S10Controller2 : MonoBehaviour
 
     public static void StartGame()
     {
-        StartPage.SetActive(false);
-        GameOverWindow.SetActive(false);
         gameCount++;
         passCount = 0;
         tableType = "empty";
         playedType = "empty";
+        tableCardObjects.Clear();
+        selectedCardObjects.Clear();
         exitRotate = false;
         stolen1 = false;
         stolen2 = false;
         activePlayers = Enumerable.Range(0,numPlayers).ToList();
         List<List<GameObject>> hands = new List<List<GameObject>>();
+        List<GameObject> scoreCards = new List<GameObject>();
+        List<Color32> playerColors = new List<Color32>(){
+            new Color32(71,124,255,255),
+            new Color32(255,188,4,255),
+            new Color32(0,159,29,255),
+            new Color32(255,0,0,255)
+        };
 
         foreach(GameObject card in deckArray)
         {
@@ -163,15 +168,17 @@ public class S10Controller2 : MonoBehaviour
             players[i].cards = hands[i];
             players[i].seat = i;
             players[i].icon = GameObject.Find("Player"+(i+1).ToString());
-            players[i].icon.GetComponent<Image>().color = notTurnColor;
+            players[i].icon.GetComponent<Image>().color = playerColors[i];
             players[i].icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (50,50);
             players[i].icon.GetComponent<Image>().sprite = null;
-            players[i].cardCountText = GameObject.Find("P"+(i+1).ToString()+"Count");
+            players[i].scoreCard = GameObject.Find("P"+(i+1).ToString()+"Score");
+            scoreCards.Add(players[i].scoreCard);
         }
 
         // Player with 3 of hearts starts first game, otherwise it's the previous game's winner
         if (gameCount == 1)
         {
+            StartPage.SetActive(false);
             foreach (player player in players)
             {
                 if (player.cards.Contains(GameObject.Find("3ofhearts")))
@@ -183,10 +190,20 @@ public class S10Controller2 : MonoBehaviour
         }
         else
         {
+            GameOverWindow.SetActive(false);
             playerTurn = prevWinner;
+            float scoreCardYpos = 247.0f;
+
+            scoreCards.Sort((x,y) => Int32.Parse(y.transform.GetChild(1).GetComponent<UnityEngine.UI.Text>().text).CompareTo(Int32.Parse(x.transform.GetChild(1).GetComponent<UnityEngine.UI.Text>().text)));
+
+            foreach (GameObject scoreCard in scoreCards)
+            {
+                scoreCard.transform.position = new Vector2(-306,scoreCardYpos);
+                scoreCardYpos -= 20;
+            }
         }
 
-        players[playerTurn].icon.GetComponent<Image>().color = turnColor;
+        players[playerTurn].icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (70,70);
 
         if (playerTurn != 0)
         {
@@ -236,7 +253,12 @@ public class S10Controller2 : MonoBehaviour
             Reposition(players[0].cards,47.0f,-205.0f); 
             CardScript.selectedCardPrevPos.Clear();
             selectedCardObjects.Clear();
-            CheckIfOut(players[0]);
+            
+            if (players[0].cards.Count == 0)
+            {
+                PlayerDone(players[0]);
+            }
+
             Rotate();
         }
         else 
@@ -273,15 +295,14 @@ public class S10Controller2 : MonoBehaviour
 
     public static async void Rotate()
     {
+        ChangeTurn(null);
+
         // Check for game over
         if (activePlayers.Count == 1)
         {
-            player lastPlayer = players[activePlayers[0]];
-            lastPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("4thPlaceSadFace").GetComponent<SpriteRenderer>().sprite;
-            lastPlayer.cardCountText.GetComponent<UnityEngine.UI.Text>().text = "";
-            lastPlayer.place = "4th place";
-            lastPlayer.icon.GetComponent<Image>().color = new Color32(255,255,255,255);
-            lastPlayer.icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (70,70);
+            players[activePlayers[0]].icon.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = "";
+            PlayerDone(players[activePlayers[0]]);
+
             Debug.Log("Game Over");
             
             await Task.Delay(2000);
@@ -290,7 +311,6 @@ public class S10Controller2 : MonoBehaviour
             return;
         }
         
-        ChangeTurn(null);
         exitRotate = false;
         stolen1 = false;
         stolen2 = false;
@@ -340,7 +360,12 @@ public class S10Controller2 : MonoBehaviour
 
         GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = false;
         PlayCardsComputer(players[playerTurn]);
-        CheckIfOut(players[playerTurn]);
+        
+        if (players[playerTurn].cards.Count == 0)
+        {
+            PlayerDone(players[playerTurn]);
+        }
+        
 
         Debug.Log("Rotate");
         Rotate();
@@ -386,14 +411,14 @@ public class S10Controller2 : MonoBehaviour
         }
         else
         {
-            oldPlayer.icon.GetComponent<Image>().color = notTurnColor;
+            oldPlayer.icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (50,50);
         }
         
         playerTurn = (playerTurn == 4) ? 0 : playerTurn;
         bool isMyTurn = playerTurn == 0;
         GameObject.Find("PlayCardsButton").GetComponent<Button>().interactable = isMyTurn;
         GameObject.Find("PassButton").GetComponent<Button>().interactable = isMyTurn;
-        players[playerTurn].icon.GetComponent<Image>().color = turnColor;
+        players[playerTurn].icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (70,70);
     }
 
     public static async void StealTurn()
@@ -758,40 +783,49 @@ public class S10Controller2 : MonoBehaviour
         GameObject.Find("ErrorText").GetComponent<UnityEngine.UI.Text>().text = message;
     }
 
-    public static void CheckIfOut(player thisPlayer)
+    public static void PlayerDone(player thisPlayer)
     {
-        if (thisPlayer.cards.Count == 0)
-        {
-            thisPlayer.icon.GetComponent<Image>().color = new Color32(255,255,255,255);
-            thisPlayer.icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (70,70);
-            prevWinner = thisPlayer.seat;
-            if (activePlayers.Count == 4)
-                {
-                    thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("GoldMedal").GetComponent<SpriteRenderer>().sprite;
-                    thisPlayer.place = "1st place!";
-                }
-            if (activePlayers.Count == 3)
-                {
-                    thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("SilverMedal").GetComponent<SpriteRenderer>().sprite;
-                    thisPlayer.place = "2nd place";
-                }
-            if (activePlayers.Count == 2)
-                {
-                    thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("BronzeMedal").GetComponent<SpriteRenderer>().sprite;
-                    thisPlayer.place = "3rd place";
-                }
-        }
+        thisPlayer.icon.GetComponent<Image>().color = new Color32(255,255,255,255);
+        thisPlayer.icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (60,60);
+        Transform thisScore = thisPlayer.scoreCard.transform.GetChild(1);
+        int thisScoreInt = Int32.Parse(thisScore.GetComponent<UnityEngine.UI.Text>().text);
+        if (activePlayers.Count == 4)
+            {
+                thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("GoldMedal").GetComponent<SpriteRenderer>().sprite;
+                thisScore.GetComponent<UnityEngine.UI.Text>().text = (thisScoreInt += 2).ToString();
+                thisPlayer.place = "1st place!";
+                prevWinner = thisPlayer.seat;
+            }
+        if (activePlayers.Count == 3)
+            {
+                thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("SilverMedal").GetComponent<SpriteRenderer>().sprite;
+                thisScore.GetComponent<UnityEngine.UI.Text>().text = (thisScoreInt += 1).ToString();
+                thisPlayer.place = "2nd place";
+            }
+        if (activePlayers.Count == 2)
+            {
+                thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("BronzeMedal").GetComponent<SpriteRenderer>().sprite;
+                thisScore.GetComponent<UnityEngine.UI.Text>().text = (thisScoreInt -= 1).ToString();
+                thisPlayer.place = "3rd place";
+            }
+        if (activePlayers.Count == 1)
+            {
+                thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("4thPlaceSadFace").GetComponent<SpriteRenderer>().sprite;
+                thisScore.GetComponent<UnityEngine.UI.Text>().text = (thisScoreInt -= 2).ToString();
+                thisPlayer.place = "4th place";
+            }
+
     }
 
     public static void ChangeCountText(player thisPlayer)
     {
         if (0 < thisPlayer.cards.Count && thisPlayer.cards.Count < 6)
         {
-            thisPlayer.cardCountText.GetComponent<UnityEngine.UI.Text>().text = thisPlayer.cards.Count.ToString();
+            thisPlayer.icon.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = thisPlayer.cards.Count.ToString();
         }
         else
         {
-            thisPlayer.cardCountText.GetComponent<UnityEngine.UI.Text>().text = "";
+            thisPlayer.icon.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = "";
         }
     }
 
