@@ -358,7 +358,7 @@ public class S10Controller2 : MonoBehaviour
             return;
         }
 
-        GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = false;
+        StealTurnButtonOn(false);
         PlayCardsComputer(players[playerTurn]);
         
         if (players[playerTurn].cards.Count == 0)
@@ -436,7 +436,7 @@ public class S10Controller2 : MonoBehaviour
             tableType = "empty";
             stolen1 = true;
             ChangeTurn(0);
-            GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = false;
+            StealTurnButtonOn(false);
             Debug.Log("human steal double");
 
             await CheckOthersForSteal(players[0],1);
@@ -460,7 +460,7 @@ public class S10Controller2 : MonoBehaviour
             Reposition(players[0].cards,47.0f,-205);
             tableType = "empty";
             ChangeTurn(players[0].cards.Count == 0 ? 1 : 0);
-            GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = false;
+            StealTurnButtonOn(false);
             Debug.Log("steal single human");
         }
         else
@@ -486,7 +486,7 @@ public class S10Controller2 : MonoBehaviour
                     {
                         if (thisPlayer.seat == 0)
                         {
-                            GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = true;
+                            StealTurnButtonOn(true);
                             Debug.Log("Wait for human");
                             break;
                         } 
@@ -502,7 +502,7 @@ public class S10Controller2 : MonoBehaviour
                                         {stolen1 = true;}
                                     if (targetCardCount == 1)
                                         {stolen2 = true;}
-                                    GameObject.Find("StealTurnButton").GetComponent<Button>().interactable = false;
+                                    StealTurnButtonOn(false);
                                     ChangeTurn(thisPlayer.seat);
                                     break;
                                 }
@@ -829,9 +829,26 @@ public class S10Controller2 : MonoBehaviour
         }
     }
 
+    public static void StealTurnButtonOn(bool buttonState)
+    {
+        GameObject button = GameObject.Find("StealTurnButton");
+        button.GetComponent<Button>().interactable = buttonState;
+
+        if (buttonState)
+        {
+            button.GetComponent<RectTransform>().sizeDelta = new Vector2(220.0f,75.0f);
+            button.transform.position = new Vector2(70.0f,-12.0f);
+        }
+        else
+        {
+            button.GetComponent<RectTransform>().sizeDelta = new Vector2(120.0f,30.0f);
+            button.transform.position = new Vector2(111.0f,-23.389f);
+        }
+    }
+
     public static void testMethod()
     {
-       GameOverWindow.SetActive(true);
+       StealTurnButtonOn(true);
     }
 
     public static string intlist2string(List<int> listOfIntegers)
