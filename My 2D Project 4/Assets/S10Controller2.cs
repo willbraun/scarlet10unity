@@ -15,6 +15,8 @@ public class S10Controller2 : MonoBehaviour
     public GameObject StartGameButtonInspector;
     public static GameObject ExitGameButton;
     public GameObject ExitGameButtonInspector;
+    public static GameObject HowToPlayPage;
+    public GameObject HowToPlayPageInspector;
     public static GameObject GameOverWindow;
     public GameObject GameOverWindowInspector;
     public static GameObject[] deckArray;
@@ -22,17 +24,17 @@ public class S10Controller2 : MonoBehaviour
 
     public static List<GameObject> tableCardObjects = new List<GameObject>();
     public static List<GameObject> selectedCardObjects = new List<GameObject>();   
-    static int numPlayers = 4;
-    static int playerTurn = 3;
-    static int passCount = 0;
-    static string tableType = "empty";
-    static string playedType = "empty";
-    static bool exitRotate = false;
-    static bool stolen1 = false;
-    static bool stolen2 = false;
-    static List<int> activePlayers = Enumerable.Range(0,numPlayers).ToList();
-    static int gameCount = 0;
-    static int prevWinner = 3;
+    private static int numPlayers = 4;
+    private static int playerTurn = 3;
+    private static int passCount = 0;
+    private static string tableType = "empty";
+    private static string playedType = "empty";
+    private static bool exitRotate = false;
+    private static bool stolen1 = false;
+    private static bool stolen2 = false;
+    private static List<int> activePlayers = Enumerable.Range(0,numPlayers).ToList();
+    private static int gameCount = 0;
+    private static int prevWinner = 3;
 
     static Dictionary<string,List<string>> typesThatBeatMe = new Dictionary<string,List<string>>()
     {
@@ -80,17 +82,19 @@ public class S10Controller2 : MonoBehaviour
         StartPage = StartPageInspector;
         StartGameButton = StartGameButtonInspector;
         ExitGameButton = ExitGameButtonInspector;
+        HowToPlayPage = HowToPlayPageInspector;
         GameOverWindow = GameOverWindowInspector;
         deckArray = deckArrayInspector;
     }
 
-    public void Start()
+    private void Start()
     {
         StartPageInspector.SetActive(true);
         GameOverWindowInspector.SetActive(false);
+        HowToPlayPageInspector.SetActive(false);
     }
 
-    public static void StartGame()
+    private static void StartGame()
     {
         gameCount++;
         passCount = 0;
@@ -198,12 +202,13 @@ public class S10Controller2 : MonoBehaviour
 
             foreach (GameObject scoreCard in scoreCards)
             {
-                scoreCard.transform.position = new Vector2(-306,scoreCardYpos);
+                scoreCard.transform.position = new Vector2(-285,scoreCardYpos);
                 scoreCardYpos -= 20;
             }
         }
 
         players[playerTurn].icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (70,70);
+        ShowOrHideMyButtons();
 
         if (playerTurn != 0)
         {
@@ -243,7 +248,7 @@ public class S10Controller2 : MonoBehaviour
         }
     }
 
-    public static void PlayCards()
+    private static void PlayCards()
     {
         string comparisonResult = Compare(selectedCardObjects,tableCardObjects);
 
@@ -268,14 +273,14 @@ public class S10Controller2 : MonoBehaviour
         // You can't select Pass object, will never appear here. Human must pass with button.
     }
 
-    public static void Pass()
+    private static void Pass()
     {
         passCount++;
         DisplayError("");
         Rotate();
     }
 
-    public static void PlayCardsComputer(player thisPlayer)
+    private static void PlayCardsComputer(player thisPlayer)
     {
         List<List<GameObject>> legalHands = GetLegalHands(thisPlayer.cards);
 
@@ -293,9 +298,9 @@ public class S10Controller2 : MonoBehaviour
         }
     }
 
-    public static async void Rotate()
+    private static async void Rotate()
     {
-        ChangeTurn(null);
+        await ChangeTurn(null);
 
         // Check for game over
         if (activePlayers.Count == 1)
@@ -366,13 +371,12 @@ public class S10Controller2 : MonoBehaviour
             PlayerDone(players[playerTurn]);
         }
         
-
         Debug.Log("Rotate");
         Rotate();
         
     }
 
-    public static void ReplaceTable(player thisPlayer, List<GameObject> playedCards)
+    private static void ReplaceTable(player thisPlayer, List<GameObject> playedCards)
     {
         Compare(playedCards,tableCardObjects);
         tableType = playedType;
@@ -397,7 +401,7 @@ public class S10Controller2 : MonoBehaviour
         DisplayError("");
     }
 
-    public static void ChangeTurn(int? newTurn)
+    private static async Task ChangeTurn(int? newTurn)
     {
         player oldPlayer = players[playerTurn];
         int nextPlayerIndex = activePlayers.IndexOf(playerTurn) + 1;
@@ -414,14 +418,14 @@ public class S10Controller2 : MonoBehaviour
             oldPlayer.icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (50,50);
         }
         
+        await Task.Delay(100);
+
         playerTurn = (playerTurn == 4) ? 0 : playerTurn;
-        bool isMyTurn = playerTurn == 0;
-        GameObject.Find("PlayCardsButton").GetComponent<Button>().interactable = isMyTurn;
-        GameObject.Find("PassButton").GetComponent<Button>().interactable = isMyTurn;
+        ShowOrHideMyButtons();
         players[playerTurn].icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (70,70);
     }
 
-    public static async void StealTurn()
+    private static async void StealTurn()
     {
         exitRotate = true;
         CardScript.ClearSelection();
@@ -435,7 +439,7 @@ public class S10Controller2 : MonoBehaviour
             Reposition(players[0].cards,47.0f,-205);
             tableType = "empty";
             stolen1 = true;
-            ChangeTurn(0);
+            await ChangeTurn(0);
             StealTurnButtonOn(false);
             Debug.Log("human steal double");
 
@@ -446,7 +450,7 @@ public class S10Controller2 : MonoBehaviour
             if (stolen2)
             {
                 int prevIndexSteal = playerTurn == 0 ? 3 : playerTurn-1;
-                ChangeTurn(prevIndexSteal);
+                await ChangeTurn(prevIndexSteal);
                 Debug.Log("comp steal single after human");
                 Rotate();                
             }
@@ -459,7 +463,7 @@ public class S10Controller2 : MonoBehaviour
             ReplaceTable(players[0],stolenSingleHuman);
             Reposition(players[0].cards,47.0f,-205);
             tableType = "empty";
-            ChangeTurn(players[0].cards.Count == 0 ? 1 : 0);
+            await ChangeTurn(players[0].cards.Count == 0 ? 1 : 0);
             StealTurnButtonOn(false);
             Debug.Log("steal single human");
         }
@@ -470,7 +474,7 @@ public class S10Controller2 : MonoBehaviour
 
     }
 
-    public static async Task CheckOthersForSteal(player excludedPlayer, int targetCardCount)
+    private static async Task CheckOthersForSteal(player excludedPlayer, int targetCardCount)
     {
         player[] otherPlayers = Array.FindAll(players, x => x != excludedPlayer).ToArray(); 
             
@@ -503,7 +507,7 @@ public class S10Controller2 : MonoBehaviour
                                     if (targetCardCount == 1)
                                         {stolen2 = true;}
                                     StealTurnButtonOn(false);
-                                    ChangeTurn(thisPlayer.seat);
+                                    await ChangeTurn(thisPlayer.seat);
                                     break;
                                 }
                         }
@@ -512,7 +516,7 @@ public class S10Controller2 : MonoBehaviour
 
     }
 
-    public static List<List<GameObject>> GetLegalHands(List<GameObject> listOfCards)
+    private static List<List<GameObject>> GetLegalHands(List<GameObject> listOfCards)
     {
 
         GameObject[] temporaryComboArray = new GameObject[18];
@@ -555,7 +559,7 @@ public class S10Controller2 : MonoBehaviour
 
     }
 
-    public static string Compare(List<GameObject> playedCards,List<GameObject> tableCards)
+    private static string Compare(List<GameObject> playedCards,List<GameObject> tableCards)
     {
         playedType = Characterize(playedCards);
         List<int> playedCardValues = GetCardValues(playedCards);
@@ -611,11 +615,9 @@ public class S10Controller2 : MonoBehaviour
         {
             return "Incompatible hand";
         }
-
-
     }
 
-    public static string Characterize(List<GameObject> listOfCards)
+    private static string Characterize(List<GameObject> listOfCards)
     {
         List<int> theseCardValues = GetCardValues(listOfCards);
         List<string> theseCardSuits = GetCardSuits(listOfCards);
@@ -699,7 +701,7 @@ public class S10Controller2 : MonoBehaviour
 
     }
 
-    public static List<int> GetCardValues(List<GameObject> listOfCards)
+    private static List<int> GetCardValues(List<GameObject> listOfCards)
     {
         List<int> cardValues = new List<int>();
 
@@ -711,7 +713,7 @@ public class S10Controller2 : MonoBehaviour
         return cardValues;
     }
 
-    public static List<string> GetCardSuits(List<GameObject> listOfCards)
+    private static List<string> GetCardSuits(List<GameObject> listOfCards)
     {  
         List<string> cardSuits = new List<string>();
 
@@ -723,7 +725,7 @@ public class S10Controller2 : MonoBehaviour
         return cardSuits;
     }   
 
-    public static bool isConsecutive(List<int> listOfCardValues)
+    private static bool isConsecutive(List<int> listOfCardValues)
     {
         for (int i = 0; i < listOfCardValues.Count - 1; i++)
         {
@@ -736,7 +738,7 @@ public class S10Controller2 : MonoBehaviour
         return true;
     }
 
-    public static bool isAllSame(List<int> listOfCardValues)
+    private static bool isAllSame(List<int> listOfCardValues)
     {
         for (int i = 0; i < listOfCardValues.Count - 1; i++)
         {
@@ -749,12 +751,12 @@ public class S10Controller2 : MonoBehaviour
         return true;
     }
 
-    public static bool isStraight(List<int> listOfCardValues)
+    private static bool isStraight(List<int> listOfCardValues)
     {
         return isConsecutive(listOfCardValues) && !listOfCardValues.Contains(15);
     }
 
-    public static bool isStraightOfDoubles(List<int> listOfCardValues)
+    private static bool isStraightOfDoubles(List<int> listOfCardValues)
     {
         if (listOfCardValues.Count < 6 || listOfCardValues.Count % 2 == 1)
         {
@@ -778,12 +780,12 @@ public class S10Controller2 : MonoBehaviour
                oddSDcards[0] == evenSDcards[0];
     }
 
-    public static void DisplayError(string message)
+    private static void DisplayError(string message)
     {
         GameObject.Find("ErrorText").GetComponent<UnityEngine.UI.Text>().text = message;
     }
 
-    public static void PlayerDone(player thisPlayer)
+    private static void PlayerDone(player thisPlayer)
     {
         thisPlayer.icon.GetComponent<Image>().color = new Color32(255,255,255,255);
         thisPlayer.icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (60,60);
@@ -817,7 +819,7 @@ public class S10Controller2 : MonoBehaviour
 
     }
 
-    public static void ChangeCountText(player thisPlayer)
+    private static void ChangeCountText(player thisPlayer)
     {
         if (0 < thisPlayer.cards.Count && thisPlayer.cards.Count < 6)
         {
@@ -829,7 +831,7 @@ public class S10Controller2 : MonoBehaviour
         }
     }
 
-    public static void StealTurnButtonOn(bool buttonState)
+    private static void StealTurnButtonOn(bool buttonState)
     {
         GameObject button = GameObject.Find("StealTurnButton");
         button.GetComponent<Button>().interactable = buttonState;
@@ -846,12 +848,12 @@ public class S10Controller2 : MonoBehaviour
         }
     }
 
-    public static void testMethod()
+    private static void testMethod()
     {
        StealTurnButtonOn(true);
     }
 
-    public static string intlist2string(List<int> listOfIntegers)
+    private static string intlist2string(List<int> listOfIntegers)
     {
         string result = "";
         foreach(int num in listOfIntegers)
@@ -861,12 +863,29 @@ public class S10Controller2 : MonoBehaviour
         return result;
     }
 
-    public static void ExitRotateManual()
+    private static void ExitRotateManual()
     {
         exitRotate = true;
     }
 
-    public static void ExitGame()
+    private static void ShowOrHideMyButtons()
+    {
+        bool isMyTurn = playerTurn == 0;
+        GameObject.Find("PlayCardsButton").GetComponent<Button>().interactable = isMyTurn;
+        GameObject.Find("PassButton").GetComponent<Button>().interactable = isMyTurn;
+    }
+
+    private static void OpenHowToPlay()
+    {
+        HowToPlayPage.SetActive(true);
+    }
+    
+    private static void CloseHowToPlay()
+    {
+        HowToPlayPage.SetActive(false);
+    }
+
+    private static void ExitGame()
     {
         StartPage.SetActive(true);
         exitRotate = true;
