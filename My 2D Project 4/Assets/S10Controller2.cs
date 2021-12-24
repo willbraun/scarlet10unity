@@ -96,6 +96,7 @@ public class S10Controller2 : MonoBehaviour
 
     private static void StartGame()
     {
+        SoundManagerScript.PlaySound("StartSound");
         gameCount++;
         passCount = 0;
         tableType = "empty";
@@ -267,6 +268,7 @@ public class S10Controller2 : MonoBehaviour
                 PlayerDone(players[0]);
             }
 
+            StealTurnButtonOn(false);
             Rotate();
         }
         else 
@@ -315,6 +317,7 @@ public class S10Controller2 : MonoBehaviour
             
             await Task.Delay(2000);
             GameOverWindow.SetActive(true);
+            SoundManagerScript.PlaySound("GameOverSound");
             GameObject.Find("YouGotXPlaceText").GetComponent<UnityEngine.UI.Text>().text = "You got "+players[0].place;
             return;
         }
@@ -802,6 +805,7 @@ public class S10Controller2 : MonoBehaviour
         int thisScoreInt = Int32.Parse(thisScore.GetComponent<UnityEngine.UI.Text>().text);
         if (activePlayers.Count == 4)
             {
+                SoundManagerScript.PlaySound("ResultSound");
                 thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("GoldMedal").GetComponent<SpriteRenderer>().sprite;
                 thisScore.GetComponent<UnityEngine.UI.Text>().text = (thisScoreInt += 2).ToString();
                 thisPlayer.place = "1st place!";
@@ -809,12 +813,14 @@ public class S10Controller2 : MonoBehaviour
             }
         if (activePlayers.Count == 3)
             {
+                SoundManagerScript.PlaySound("ResultSound");
                 thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("SilverMedal").GetComponent<SpriteRenderer>().sprite;
                 thisScore.GetComponent<UnityEngine.UI.Text>().text = (thisScoreInt += 1).ToString();
                 thisPlayer.place = "2nd place";
             }
         if (activePlayers.Count == 2)
             {
+                SoundManagerScript.PlaySound("ResultSound");
                 thisPlayer.icon.GetComponent<Image>().sprite = GameObject.Find("BronzeMedal").GetComponent<SpriteRenderer>().sprite;
                 thisScore.GetComponent<UnityEngine.UI.Text>().text = (thisScoreInt -= 1).ToString();
                 thisPlayer.place = "3rd place";
@@ -903,9 +909,9 @@ public class S10Controller2 : MonoBehaviour
 
     private static void ExitGame()
     {
+        SoundManagerScript.PlaySound("ExitSound");
         StartPage.SetActive(true);
         exitRotate = true;
-
     }
 
 }
