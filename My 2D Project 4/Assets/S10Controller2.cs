@@ -175,6 +175,7 @@ public class S10Controller2 : MonoBehaviour
             players[i].icon.GetComponent<Image>().color = playerColors[i];
             players[i].icon.GetComponent<RectTransform>().sizeDelta = new Vector2 (50,50);
             players[i].icon.GetComponent<Image>().sprite = null;
+            players[i].icon.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = "";
             players[i].scoreCard = GameObject.Find("P"+(i+1).ToString()+"Score");
             scoreCards.Add(players[i].scoreCard);
         }
@@ -215,6 +216,8 @@ public class S10Controller2 : MonoBehaviour
             playerTurn --;
             Rotate();
         }
+
+        StartPage.SetActive(false);
     }
 
     public static void Reposition(List<GameObject> listOfCards, float increment, float yposition)
@@ -275,7 +278,7 @@ public class S10Controller2 : MonoBehaviour
 
     private static void Pass()
     {
-        passCount++;
+        PassTurn();
         DisplayError("");
         Rotate();
     }
@@ -294,7 +297,7 @@ public class S10Controller2 : MonoBehaviour
         }
         else
         {
-            passCount++;
+            PassTurn();
         }
     }
 
@@ -381,6 +384,7 @@ public class S10Controller2 : MonoBehaviour
         Compare(playedCards,tableCardObjects);
         tableType = playedType;
         Debug.Log(intlist2string(GetCardValues(playedCards)));
+        SoundManagerScript.PlaySound("NormalPlay");
 
         foreach (GameObject card in tableCardObjects)
         {
@@ -399,6 +403,11 @@ public class S10Controller2 : MonoBehaviour
         passCount = 0;
         ChangeCountText(thisPlayer);
         DisplayError("");
+
+        if (tableType == "red10s")
+        {
+            SoundManagerScript.PlaySound("Red10sound");
+        }
     }
 
     private static async Task ChangeTurn(int? newTurn)
@@ -840,6 +849,7 @@ public class S10Controller2 : MonoBehaviour
         {
             button.GetComponent<RectTransform>().sizeDelta = new Vector2(220.0f,75.0f);
             button.transform.position = new Vector2(70.0f,-12.0f);
+            SoundManagerScript.PlaySound("StealNotification");
         }
         else
         {
@@ -873,6 +883,12 @@ public class S10Controller2 : MonoBehaviour
         bool isMyTurn = playerTurn == 0;
         GameObject.Find("PlayCardsButton").GetComponent<Button>().interactable = isMyTurn;
         GameObject.Find("PassButton").GetComponent<Button>().interactable = isMyTurn;
+    }
+
+    private static void PassTurn()
+    {
+        passCount++;
+        SoundManagerScript.PlaySound("PassSound");
     }
 
     private static void OpenHowToPlay()
