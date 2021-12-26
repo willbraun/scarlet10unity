@@ -27,29 +27,37 @@ public class SoundManagerScript : MonoBehaviour
         switch (clip)
         {
             case "NormalPlay":
+                audioSrc.volume = 1.0f;
                 audioSrc.PlayOneShot(playCardSound);
                 break;
             case "StealNotification":
+                audioSrc.volume = 0.7f;
                 audioSrc.PlayOneShot(stealNotificationSound);
                 break;
             case "PassSound":
+                audioSrc.volume = 1.0f;
                 audioSrc.PlayOneShot(passSound);
                 break;
             case "Red10sound":
+                audioSrc.volume = 0.2f;
                 audioSrc.PlayOneShot(red10sound);
                 break;
             case "ResultSound":
+                audioSrc.volume = 0.2f;
                 audioSrc.PlayOneShot(resultSound);
                 break;
             case "GameOverSound":
+                audioSrc.volume = 0.8f;
                 audioSrc.PlayOneShot(gameoverSound);
                 break; 
             case "StartSound":
+                audioSrc.volume = 0.7f;
                 audioSrc.PlayOneShot(startSound);
                 break;
             case "ExitSound":
+                audioSrc.volume = 1.0f;
                 audioSrc.PlayOneShot(exitSound);
-                break;     
+                break;   
         }
     }
 }

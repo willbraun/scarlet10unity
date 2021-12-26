@@ -94,7 +94,7 @@ public class S10Controller2 : MonoBehaviour
         HowToPlayPageInspector.SetActive(false);
     }
 
-    private static void StartGame()
+    public static void StartGame()
     {
         SoundManagerScript.PlaySound("StartSound");
         gameCount++;
@@ -252,7 +252,7 @@ public class S10Controller2 : MonoBehaviour
         }
     }
 
-    private static void PlayCards()
+    public static void PlayCards()
     {
         string comparisonResult = Compare(selectedCardObjects,tableCardObjects);
 
@@ -278,7 +278,7 @@ public class S10Controller2 : MonoBehaviour
         // You can't select Pass object, will never appear here. Human must pass with button.
     }
 
-    private static void Pass()
+    public static void Pass()
     {
         PassTurn();
         DisplayError("");

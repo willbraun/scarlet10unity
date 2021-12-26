@@ -450,7 +450,7 @@ GameObject:
   - component: {fileID: 71855316}
   m_Layer: 5
   m_Name: Kingofspades
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -631,11 +631,11 @@ GameObject:
   - component: {fileID: 100221359}
   m_Layer: 5
   m_Name: 10ofdiamonds
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &100221358
 RectTransform:
   m_ObjectHideFlags: 0
@@ -812,7 +812,7 @@ GameObject:
   - component: {fileID: 119441023}
   m_Layer: 5
   m_Name: 4ofhearts
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -833,7 +833,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 40.99948, y: 189}
+  m_AnchoredPosition: {x: -299, y: 24}
   m_SizeDelta: {x: 45, y: 63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &119441023
@@ -993,11 +993,11 @@ GameObject:
   - component: {fileID: 148525318}
   m_Layer: 5
   m_Name: Queenofspades
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &148525317
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1014,7 +1014,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 41, y: 189}
+  m_AnchoredPosition: {x: 40.99948, y: 189}
   m_SizeDelta: {x: 45, y: 63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &148525318
@@ -1174,7 +1174,7 @@ GameObject:
   - component: {fileID: 152805897}
   m_Layer: 5
   m_Name: 7ofclubs
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1567,7 +1567,7 @@ GameObject:
   - component: {fileID: 209445202}
   m_Layer: 5
   m_Name: 7ofhearts
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2388,49 +2388,6 @@ RectTransform:
   m_AnchoredPosition: {x: 254.07, y: 0}
   m_SizeDelta: {x: 120.6, y: 16.779}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &283228844
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 283228846}
-  - component: {fileID: 283228845}
-  m_Layer: 0
-  m_Name: NetworkController4
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &283228845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 283228844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43e0c34b196844c29b97f6af40bcd04b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &283228846
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 283228844}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &300069145
 GameObject:
   m_ObjectHideFlags: 0
@@ -2448,7 +2405,7 @@ GameObject:
   - component: {fileID: 300069152}
   m_Layer: 5
   m_Name: Blackjoker
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2629,7 +2586,7 @@ GameObject:
   - component: {fileID: 316269129}
   m_Layer: 5
   m_Name: Kingofclubs
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2810,7 +2767,7 @@ GameObject:
   - component: {fileID: 323514370}
   m_Layer: 5
   m_Name: Aceofhearts
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2831,7 +2788,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 40.99948, y: 189}
+  m_AnchoredPosition: {x: -275.5, y: 24}
   m_SizeDelta: {x: 45, y: 63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &323514365
@@ -3141,7 +3098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3209,11 +3166,11 @@ RectTransform:
   - {fileID: 1349388488}
   - {fileID: 1350600893}
   m_Father: {fileID: 1646663173}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 482, y: 271}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 940, y: 520}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &410072077
@@ -3409,12 +3366,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 413053796}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 231.10265, y: 291.82855, z: -12.974557}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &434203539
 GameObject:
@@ -3512,11 +3469,11 @@ GameObject:
   - component: {fileID: 445923144}
   m_Layer: 5
   m_Name: Jackofclubs
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &445923138
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3533,7 +3490,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 700, y: 0}
+  m_AnchoredPosition: {x: -228.5, y: 24}
   m_SizeDelta: {x: 45, y: 63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &445923139
@@ -3991,7 +3948,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 5
+  m_Text: 
 --- !u!222 &505033801
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4156,7 +4113,7 @@ GameObject:
   - component: {fileID: 519420029}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4196,7 +4153,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 271.0152
+  orthographic size: 272.1535
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4220,7 +4177,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4447,7 +4404,7 @@ GameObject:
   - component: {fileID: 554845836}
   - component: {fileID: 554845835}
   m_Layer: 5
-  m_Name: Button
+  m_Name: TestButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4587,7 +4544,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &611069435
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4599,15 +4556,15 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1364642099}
   - {fileID: 1120426830}
+  - {fileID: 1364642099}
   - {fileID: 1633405280}
   m_Father: {fileID: 1646663173}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 482, y: 271}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 964, y: 542}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &611069436
@@ -4702,12 +4659,12 @@ Canvas:
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
-  m_OverrideSorting: 0
+  m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!1 &616672060
 GameObject:
@@ -4813,7 +4770,7 @@ GameObject:
   - component: {fileID: 620321901}
   m_Layer: 5
   m_Name: 7ofdiamonds
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5078,11 +5035,11 @@ GameObject:
   - component: {fileID: 640803115}
   m_Layer: 5
   m_Name: Aceofdiamonds
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &640803114
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5099,7 +5056,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 700, y: 0}
+  m_AnchoredPosition: {x: -228.5, y: 24}
   m_SizeDelta: {x: 45, y: 63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &640803115
@@ -5259,11 +5216,11 @@ GameObject:
   - component: {fileID: 642529949}
   m_Layer: 5
   m_Name: Jackofhearts
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &642529948
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5280,7 +5237,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 64.49948, y: 189}
+  m_AnchoredPosition: {x: -275.5, y: 24}
   m_SizeDelta: {x: 45, y: 63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &642529949
@@ -5440,7 +5397,7 @@ GameObject:
   - component: {fileID: 645097327}
   m_Layer: 5
   m_Name: 5ofdiamonds
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6008,11 +5965,11 @@ GameObject:
   - component: {fileID: 760197438}
   m_Layer: 5
   m_Name: Kingofhearts
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &760197437
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6189,7 +6146,7 @@ GameObject:
   - component: {fileID: 770110305}
   m_Layer: 5
   m_Name: 2ofclubs
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6370,7 +6327,7 @@ GameObject:
   - component: {fileID: 771378869}
   m_Layer: 5
   m_Name: 9ofspades
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6551,7 +6508,7 @@ GameObject:
   - component: {fileID: 785579407}
   m_Layer: 5
   m_Name: 9ofhearts
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6732,7 +6689,7 @@ GameObject:
   - component: {fileID: 796003376}
   m_Layer: 5
   m_Name: Queenofclubs
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6992,7 +6949,7 @@ GameObject:
   - component: {fileID: 820013454}
   m_Layer: 5
   m_Name: 2ofhearts
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7013,7 +6970,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 700, y: 0}
+  m_AnchoredPosition: {x: 40.99948, y: 189}
   m_SizeDelta: {x: 45, y: 63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &820013454
@@ -7216,8 +7173,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0005187988, y: 0}
-  m_SizeDelta: {x: 0.0010986, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &822392697
 MonoBehaviour:
@@ -7274,7 +7231,7 @@ GameObject:
   - component: {fileID: 826287494}
   m_Layer: 5
   m_Name: 9ofclubs
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7695,7 +7652,7 @@ GameObject:
   - component: {fileID: 896132155}
   m_Layer: 5
   m_Name: Jackofspades
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7895,7 +7852,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 110.99948, y: -23.389}
+  m_AnchoredPosition: {x: 111, y: -23.389}
   m_SizeDelta: {x: 120, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &910779605
@@ -8009,7 +7966,7 @@ GameObject:
   - component: {fileID: 917324644}
   m_Layer: 5
   m_Name: 2ofspades
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8269,11 +8226,11 @@ GameObject:
   - component: {fileID: 962011279}
   m_Layer: 5
   m_Name: 10ofclubs
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &962011278
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8737,7 +8694,7 @@ GameObject:
   - component: {fileID: 1033355482}
   m_Layer: 5
   m_Name: 6ofhearts
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8901,72 +8858,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1033355480}
   m_CullTransparentMesh: 1
---- !u!1 &1041814231
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1041814234}
-  - component: {fileID: 1041814233}
-  - component: {fileID: 1041814232}
-  m_Layer: 0
-  m_Name: EventSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1041814232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1041814231}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
---- !u!114 &1041814233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1041814231}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!4 &1041814234
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1041814231}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1077452070
 GameObject:
   m_ObjectHideFlags: 0
@@ -9059,7 +8950,7 @@ GameObject:
   - component: {fileID: 1115354091}
   m_Layer: 5
   m_Name: Jackofdiamonds
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9253,12 +9144,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 611069435}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 78.828}
-  m_SizeDelta: {x: 801.9536, y: 257.6555}
+  m_AnchoredPosition: {x: 0, y: 89}
+  m_SizeDelta: {x: 801.9536, y: 104.8569}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1120426831
 MonoBehaviour:
@@ -9274,7 +9165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -9319,7 +9210,7 @@ GameObject:
   - component: {fileID: 1129443131}
   m_Layer: 5
   m_Name: 2ofdiamonds
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9587,7 +9478,7 @@ GameObject:
   - component: {fileID: 1140765581}
   m_Layer: 5
   m_Name: Redjoker
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9926,7 +9817,7 @@ GameObject:
   - component: {fileID: 1203540874}
   m_Layer: 5
   m_Name: 4ofspades
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10107,7 +9998,7 @@ GameObject:
   - component: {fileID: 1226072417}
   m_Layer: 5
   m_Name: 5ofhearts
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10367,7 +10258,7 @@ GameObject:
   - component: {fileID: 1234168789}
   m_Layer: 5
   m_Name: 4ofclubs
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10380,7 +10271,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1234168787}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.29543743}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 630544645}
@@ -10388,7 +10279,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 700, y: 0}
+  m_AnchoredPosition: {x: -252, y: 24}
   m_SizeDelta: {x: 45, y: 63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1234168789
@@ -10474,7 +10365,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1234168787}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -10548,7 +10439,7 @@ GameObject:
   - component: {fileID: 1267992286}
   m_Layer: 5
   m_Name: 8ofclubs
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10862,7 +10753,7 @@ GameObject:
   - component: {fileID: 1316825667}
   m_Layer: 5
   m_Name: 7ofspades
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11043,7 +10934,7 @@ GameObject:
   - component: {fileID: 1326165313}
   m_Layer: 5
   m_Name: 3ofspades
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11574,13 +11465,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1364642098}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1964641150}
   m_Father: {fileID: 611069435}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11609,7 +11500,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0, g: 0, b: 0, a: 1}
-    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 1}
+    m_HighlightedColor: {r: 0.4901961, g: 0.67058825, b: 0.94117653, a: 1}
     m_PressedColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
     m_SelectedColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -11656,7 +11547,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11717,6 +11608,72 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1382637624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1382637627}
+  - component: {fileID: 1382637626}
+  - component: {fileID: 1382637625}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1382637625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382637624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &1382637626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382637624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &1382637627
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382637624}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1410636910
 GameObject:
   m_ObjectHideFlags: 0
@@ -11846,7 +11803,7 @@ GameObject:
   - component: {fileID: 1449981446}
   m_Layer: 5
   m_Name: 6ofclubs
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12046,12 +12003,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1456076307}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -251.4049, y: -306.1127, z: -210.56044}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1494111045
 GameObject:
@@ -12070,7 +12027,7 @@ GameObject:
   - component: {fileID: 1494111047}
   m_Layer: 5
   m_Name: 10ofhearts
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12327,7 +12284,7 @@ GameObject:
   - component: {fileID: 1513954073}
   m_Layer: 5
   m_Name: 6ofspades
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12662,7 +12619,7 @@ GameObject:
   - component: {fileID: 1582404009}
   m_Layer: 5
   m_Name: Queenofdiamonds
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12843,7 +12800,7 @@ GameObject:
   - component: {fileID: 1584180037}
   m_Layer: 5
   m_Name: 3ofhearts
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13024,7 +12981,7 @@ GameObject:
   - component: {fileID: 1590337503}
   m_Layer: 5
   m_Name: 5ofspades
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13205,7 +13162,7 @@ GameObject:
   - component: {fileID: 1602119521}
   m_Layer: 5
   m_Name: Queenofhearts
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13386,7 +13343,7 @@ GameObject:
   - component: {fileID: 1621069443}
   m_Layer: 5
   m_Name: 3ofclubs
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13407,7 +13364,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 700, y: 0}
+  m_AnchoredPosition: {x: 88, y: 189}
   m_SizeDelta: {x: 45, y: 63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1621069443
@@ -13700,7 +13657,7 @@ GameObject:
   - component: {fileID: 1643486232}
   m_Layer: 5
   m_Name: 3ofdiamonds
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13721,7 +13678,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 700, y: 0}
+  m_AnchoredPosition: {x: -6, y: 189}
   m_SizeDelta: {x: 45, y: 63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1643486232
@@ -13895,7 +13852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
+  m_IgnoreReversedGraphics: 0
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
@@ -13933,7 +13890,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -13956,10 +13913,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 822392696}
-  - {fileID: 611069435}
   - {fileID: 410072076}
+  - {fileID: 611069435}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -14149,7 +14106,7 @@ GameObject:
   - component: {fileID: 1750245527}
   m_Layer: 5
   m_Name: Aceofclubs
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14170,7 +14127,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 41, y: 189}
+  m_AnchoredPosition: {x: 17.5, y: 189}
   m_SizeDelta: {x: 45, y: 63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1750245527
@@ -14717,7 +14674,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -14808,12 +14765,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1778984312}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1802861749
 GameObject:
@@ -14832,7 +14789,7 @@ GameObject:
   - component: {fileID: 1802861751}
   m_Layer: 5
   m_Name: 8ofspades
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15013,11 +14970,11 @@ GameObject:
   - component: {fileID: 1860042861}
   m_Layer: 5
   m_Name: Kingofdiamonds
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1860042855
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15273,11 +15230,11 @@ GameObject:
   - component: {fileID: 1881868135}
   m_Layer: 5
   m_Name: 10ofspades
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1881868129
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15528,7 +15485,7 @@ GameObject:
   - component: {fileID: 1931098498}
   m_Layer: 5
   m_Name: 8ofhearts
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15709,7 +15666,7 @@ GameObject:
   - component: {fileID: 1935272156}
   m_Layer: 5
   m_Name: 4ofdiamonds
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15924,7 +15881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -15969,7 +15926,7 @@ GameObject:
   - component: {fileID: 1965193646}
   m_Layer: 5
   m_Name: Aceofspades
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16150,7 +16107,7 @@ GameObject:
   - component: {fileID: 2006171102}
   m_Layer: 5
   m_Name: 8ofdiamonds
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16331,7 +16288,7 @@ GameObject:
   - component: {fileID: 2060637827}
   m_Layer: 5
   m_Name: 9ofdiamonds
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16591,7 +16548,7 @@ GameObject:
   - component: {fileID: 2122249598}
   m_Layer: 5
   m_Name: 6ofdiamonds
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16772,7 +16729,7 @@ GameObject:
   - component: {fileID: 2146033442}
   m_Layer: 5
   m_Name: 5ofclubs
-  m_TagString: Card
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
