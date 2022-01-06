@@ -1,0 +1,14 @@
+Scarlet 10
+I created an video game version of Scarlet 10, which is a card game from China that my friend Charles introduced to me. I have some experience coding and wanted to build something to see if I could do it. I liked this idea as a project to pursue so I could use it as a tool to practice. 
+This project is currently published online here - https://play.unity.com/mg/other/scarlet-10-1
+All instructions are in the game itself in the How to Play button.
+Features
+  Right now a user can play through multiple games, and the game will keep score along the way.
+  Computer players will search through all card combinations and pick a random legal move to play.
+  The program automatically cycles through the players in order, however, it is possible for any player to steal the turn out of order in the right circumstance.
+Future enhancements I would like to build
+  Animation of the cards from one location to another, rather than just updating the position
+  Rules to determine which hand a computer player should play so the games are more realistic
+  Multiplayer support
+  
+Thank you for playing!
